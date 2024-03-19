@@ -1,0 +1,1 @@
+export * from './create_new_product_facade';
