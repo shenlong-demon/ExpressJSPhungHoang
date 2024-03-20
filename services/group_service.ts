@@ -1,9 +1,14 @@
 import {Dto} from "./dto";
-import {Group} from "./model";
+import {Brand, Group} from "./model";
 import {GroupEntity} from "../repositories/model";
-import {GroupRepo} from "../repositories";
+import {BrandRepo, GroupRepo} from "../repositories";
 
 export class GroupService {
+
+    static async getGroups() : Promise<Dto<Group[]>> {
+        const groups: Group[] = await GroupRepo.getGroups()
+        return Dto.success(groups);
+    }
     static async updateGroup(id: number, name: string, status: number) : Promise<Dto<Group | null>> {
         let groupEntity: GroupEntity | null = null;
         if(id > 0){

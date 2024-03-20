@@ -1,5 +1,6 @@
-import {BrandEntity, GroupEntity} from "./model";
-import { PrismaClient } from '@prisma/client'
+import {GroupEntity} from "./model";
+import {PrismaClient} from '@prisma/client'
+
 const prisma = new PrismaClient();
 export class GroupRepo {
     static async update(id: number, name: string, status: number): Promise<GroupEntity | null> {
@@ -22,5 +23,10 @@ export class GroupRepo {
             }
         });
         return group;
+    }
+
+    static async getGroups(): Promise<GroupEntity[]> {
+        const groups: GroupEntity[] = await prisma.groups.findMany();
+        return groups;
     }
 }
