@@ -10,11 +10,11 @@ export class Dto<T> {
     }
 
     isSuccess(needCheckData?: boolean | undefined): boolean {
-        return this.code === '' && (!needCheckData || (needCheckData && !!this.data));
+        return this.code === '0' && (!needCheckData || (needCheckData && !!this.data));
     }
 
     static success<T>(data?: T | null | undefined): Dto<T> {
-        return new Dto<T>('','', data);
+        return new Dto<T>('0','', data);
     }
     static failed(code: string, message?: string | null | undefined): Dto<null> {
         return new Dto(code, message, null);

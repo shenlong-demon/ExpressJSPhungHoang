@@ -2,14 +2,17 @@
 
 # Migration
 ## Create migration file 
+1. Update prisma/schema.prisma
+2. Run migrate to update
 ```
-npm run migrate create my first migration
+DATABASE_URL=postgres://postgres:123456@localhost:5432/postgres prisma migrate dev --name added-xxxxxx
 ```
-and run Up Migration
-## Up migration
+
+## Seed default data
+```shell
+npx prisma db seed
 ```
-DATABASE_URL=postgres://postgres:123456@localhost:5432/postgres npm run migrate up
-```
+
 ## Drop all Tables
 ```
 DROP TABLE products, groups, brands, users, pgmigrations;

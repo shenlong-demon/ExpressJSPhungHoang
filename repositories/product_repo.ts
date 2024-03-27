@@ -34,5 +34,18 @@ export class ProductRepo {
         });
         return products;
     }
+    static async getProductsBy(name: string | null, brandId: number | null, groupId: number | null, status: number | null, offset: number): Promise<ProductEntity[]> {
+        Logger.log(() => [`ProductRepo getProducts ${status} ${offset}`]);
+        const products: ProductEntity[] = await prisma.products.findMany({
+            where:  {
+                status: status !== null ? status : undefined,
+                brandId: brandId !== null ? brandId : undefined,
+                groupId: groupId !== null ? groupId : undefined
+            },
+            skip: offset * DB_CONSTANT.PAGING,
+            take: DB_CONSTANT.PAGING
+        });
+        return products;
+    }
 
 }

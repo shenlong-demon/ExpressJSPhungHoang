@@ -6,6 +6,8 @@ CREATE TABLE "users" (
     "password" TEXT NOT NULL,
     "token" VARCHAR(255) DEFAULT '',
     "status" INTEGER NOT NULL DEFAULT 1,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -15,6 +17,8 @@ CREATE TABLE "brands" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "brands_pkey" PRIMARY KEY ("id")
 );
@@ -24,6 +28,8 @@ CREATE TABLE "groups" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "groups_pkey" PRIMARY KEY ("id")
 );
@@ -31,15 +37,17 @@ CREATE TABLE "groups" (
 -- CreateTable
 CREATE TABLE "products" (
     "id" SERIAL NOT NULL,
-    "code" VARCHAR(50) NOT NULL,
+    "code" VARCHAR(50),
     "name" VARCHAR(255) NOT NULL,
-    "otherName" VARCHAR(255) NOT NULL,
-    "image" VARCHAR(500) NOT NULL,
+    "otherName" VARCHAR(255),
+    "image" VARCHAR(500),
     "price" DOUBLE PRECISION NOT NULL,
     "quantity" INTEGER NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
     "brandId" INTEGER NOT NULL,
     "groupId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 );
