@@ -35,7 +35,7 @@ export class ProductRepo {
         return products;
     }
     static async getProductsBy(name: string | null, brandId: number | null, groupId: number | null, status: number | null, offset: number): Promise<ProductEntity[]> {
-        Logger.log(() => [`ProductRepo getProducts ${status} ${offset}`]);
+        Logger.log(() => [`ProductRepo getProductsBy "${name}" "${brandId}" "${groupId}" "${status}" "${offset}"`]);
         const products: ProductEntity[] = await prisma.products.findMany({
             where:  {
                 status: status !== null ? status : undefined,
@@ -45,6 +45,8 @@ export class ProductRepo {
             skip: offset * DB_CONSTANT.PAGING,
             take: DB_CONSTANT.PAGING
         });
+        Logger.log(() => [`ProductRepo getProductsBy "${name}" "${brandId}" "${groupId}" "${status}" "${offset}" RESULT `, products]);
+
         return products;
     }
 
