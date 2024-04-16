@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 async function main() {
-    const user1 = await prisma.users.upsert({
+    const user1 = await prisma.phuser.upsert({
         where: { phone: '0905690200 '},
         update: {},
         create: {
@@ -10,7 +10,7 @@ async function main() {
             password: '123456'
         },
     })
-    const brand1 = await prisma.brands.upsert({
+    const brand1 = await prisma.phbrand.upsert({
         where: { id: 1},
         update: {},
         create: {
@@ -18,7 +18,7 @@ async function main() {
         },
     })
 
-    const group1 = await prisma.groups.upsert({
+    const group1 = await prisma.phgroup.upsert({
         where: { id: 1},
         update: {},
         create: {
@@ -26,7 +26,7 @@ async function main() {
         },
     })
 
-    const product1 = await prisma.products.upsert({
+    const product1 = await prisma.phproduct.upsert({
         where: { id: 1},
         update: {},
         create: {

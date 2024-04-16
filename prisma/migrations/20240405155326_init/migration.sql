@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "users" (
+CREATE TABLE "phuser" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "phone" TEXT NOT NULL,
@@ -9,33 +9,33 @@ CREATE TABLE "users" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "phuser_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "brands" (
+CREATE TABLE "phbrand" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "brands_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "phbrand_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "groups" (
+CREATE TABLE "phgroup" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "groups_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "phgroup_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "products" (
+CREATE TABLE "phproduct" (
     "id" SERIAL NOT NULL,
     "code" VARCHAR(50),
     "name" VARCHAR(255) NOT NULL,
@@ -49,14 +49,14 @@ CREATE TABLE "products" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "products_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "phproduct_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_phone_key" ON "users"("phone");
+CREATE UNIQUE INDEX "phuser_phone_key" ON "phuser"("phone");
 
 -- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_brandId_fkey" FOREIGN KEY ("brandId") REFERENCES "brands"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "phproduct" ADD CONSTRAINT "phproduct_brandId_fkey" FOREIGN KEY ("brandId") REFERENCES "phbrand"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "groups"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "phproduct" ADD CONSTRAINT "phproduct_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "phgroup"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

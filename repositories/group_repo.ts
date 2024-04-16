@@ -4,7 +4,7 @@ import {PrismaClient} from '@prisma/client'
 const prisma = new PrismaClient();
 export class GroupRepo {
     static async update(id: number, name: string, status: number): Promise<GroupEntity | null> {
-        const group: GroupEntity | null = await prisma.groups.update({
+        const group: GroupEntity | null = await prisma.phgroup.update({
             where: {
                 id
             },
@@ -17,7 +17,7 @@ export class GroupRepo {
     }
 
     static async create(name: string, status: number): Promise<GroupEntity | null> {
-        const group: GroupEntity | null = await prisma.groups.create({
+        const group: GroupEntity | null = await prisma.phgroup.create({
             data: {
                 name, status
             }
@@ -26,7 +26,7 @@ export class GroupRepo {
     }
 
     static async getGroups(): Promise<GroupEntity[]> {
-        const groups: GroupEntity[] = await prisma.groups.findMany();
+        const groups: GroupEntity[] = await prisma.phgroup.findMany();
         return groups;
     }
 }

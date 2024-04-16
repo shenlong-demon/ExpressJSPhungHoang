@@ -1,9 +1,9 @@
 import express,{Express} from "express";
-const authRoute = require('./routes/auth');
+const authRoute = require('./routes/auth_route');
 const testRoute = require('./routes/test');
-const productRoute = require('./routes/product');
-const brandRoute = require('./routes/brand');
-const groupRoute = require('./routes/group');
+const productRoute = require('./routes/product_route');
+const brandRoute = require('./routes/brand_route');
+const groupRoute = require('./routes/group_route');
 const app:Express = express()
 const port = 3000
 

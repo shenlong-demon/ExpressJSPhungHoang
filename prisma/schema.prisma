@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -10,7 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
+model phuser {
   id            Int             @id                 @default(autoincrement())
   name          String          @db.VarChar(255)
   phone         String          @unique
@@ -21,26 +22,26 @@ model users {
   updatedAt     DateTime        @updatedAt
 }
 
-model brands {
+model phbrand {
   id            Int             @id                 @default(autoincrement())
   name          String          @db.VarChar(255)
   status        Int             @default(1)
-  products      products[]
+  products      phproduct[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }
 
 
-model groups {
+model phgroup {
   id            Int             @id                 @default(autoincrement())
   name          String          @db.VarChar(255)
   status        Int             @default(1)
-  products      products[]
+  products      phproduct[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }
 
-model products {
+model phproduct {
   id            Int             @id                 @default(autoincrement())
   code          String?         @db.VarChar(50)
   name          String          @db.VarChar(255)
@@ -49,9 +50,9 @@ model products {
   price         Float
   quantity      Int
   status        Int             @default(1)
-  brand         brands          @relation(fields: [brandId], references: [id])
+  brand         phbrand          @relation(fields: [brandId], references: [id])
   brandId       Int
-  group         groups          @relation(fields: [groupId], references: [id])
+  group         phgroup          @relation(fields: [groupId], references: [id])
   groupId       Int
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt

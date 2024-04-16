@@ -10,7 +10,7 @@
     "migrate_up": "DATABASE_URL=postgres://postgres:123456@localhost:5432/postgres npm run migrate up",
     "migrate_init": "rm -rf ./prisma/migrations && npx prisma migrate dev --name init",
     "migrate_seed": "npx prisma db seed",
-    "production" : "sh ./deploy.sh"
+    "production": "sh ./deploy.sh"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -26,10 +26,10 @@
   },
   "homepage": "https://github.com/huyle21202/PhungHoangExpressJS#readme",
   "dependencies": {
-    "@prisma/client": "^4.14.0",
+    "@prisma/client": "5",
     "express": "4.18.2",
     "jsonwebtoken": "9.0.0",
-    "prisma": "^4.14.0"
+    "prisma": "5"
   },
   "devDependencies": {
     "@types/express": "4.17.17",

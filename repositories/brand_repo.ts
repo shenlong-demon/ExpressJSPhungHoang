@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 export class BrandRepo {
 
     static async update(id: number, name: string, status: number): Promise<BrandEntity | null> {
-        const brand = await prisma.brands.update({
+        const brand = await prisma.phbrand.update({
             where: {
                 id
             },
@@ -17,7 +17,7 @@ export class BrandRepo {
     }
 
     static async create(name: string, status: number): Promise<BrandEntity | null> {
-        const brand: BrandEntity | null = await prisma.brands.create({
+        const brand: BrandEntity | null = await prisma.phbrand.create({
             data: {
                 name, status
             }
@@ -25,7 +25,7 @@ export class BrandRepo {
         return brand;
     }
     static async getBrands(): Promise<BrandEntity[]> {
-        const brands: BrandEntity[] = await prisma.brands.findMany();
+        const brands: BrandEntity[] = await prisma.phbrand.findMany();
         return brands;
     }
 }

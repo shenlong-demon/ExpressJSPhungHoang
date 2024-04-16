@@ -28,3 +28,8 @@ password: 123456
 ```shell
 select * from users ;
 ```
+
+## Drop all Tables
+```
+DROP TABLE products, groups, brands, users, _prisma_migrations;
+```

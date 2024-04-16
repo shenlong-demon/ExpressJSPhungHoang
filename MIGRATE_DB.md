@@ -1,5 +1,12 @@
 # PhungHoangExpressJS
-
+# Clear for first
+## Drop all table
+```shell
+DROP TABLE products, groups, brands, users, _prisma_migrations;
+```
+```shell
+rm -rf ./prisma/migrations
+```
 # Migration
 ## Create migration file 
 1. Update prisma/schema.prisma
@@ -11,14 +18,4 @@ DATABASE_URL=postgres://postgres:123456@localhost:5432/postgres prisma migrate d
 ## Seed default data
 ```shell
 npx prisma db seed
-```
-
-# Run
-## Debug
-```shell
-yarn start
-```
-## Localhost
-```shell
-ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 3000 
 ```

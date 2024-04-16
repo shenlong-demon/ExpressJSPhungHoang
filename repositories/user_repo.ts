@@ -14,7 +14,7 @@ export class UserRepo {
 
     static async getByPhoneAndPassword(phone: string, password: string): Promise<UserEntity | null> {
         // Query returns User or null
-        const user: UserEntity | null = await prisma.users.findFirst({
+        const user: UserEntity | null = await prisma.phuser.findFirst({
             where: {
                 phone,
                 password
@@ -25,7 +25,7 @@ export class UserRepo {
     }
 
     static async setToken(id: number, token: string): Promise<void> {
-        const updateUser = await prisma.users.update({
+        const updateUser = await prisma.phuser.update({
             where: {
                id
             },
