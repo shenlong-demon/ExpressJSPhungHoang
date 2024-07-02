@@ -1,5 +1,5 @@
 import express from "express";
-import {GetGroupsFacade} from "../facades/group";
+import {GetGroupsFacade} from "@business/facades";
 
 const router = express.Router();
 

@@ -1,8 +1,8 @@
 import express from "express";
-import {GetBrandsFacade} from "../facades/brand";
+import {GetBrandsFacade} from "@business/facades";
 
 const router = express.Router();
-const authMiddleware = require('../middleware/auth_middleware');
+const authMiddleware = require('../business/middleware/auth_middleware');
 
 
 router.get('/',authMiddleware,async (req, res): Promise<void > => {

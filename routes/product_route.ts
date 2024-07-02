@@ -1,9 +1,6 @@
 import express from "express";
-import {GetProductsByStatusFacade} from "../facades/product/get_products_by_status_facade";
-import {CreateProductFacade, GetProductsByFacade} from "../facades";
-import {CreateProductRequest, ProductFilterRequest} from "../facades/requests";
-import {UpdateProductFacade} from "../facades/product/update_products_facade";
-import {UpdateProductRequest} from "../facades/requests/update_product_request";
+import {GetProductsByStatusFacade} from "@business/facades/product/get_products_by_status_facade";
+
 
 const router = express.Router();
 
