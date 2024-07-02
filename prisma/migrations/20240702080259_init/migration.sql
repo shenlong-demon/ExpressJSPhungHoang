@@ -2,12 +2,13 @@
 CREATE TABLE "phuser" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
-    "phone" TEXT NOT NULL,
+    "phone" VARCHAR(50) NOT NULL,
     "password" TEXT NOT NULL,
     "token" VARCHAR(255) DEFAULT '',
     "status" INTEGER NOT NULL DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "appKey" TEXT,
 
     CONSTRAINT "phuser_pkey" PRIMARY KEY ("id")
 );
@@ -19,6 +20,7 @@ CREATE TABLE "phbrand" (
     "status" INTEGER NOT NULL DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "appKey" TEXT,
 
     CONSTRAINT "phbrand_pkey" PRIMARY KEY ("id")
 );
@@ -30,6 +32,7 @@ CREATE TABLE "phgroup" (
     "status" INTEGER NOT NULL DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "appKey" TEXT,
 
     CONSTRAINT "phgroup_pkey" PRIMARY KEY ("id")
 );
@@ -48,12 +51,25 @@ CREATE TABLE "phproduct" (
     "groupId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "appKey" TEXT,
 
     CONSTRAINT "phproduct_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "phuser_id_key" ON "phuser"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "phuser_phone_key" ON "phuser"("phone");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "phbrand_id_key" ON "phbrand"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "phgroup_id_key" ON "phgroup"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "phproduct_id_key" ON "phproduct"("id");
 
 -- AddForeignKey
 ALTER TABLE "phproduct" ADD CONSTRAINT "phproduct_brandId_fkey" FOREIGN KEY ("brandId") REFERENCES "phbrand"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

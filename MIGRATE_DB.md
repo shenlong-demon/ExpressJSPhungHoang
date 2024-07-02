@@ -1,21 +1,32 @@
 # PhungHoangExpressJS
-# Clear for first
-## Drop all table
+# DB Connection
+- We are using DB Connection from env file with DB name is `phunghoangdb`
 ```shell
-DROP TABLE products, groups, brands, users, _prisma_migrations;
+DATABASE_URL="postgres://postgres:123456@localhost:5432/phunghoangdb"
 ```
+
+# Migration for INIT
+## Remove all migrations
 ```shell
 rm -rf ./prisma/migrations
 ```
-# Migration
-## Create migration file 
-1. Update prisma/schema.prisma
-2. Run migrate to update
+## Drop all table
+```shell
+DROP TABLE phproduct, phgroup, phbrand, phuser, _prisma_migrations;
 ```
-DATABASE_URL=postgres://postgres:123456@localhost:5432/postgres prisma migrate dev --name added-xxxxxx
+## Create migration file
+```shell
+npm run migrate_init
+```
+## Create default data with seed
+```shell
+npm run migrate_seed
 ```
 
-## Seed default data
+# Migrate for updating
+## Update schema.prisma file
+## Create new migration file for updating
 ```shell
-npx prisma db seed
+npx prisma migrate dev --name added_xxx
 ```
+

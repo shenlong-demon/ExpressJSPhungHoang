@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client'
+const { v4: uuidv4 } = require('uuid');
+
 const prisma = new PrismaClient()
 async function main() {
     const user1 = await prisma.phuser.upsert({
@@ -7,7 +9,8 @@ async function main() {
         create: {
             name: 'long',
             phone: '0905690200',
-            password: '123456'
+            password: '123456',
+            appKey: uuidv4()
         },
     })
     const brand1 = await prisma.phbrand.upsert({

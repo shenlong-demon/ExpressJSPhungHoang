@@ -12,37 +12,39 @@ datasource db {
 }
 
 model phuser {
-  id            Int             @id                 @default(autoincrement())
+  id            Int             @id                 @unique  @default(autoincrement())
   name          String          @db.VarChar(255)
-  phone         String          @unique
+  phone         String          @db.VarChar(50)    @unique
   password      String
-  token         String?         @db.VarChar(255)    @default(value: "")
+  token         String?         @db.VarChar(255)             @default(value: "")
   status        Int             @default(1)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  appKey        String?         @default(uuid())
 }
 
 model phbrand {
-  id            Int             @id                 @default(autoincrement())
+  id            Int             @id                 @unique @default(autoincrement())
   name          String          @db.VarChar(255)
   status        Int             @default(1)
   products      phproduct[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  appKey        String?         @default(uuid())
 }
 
-
 model phgroup {
-  id            Int             @id                 @default(autoincrement())
+  id            Int             @id                 @unique @default(autoincrement())
   name          String          @db.VarChar(255)
   status        Int             @default(1)
   products      phproduct[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  appKey        String?         @default(uuid())
 }
 
 model phproduct {
-  id            Int             @id                 @default(autoincrement())
+  id            Int             @id                 @unique @default(autoincrement())
   code          String?         @db.VarChar(50)
   name          String          @db.VarChar(255)
   otherName     String?         @db.VarChar(255)
@@ -56,8 +58,17 @@ model phproduct {
   groupId       Int
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  appKey        String?         @default(uuid())
 }
 
+model phcustomer {
+    id            Int             @id                 @unique  @default(autoincrement())
+    name          String          @db.VarChar(255)
+    phone         String          @db.VarChar(50)    @unique
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    appKey        String?         @default(uuid())
+}
 
 
 

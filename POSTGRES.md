@@ -14,7 +14,7 @@ password: 123456
 ```
 ### Using database
 ```shell
-\c [database name]
+\c phunghoangdb
 ```
 ### List all tables
 ```shell
@@ -31,5 +31,5 @@ select * from users ;
 
 ## Drop all Tables
 ```
-DROP TABLE products, groups, brands, users, _prisma_migrations;
+DROP TABLE phproduct, phgroup, phbrand, phuser, _prisma_migrations;
 ```
