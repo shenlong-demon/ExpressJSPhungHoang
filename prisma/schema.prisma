@@ -76,6 +76,8 @@ model phcustomer {
 
 model phoperation {
     id            Int             @id                 @unique  @default(autoincrement())
+    name          String?
+    phone         String?
     note          String?
     customer      phcustomer?     @relation(fields: [customerId], references: [id])
     customerId    Int?
@@ -87,6 +89,8 @@ model phoperation {
 
 model phbill {
     id            Int             @id                 @unique  @default(autoincrement())
+    name          String?
+    phone         String?
     note          String?
     customer      phcustomer?     @relation(fields: [customerId], references: [id])
     customerId    Int?
@@ -102,6 +106,7 @@ model phoperationitems {
     product       phproduct       @relation(fields: [productId], references: [id])
     productId     Int
     price         Float
+    quantity      Int
     note          String?
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
@@ -114,6 +119,8 @@ model phbillitems {
     id            Int             @id                 @unique  @default(autoincrement())
     product       phproduct       @relation(fields: [productId], references: [id])
     productId     Int
+    price         Float
+    quantity      Int
     note          String?
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
@@ -121,4 +128,3 @@ model phbillitems {
     bill          phbill          @relation(fields: [billId], references: [id])
     billId        Int
 }
-

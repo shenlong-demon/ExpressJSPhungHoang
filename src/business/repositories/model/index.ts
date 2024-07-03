@@ -2,3 +2,8 @@ export * from './user_entity';
 export * from './brand_entity';
 export * from './group_entity';
 export * from './product_entity';
+export * from './customer_entity';
+export * from './operation_entity';
+export * from './operation_item_entity'
+export * from './bill_entity';
+export * from './bill_item_entity'

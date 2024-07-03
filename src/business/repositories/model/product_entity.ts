@@ -3,7 +3,6 @@ import {GroupEntity} from "./group_entity";
 import {BrandEntity} from "./brand_entity";
 
 export type ProductEntity = BaseEntity &  {
-    id: number;
     name: string;
     otherName: string | null;
     groupId: number;
@@ -13,5 +12,4 @@ export type ProductEntity = BaseEntity &  {
     image: string | null;
     price: number;
     status: number;
-
 };

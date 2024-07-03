@@ -1,6 +1,6 @@
 import {BaseEntity} from "./base_entity";
 
-export type GroupEntity = BaseEntity &  {
+export type CustomerEntity = BaseEntity & {
     name: string;
-    status: number;
+    phone: string;
 };
