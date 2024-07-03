@@ -44,21 +44,23 @@ model phgroup {
 }
 
 model phproduct {
-  id            Int             @id                 @unique @default(autoincrement())
-  code          String?         @db.VarChar(50)
-  name          String          @db.VarChar(255)
-  otherName     String?         @db.VarChar(255)
-  image         String?         @db.VarChar(500)
-  price         Float
-  quantity      Int
-  status        Int             @default(1)
-  brand         phbrand          @relation(fields: [brandId], references: [id])
-  brandId       Int
-  group         phgroup          @relation(fields: [groupId], references: [id])
-  groupId       Int
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  appKey        String?         @default(uuid())
+  id                Int             @id                 @unique @default(autoincrement())
+  code              String?         @db.VarChar(50)
+  name              String          @db.VarChar(255)
+  otherName         String?         @db.VarChar(255)
+  image             String?         @db.VarChar(500)
+  price             Float
+  quantity          Int
+  status            Int             @default(1)
+  brand             phbrand          @relation(fields: [brandId], references: [id])
+  brandId           Int
+  group             phgroup          @relation(fields: [groupId], references: [id])
+  groupId           Int
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  appKey            String?         @default(uuid())
+  operationItems    phoperationitems[]
+  billItems         phbillitems[]
 }
 
 model phcustomer {
@@ -68,7 +70,55 @@ model phcustomer {
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     appKey        String?         @default(uuid())
+    operations    phoperation[]
+    bills         phbill[]
 }
 
+model phoperation {
+    id            Int             @id                 @unique  @default(autoincrement())
+    note          String?
+    customer      phcustomer?     @relation(fields: [customerId], references: [id])
+    customerId    Int?
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    appKey        String?         @default(uuid())
+    items         phoperationitems[]
+}
 
+model phbill {
+    id            Int             @id                 @unique  @default(autoincrement())
+    note          String?
+    customer      phcustomer?     @relation(fields: [customerId], references: [id])
+    customerId    Int?
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    appKey        String
+    total         Float
+    items         phbillitems[]
+}
+
+model phoperationitems {
+    id            Int             @id                 @unique  @default(autoincrement())
+    product       phproduct       @relation(fields: [productId], references: [id])
+    productId     Int
+    price         Float
+    note          String?
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    appKey        String?         @default(uuid())
+    operation     phoperation     @relation(fields: [operationId], references: [id])
+    operationId   Int
+}
+
+model phbillitems {
+    id            Int             @id                 @unique  @default(autoincrement())
+    product       phproduct       @relation(fields: [productId], references: [id])
+    productId     Int
+    note          String?
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    appKey        String?         @default(uuid())
+    bill          phbill          @relation(fields: [billId], references: [id])
+    billId        Int
+}
 
