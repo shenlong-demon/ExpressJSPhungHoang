@@ -107,9 +107,10 @@
     "rootDir": "./src",                                  /* Specify the root folder within your source files. */
     "baseUrl": "./" /* Base directory to resolve non-absolute module names. */,
     "paths": {
-      "@core/*": ["core/*"],
-      "@business/*": ["business/*"]
+      "@core/*": ["src/core/*"],
+      "@business/*": ["src/business/*"]
     }
   },
-  "include": ["./"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

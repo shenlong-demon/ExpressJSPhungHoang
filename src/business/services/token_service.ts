@@ -1,5 +1,5 @@
 import {User} from "./model";
-import {CONSTANT, Logger} from "../common";
+import {CONSTANT, Logger} from "../../core/common";
 
 const jwt = require('jsonwebtoken');
 

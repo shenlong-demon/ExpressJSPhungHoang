@@ -1,7 +1,7 @@
 
-import {Dto} from "@core/common";
-import {Product, ProductService} from "@business/services";
-import {CreateProductRequest} from "@business/model/request";
+import {Dto} from "../../../core/common";
+import {Product, ProductService} from "../../services";
+import {CreateProductRequest} from "../../model/request";
 
 export class CreateProductFacade {
     static async create(product: CreateProductRequest): Promise<Dto<Product | null>> {

@@ -1,7 +1,7 @@
 import {UserEntity} from "./model";
 import { PrismaClient } from '@prisma/client'
-import {Logger, STATUS} from "../common";
-import {LoginRequest} from "@business/model/request";
+import {LoginRequest} from "../model/request";
+import {Logger} from "../../core/common";
 const prisma = new PrismaClient();
 export class UserRepo {
 
@@ -21,7 +21,7 @@ export class UserRepo {
                 password:req.password,
             },
         })
-        Logger.log(() => [`UserRepo getByPhoneAndPassword`, phone, password, user]);
+        Logger.log(() => [`UserRepo getByPhoneAndPassword`, req, user]);
         return user;
     }
 

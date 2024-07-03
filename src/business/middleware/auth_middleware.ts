@@ -1,5 +1,5 @@
-import {Logger} from "../common";
 import {TokenService} from "../services";
+import {Logger} from "../../core/common";
 
 const jwt = require('jsonwebtoken');
 const authMiddleware = (req: any, res: any, next: any) => {

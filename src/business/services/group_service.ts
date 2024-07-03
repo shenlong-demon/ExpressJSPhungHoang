@@ -1,7 +1,7 @@
 import {Brand, Group} from "./model";
 import {GroupEntity} from "../repositories/model";
 import {BrandRepo, GroupRepo} from "../repositories";
-import {Dto} from "@core/common";
+import {Dto} from "../../core/common";
 
 export class GroupService {
 

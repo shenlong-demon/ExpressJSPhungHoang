@@ -2,8 +2,8 @@ import {ProductEntity} from "./model";
 
 import {PrismaClient} from '@prisma/client'
 import {CreateProductRequestSdo} from "./request";
-import {ProductFilterRequest, UpdateProductRequest} from "@business/model/request";
-import {DB_CONSTANT} from "@core/common";
+import {ProductFilterRequest, UpdateProductRequest} from "../model/request";
+import {DB_CONSTANT, Logger} from "../../core/common";
 
 const prisma = new PrismaClient();
 
@@ -68,7 +68,7 @@ export class ProductRepo {
         return products;
     }
     static async getProductsBy(req: ProductFilterRequest): Promise<ProductEntity[]> {
-        Logger.log(() => [`ProductRepo getProductsBy "${name}" "${brandId}" "${groupId}" "${status}" "${offset}"`]);
+        Logger.log(() => [`ProductRepo getProductsBy `, req]);
         const products: any[] = await prisma.phproduct.findMany({
             where:  {
                 status: req.status !== null ? req.status : undefined,
@@ -82,7 +82,7 @@ export class ProductRepo {
             skip: req.offset * DB_CONSTANT.PAGING,
             take: DB_CONSTANT.PAGING
         });
-        Logger.log(() => [`ProductRepo getProductsBy "${name}" "${brandId}" "${groupId}" "${status}" "${offset}" RESULT `, products]);
+        Logger.log(() => [`ProductRepo getProductsBy  RESULT `,req, products]);
 
         return products as ProductEntity[];
     }

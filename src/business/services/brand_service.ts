@@ -1,7 +1,7 @@
 import {Brand} from "./model";
 import {BrandEntity} from "../repositories/model";
 import {BrandRepo} from "../repositories";
-import {Dto} from "@core/common";
+import {Dto} from "../../core/common";
 
 export class BrandService {
 

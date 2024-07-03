@@ -1,7 +1,7 @@
 import {AuthService, SettingService, TokenService, Setting, User} from "../../services";
-import {Dto, Logger} from "@core/common";
-import {LoginRequest} from "@business/model/request";
-import {LoginResult} from "@business/model/result";
+import {Dto, Logger} from "../../../core/common";
+import {LoginRequest} from "../../model/request";
+import {LoginResult} from "../../model/result";
 
 export class LoginWithPhoneNumberAndPasswordFacade {
     static async login(req: LoginRequest): Promise<Dto<LoginResult | null>> {

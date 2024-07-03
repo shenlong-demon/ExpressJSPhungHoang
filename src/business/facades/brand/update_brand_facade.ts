@@ -1,5 +1,5 @@
-import {Dto} from "@core/common";
-import {Brand, BrandService} from "@business/services";
+import {Dto} from "../../../core/common";
+import {Brand, BrandService} from "../../services";
 
 export class UpdateBrandFacade {
     static async update(id: number, name: string, status: number): Promise<Dto<Brand | null>> {

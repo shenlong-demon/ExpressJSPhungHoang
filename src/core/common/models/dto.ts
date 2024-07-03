@@ -1,4 +1,4 @@
-import {CONSTANT, RESULT_CODE} from "@core/common";
+import {CONSTANT, RESULT_CODE} from "../index";
 
 export class Dto<T> {
     public code: number = RESULT_CODE.SUCCESS;
@@ -18,11 +18,11 @@ export class Dto<T> {
         return new Dto<null>(this.code, this.message);
     }
 
-    public static success<T>(data: T | null | undefined): Dto<T | null | undefined>{
-        return new Dto<T | null | undefined>(0, data, CONSTANT.STR_EMPTY)
+    public static success<T>(data: T | null | undefined): Dto<T>{
+        return new Dto<T>(0, CONSTANT.STR_EMPTY, data,)
     }
-    public static error<T>(code: number, message?: string): Dto<T | null | undefined>{
-        return new Dto<T | null | undefined>(RESULT_CODE.ERROR | code, null, message)
+    public static error(code: number, message?: string): Dto<null>{
+        return new Dto<null>(RESULT_CODE.ERROR | code,  message, null)
     }
 
 }

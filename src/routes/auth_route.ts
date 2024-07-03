@@ -1,6 +1,6 @@
 import express from "express";
-import {LoginWithPhoneNumberAndPasswordFacade} from "@business/facades";
-import {LoginRequest} from "@business/model/request";
+import {LoginRequest} from "../business/model/request";
+import {LoginWithPhoneNumberAndPasswordFacade} from "../business/facades";
 const router = express.Router();
 
 /* GET quotes listing. */

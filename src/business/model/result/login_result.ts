@@ -1,4 +1,4 @@
-import {Setting, User} from "@business/services";
+import {Setting, User} from "../../services";
 
 export type LoginResult = {
     user: User;

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "npx nodemon app.ts",
+    "start": "npx nodemon src/app.ts",
     "local": "ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 3000",
     "migrate": "node-pg-migrate",
     "migrate_up": "npm run migrate up",
@@ -39,6 +39,7 @@
     "concurrently": "8.0.1",
     "nodemon": "2.0.22",
     "ts-node": "10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "5.0.4"
   }
 }

@@ -1,9 +1,9 @@
 import {UserRepo} from "../repositories";
 import {UserEntity} from "../repositories/model";
 import {User} from "./model";
-import {ERROR_CODE, STATUS} from "@business/common";
-import {Dto, Logger} from "@core/common";
-import {LoginRequest} from "@business/model/request";
+import {ERROR_CODE, STATUS} from "../common";
+import {Dto, Logger} from "../../core/common";
+import {LoginRequest} from "../model/request";
 
 export class AuthService {
     static async login(req: LoginRequest): Promise<Dto<User | null>> {

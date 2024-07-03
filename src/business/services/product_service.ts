@@ -1,8 +1,8 @@
 import {Product} from "./model/product";
 import {ProductRepo} from "../repositories";
 import {ProductEntity} from "../repositories/model";
-import {Dto} from "@core/common";
-import {CreateProductRequest, ProductFilterRequest, UpdateProductRequest} from "@business/model/request";
+import {Dto} from "../../core/common";
+import {CreateProductRequest, ProductFilterRequest, UpdateProductRequest} from "../model/request";
 
 export class ProductService {
     static async createNewProduct(product: CreateProductRequest) : Promise<Dto<Product | null>>{

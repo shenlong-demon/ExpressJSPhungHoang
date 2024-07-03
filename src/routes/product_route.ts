@@ -1,5 +1,11 @@
 import express from "express";
-import {GetProductsByStatusFacade} from "@business/facades/product/get_products_by_status_facade";
+import {
+    CreateProductFacade,
+    GetProductsByFacade,
+    GetProductsByStatusFacade,
+    UpdateProductFacade
+} from "../business/facades";
+import {UpdateProductRequest, CreateProductRequest, ProductFilterRequest} from "../business/model";
 
 
 const router = express.Router();
@@ -31,7 +37,7 @@ router.post('/create', async function(req, res, next) {
 });
 router.put('/update/:id', async function(req, res, next) {
     try {
-        res.json(await UpdateProductFacade.update(req.params.id, req.body as UpdateProductRequest));
+        res.json(await UpdateProductFacade.update(parseInt(req.params.id) , req.body as UpdateProductRequest));
     } catch (err) {
         res.status(500).json(err);
     }

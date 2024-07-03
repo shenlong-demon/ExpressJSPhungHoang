@@ -1,4 +1,4 @@
-import {Logger} from "../common";
+import {Logger} from "../../core/common";
 
 const { Pool } = require('pg');
 const config = require('../config');

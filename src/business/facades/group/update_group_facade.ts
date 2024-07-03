@@ -1,5 +1,5 @@
-import {Group, GroupService} from "@business/services";
-import {Dto} from "@core/common";
+import {Group, GroupService} from "../../services";
+import {Dto} from "../../../core/common";
 
 export class UpdateGroupFacade {
     static async update(id: number, name: string, status: number): Promise<Dto<Group | null>> {

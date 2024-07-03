@@ -1,10 +1,9 @@
-import {Fto} from "../Fto";
-import {Product} from "../../services/model/product";
-import {Dto, ProductService} from "../../services";
+import {Product, ProductService} from "../../services";
+import {Dto} from "../../../core/common";
 
 export class GetProductsByStatusFacade {
-    static async get(status: number, offset: number): Promise<Fto<Product[]>> {
+    static async get(status: number, offset: number): Promise<Dto<Product[]>> {
         const dto: Dto<Product[]> = await ProductService.getProducts(status, offset);
-        return Fto.from(dto);
+        return dto;
     }
 }
