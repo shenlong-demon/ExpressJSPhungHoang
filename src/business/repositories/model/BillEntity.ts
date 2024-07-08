@@ -1,6 +1,7 @@
 import {BaseEntity} from "@business/repositories/model/base_entity";
 import {CustomerEntity} from "@business/repositories/model/customer_entity";
-import {BillItemEntity} from "@business/repositories/model/bill_item_entity";
+import {OrderEntity} from "@business/repositories/model/OrderEntity";
+import {EmployeeEntity} from "@business/repositories/model/employee_entity";
 
 export type BillEntity = BaseEntity & {
     name?: string;
@@ -8,5 +9,7 @@ export type BillEntity = BaseEntity & {
     note?: string;
     customer?: CustomerEntity;
     customerId?: number;
-    items: BillItemEntity[]
+    employee?: EmployeeEntity;
+    employeeId?: number;
+    orders: OrderEntity[]
 };

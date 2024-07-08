@@ -1,3 +1,3 @@
 export const DB_CONSTANT = {
-    PAGING: 10
+    PAGING: 30
 };

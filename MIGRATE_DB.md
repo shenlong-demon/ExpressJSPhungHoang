@@ -12,7 +12,7 @@ rm -rf ./prisma/migrations
 ```
 ## Drop all table
 ```shell
-DROP TABLE phproduct, phgroup, phbrand, phuser, _prisma_migrations;
+DROP TABLE phorder,phbill ,phbooking, phoperation, phproduct, phcustomer, phgroup, phbrand, phuser, _prisma_migrations;
 ```
 ## Create migration file
 ```shell

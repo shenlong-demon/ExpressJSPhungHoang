@@ -1,7 +1,7 @@
 import {BaseEntity} from "./base_entity";
 
-export type CustomerEntity = BaseEntity & {
+export type EmployeeEntity = BaseEntity & {
     name: string;
-    nickName: string;
     phone: string;
+    status: number;
 };
