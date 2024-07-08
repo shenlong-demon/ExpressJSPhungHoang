@@ -1,4 +1,4 @@
-import {BrandEntity, OperationEntity} from "./model";
+import {OperationEntity} from "./model";
 import {PrismaClient} from '@prisma/client'
 import {CONSTANT, DB_CONSTANT, Logger} from "@core/common";
 
@@ -15,7 +15,7 @@ export class OperationRepo {
     }
 
     static async getOperations(offset: number) {
-        Logger.log(() => [`ProductRepo getProducts ${status} ${offset}`]);
+        Logger.log(() => [`OperationRepo getOperations ${offset}`]);
         const products: any[] = await prisma.phoperation.findMany({
             orderBy: [
                 {
@@ -26,5 +26,19 @@ export class OperationRepo {
             take: DB_CONSTANT.PAGING
         });
         return products;
+    }
+    static async getOperation(id: number) {
+        Logger.log(() => [`OperationRepo getOperation ${id}`]);
+        const operation: OperationEntity | null = await prisma.phoperation.findFirst({
+            where: {
+                id
+            },
+            include: {
+                employee: true,
+                customer: true,
+                bookings: true
+            }
+        })
+        return operation;
     }
 }

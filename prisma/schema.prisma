@@ -86,6 +86,7 @@ model phoperation {
     employeeId    Int?
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
+    estimation    DateTime?
     appKey        String?         @default(uuid())
     bookings      phbooking[]
 }
@@ -116,6 +117,7 @@ model phbill {
     employeeId    Int?
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
+    estimation    DateTime?
     appKey        String
     total         Float
     orders        phorder[]

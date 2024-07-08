@@ -11,5 +11,6 @@ export type OperationEntity = BaseEntity & {
     customer?: CustomerEntity | null;
     employee?: EmployeeEntity | null;
     employeeId?: number | null;
-    bookings?: BookingEntity[]
+    bookings?: BookingEntity[] | null;
+    estimation: Date | null;
 };
