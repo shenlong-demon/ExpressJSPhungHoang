@@ -1,5 +1,5 @@
 import {BaseEntity} from "@business/repositories/model/base_entity";
-import {ProductEntity} from "@business/repositories/model/product_entity";
+import {ProductEntity} from "@business/repositories/model/ProductEntity";
 import {BillEntity} from "@business/repositories/model/BillEntity";
 
 export type OrderEntity = BaseEntity & {

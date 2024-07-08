@@ -4,6 +4,7 @@ import {BrandEntity} from "./brand_entity";
 
 export type ProductEntity = BaseEntity &  {
     name: string;
+    code: string | null;
     otherName: string | null;
     groupId: number;
     group: GroupEntity;
