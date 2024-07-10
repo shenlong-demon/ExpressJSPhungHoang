@@ -4,6 +4,7 @@ const productRoute = require('./routes/product_route');
 const brandRoute = require('./routes/brand_route');
 const groupRoute = require('./routes/group_route');
 const operationRoute = require('./routes/operation_route');
+const customerRoute = require('./routes/CustomerRoute');
 const app:Express = express()
 const port = 3000
 
@@ -23,6 +24,7 @@ app.use('/product', productRoute);
 app.use('/brand', brandRoute);
 app.use('/group', groupRoute);
 app.use('/operation', operationRoute);
+app.use('/customer', customerRoute);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

@@ -4,3 +4,4 @@ export * from './group';
 export * from './brand';
 export * from './product';
 export * from './Operation';
+export * from './Customer';
