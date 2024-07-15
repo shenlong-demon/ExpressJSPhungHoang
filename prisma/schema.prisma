@@ -50,6 +50,7 @@ model phproduct {
   otherName         String?         @db.VarChar(255)
   image             String?         @db.VarChar(500)
   price             Float
+  costPrice         Float
   quantity          Int
   status            Int             @default(1)
   brand             phbrand          @relation(fields: [brandId], references: [id])
@@ -91,6 +92,7 @@ model phoperation {
     estimation    DateTime?
     appKey        String?         @default(uuid())
     bookings      phbooking[]
+    profit        Float
 }
 
 
@@ -106,6 +108,7 @@ model phbooking {
     appKey        String?         @default(uuid())
     operation     phoperation     @relation(fields: [operationId], references: [id])
     operationId   Int
+    profit        Float
 }
 
 model phbill {
@@ -123,6 +126,7 @@ model phbill {
     appKey        String
     total         Float
     orders        phorder[]
+    profit        Float
 }
 
 
@@ -138,6 +142,7 @@ model phorder {
     appKey        String?         @default(uuid())
     bill          phbill          @relation(fields: [billId], references: [id])
     billId        Int
+    profit        Float
 }
 
 model phemployee {

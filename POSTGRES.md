@@ -26,7 +26,7 @@ password: 123456
 ```
 ### SELECT
 ```shell
-select * from users ;
+select * from phuser;
 ```
 
 ## Drop all Tables

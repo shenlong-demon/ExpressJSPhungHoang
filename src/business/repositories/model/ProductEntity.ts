@@ -12,5 +12,6 @@ export type ProductEntity = BaseEntity &  {
     brand: BrandEntity;
     image: string | null;
     price: number;
+    costPrice: number;
     status: number;
 };

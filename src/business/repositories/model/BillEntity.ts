@@ -11,5 +11,6 @@ export type BillEntity = BaseEntity & {
     customerId?: number;
     employee?: EmployeeEntity;
     employeeId?: number;
-    orders: OrderEntity[]
+    orders: OrderEntity[];
+    profit: number;
 };
