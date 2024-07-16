@@ -45,6 +45,7 @@ CREATE TABLE "phproduct" (
     "otherName" VARCHAR(255),
     "image" VARCHAR(500),
     "price" DOUBLE PRECISION NOT NULL,
+    "basePrice" DOUBLE PRECISION NOT NULL,
     "quantity" INTEGER NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
     "brandId" INTEGER NOT NULL,
@@ -62,6 +63,8 @@ CREATE TABLE "phcustomer" (
     "name" VARCHAR(255) NOT NULL,
     "nickName" VARCHAR(255) NOT NULL,
     "phone" VARCHAR(50) NOT NULL,
+    "image" VARCHAR(500),
+    "status" INTEGER NOT NULL DEFAULT 1,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "appKey" TEXT,
@@ -79,7 +82,9 @@ CREATE TABLE "phoperation" (
     "employeeId" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "estimation" TIMESTAMP(3),
     "appKey" TEXT,
+    "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phoperation_pkey" PRIMARY KEY ("id")
 );
@@ -95,6 +100,7 @@ CREATE TABLE "phbooking" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "appKey" TEXT,
     "operationId" INTEGER NOT NULL,
+    "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phbooking_pkey" PRIMARY KEY ("id")
 );
@@ -109,8 +115,10 @@ CREATE TABLE "phbill" (
     "employeeId" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "estimation" TIMESTAMP(3),
     "appKey" TEXT NOT NULL,
     "total" DOUBLE PRECISION NOT NULL,
+    "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phbill_pkey" PRIMARY KEY ("id")
 );
@@ -126,6 +134,7 @@ CREATE TABLE "phorder" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "appKey" TEXT,
     "billId" INTEGER NOT NULL,
+    "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phorder_pkey" PRIMARY KEY ("id")
 );
@@ -160,9 +169,6 @@ CREATE UNIQUE INDEX "phproduct_id_key" ON "phproduct"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "phcustomer_id_key" ON "phcustomer"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "phcustomer_phone_key" ON "phcustomer"("phone");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "phoperation_id_key" ON "phoperation"("id");

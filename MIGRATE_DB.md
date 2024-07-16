@@ -12,7 +12,7 @@ rm -rf ./prisma/migrations
 ```
 ## Drop all table
 ```shell
-DROP TABLE phorder,phbill ,phbooking, phoperation, phproduct, phcustomer, phgroup, phbrand, phuser, _prisma_migrations;
+psql -U postgres -d phunghoangdb -c "DROP TABLE phorder,phbill ,phbooking, phoperation, phproduct, phcustomer, phgroup, phbrand, phuser, phemployee, _prisma_migrations;"
 ```
 ## Create migration file
 ```shell

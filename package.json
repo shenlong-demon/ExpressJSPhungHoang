@@ -9,7 +9,7 @@
     "local": "ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 3000",
     "migrate": "node-pg-migrate",
     "migrate_up": "npm run migrate up",
-    "migrate_init": "rm -rf ./prisma/migrations && npx prisma migrate dev --name init",
+    "migrate_init": "sh ./migrate_init.sh",
     "migrate_seed": "npx prisma db seed",
     "production": "sh ./deploy.sh"
   },
