@@ -4,6 +4,7 @@ export type CreateProductRequestSdo = {
     otherName?: string;
     image?: string;
     price: number;
+    basePrice: number;
     quantity: number;
     brandId: number;
     groupId: number;

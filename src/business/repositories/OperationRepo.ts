@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export class OperationRepo {
 
     static async create(name?: string): Promise<OperationEntity | null> {
-        const operation: OperationEntity  = await prisma.phoperation.create({
+        const operation: OperationEntity = await prisma.phoperation.create({
             data: {
                 name: name || CONSTANT.STR_EMPTY
             }
@@ -27,18 +27,28 @@ export class OperationRepo {
         });
         return products;
     }
-    static async getOperation(id: number) {
+
+    static async getOperation(id: number): Promise<OperationEntity | null> {
         Logger.log(() => [`OperationRepo getOperation ${id}`]);
-        const operation: OperationEntity | null = await prisma.phoperation.findFirst({
+        const op: OperationEntity | null = await prisma.phoperation.findFirst({
             where: {
                 id
             },
             include: {
                 employee: true,
                 customer: true,
-                bookings: true
-            }
+                bookings: {
+                    include: {
+                        product: {
+                            include: {
+                                brand: false,
+                                group: false
+                            }
+                        }
+                    }
+                }
+            },
         })
-        return operation;
+        return op;
     }
 }

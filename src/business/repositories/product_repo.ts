@@ -18,6 +18,7 @@ export class ProductRepo {
                 groupId: req.groupId,
                 brandId: req.brandId,
                 price: req.price,
+                basePrice: req.basePrice,
                 quantity: req.quantity,
                 image: req.image
             },
@@ -40,6 +41,7 @@ export class ProductRepo {
                 groupId: req.groupId,
                 brandId: req.brandId,
                 price: req.price,
+                basePrice: req.basePrice,
                 image: req.image
             },
             include: {

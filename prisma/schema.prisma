@@ -87,13 +87,14 @@ model phoperation {
     customerId    Int?
     employee      phemployee?     @relation(fields: [employeeId], references: [id])
     employeeId    Int?
+    estimation    DateTime?
+    bookings      phbooking[]
+    profit        Float           @default(0.0)
+    appKey        String?         @default(uuid())
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
-    estimation    DateTime?
-    appKey        String?         @default(uuid())
-    bookings      phbooking[]
-    profit        Float
 }
+
 
 
 model phbooking {
@@ -102,6 +103,7 @@ model phbooking {
     productId     Int?
     price         Float
     quantity      Int
+    name          String?
     note          String?
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt

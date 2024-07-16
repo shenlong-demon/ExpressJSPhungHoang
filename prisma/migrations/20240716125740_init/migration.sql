@@ -80,11 +80,11 @@ CREATE TABLE "phoperation" (
     "note" TEXT,
     "customerId" INTEGER,
     "employeeId" INTEGER,
+    "estimation" TIMESTAMP(3),
+    "profit" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
+    "appKey" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "estimation" TIMESTAMP(3),
-    "appKey" TEXT,
-    "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phoperation_pkey" PRIMARY KEY ("id")
 );
@@ -95,6 +95,7 @@ CREATE TABLE "phbooking" (
     "productId" INTEGER,
     "price" DOUBLE PRECISION NOT NULL,
     "quantity" INTEGER NOT NULL,
+    "name" TEXT,
     "note" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

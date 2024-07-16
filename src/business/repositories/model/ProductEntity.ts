@@ -3,15 +3,16 @@ import {GroupEntity} from "./group_entity";
 import {BrandEntity} from "./brand_entity";
 
 export type ProductEntity = BaseEntity &  {
+    code?: string | null;
     name: string;
-    code: string | null;
-    otherName: string | null;
-    groupId: number;
-    group: GroupEntity;
-    brandId: number;
-    brand: BrandEntity;
-    image: string | null;
+    otherName?: string | null;
+    image?: string | null;
     price: number;
     basePrice: number;
+    quantity: number;
     status: number;
+    brandId: number;
+    brand?: BrandEntity | null;
+    groupId: number;
+    group?: GroupEntity | null;
 };
