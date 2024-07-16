@@ -89,4 +89,19 @@ export class ProductRepo {
         return products as ProductEntity[];
     }
 
+    static async getProductById(productId: number) : Promise<ProductEntity | null>{
+        Logger.log(() => [`ProductRepo getProductById ${productId}`]);
+        const product: ProductEntity | null = await prisma.phproduct.findFirst({
+            where:  {
+                id: productId
+            },
+            include: {
+                brand: true,
+                group: true
+            }
+        });
+        Logger.log(() => [`ProductRepo getProductById  ${productId} RESULT `,product]);
+
+        return product;
+    }
 }

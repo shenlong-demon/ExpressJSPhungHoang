@@ -1,8 +1,9 @@
 import {Dto} from "@core/common";
-import {OperationRepo} from "@business/repositories";
-import {Operation} from "@business/services/model";
-import {OperationEntity} from "@business/repositories/model";
+import {BookingRepo, OperationRepo} from "@business/repositories";
+import {Operation, Product} from "@business/services/model";
+import {BookingEntity, OperationEntity} from "@business/repositories/model";
 import {ERROR_CODE} from "@business/common";
+import {BookingRequestSdo} from "@business/repositories/request";
 
 export class OperationService {
     static async createOperation(name?: string) : Promise<Dto<Operation | null>>{
@@ -20,5 +21,16 @@ export class OperationService {
             return Dto.success(operation);
         }
         return Dto.error(ERROR_CODE.USER_NOT_EXIST);
+    }
+
+    static async booking(operationId: number, product: Product) : Promise<Dto<Operation | null>> {
+        const booking: BookingEntity = await BookingRepo.booking(operationId, {
+            productId: product.id,
+            productName: product.name,
+            price: product.price,
+            basePrice: product.basePrice,
+            quantity: 1
+        } as BookingRequestSdo) ;
+        return Dto.success(booking.operation);
     }
 }

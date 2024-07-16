@@ -21,4 +21,8 @@ export class ProductService {
         const newProduct : ProductEntity[] = await ProductRepo.getProductsBy(req);
         return Dto.success(newProduct);
     }
+    static async getProductById(productId: number) : Promise<Dto<Product | null>>{
+        const product :  ProductEntity | null = await ProductRepo.getProductById(productId);
+        return Dto.success(product);
+    }
 }

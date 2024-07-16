@@ -5,3 +5,4 @@ export * from './update_product_request';
 export * from './CreateCustomerRequest';
 export * from './FilterCustomerRequest';
 export * from './UpdateCustomerRequest';
+export * from './BookingRequest';

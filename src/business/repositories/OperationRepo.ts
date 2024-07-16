@@ -49,6 +49,10 @@ export class OperationRepo {
                 }
             },
         })
+        Logger.log(() => [`OperationRepo getOperation ${id} RESULT`, op]);
+
         return op;
     }
+
+
 }

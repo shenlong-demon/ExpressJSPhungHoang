@@ -9,6 +9,7 @@ const groupRoute = require('./routes/group_route');
 const operationRoute = require('./routes/operation_route');
 const customerRoute = require('./routes/CustomerRoute');
 const dataRoute = require('./routes/DataRoute');
+const bookingRoute = require('./routes/BookingRoute');
 const app:Express = express()
 const port = 3000
 
@@ -30,6 +31,7 @@ app.use('/group', groupRoute);
 app.use('/operation', operationRoute);
 app.use('/customer', customerRoute);
 app.use('/data', dataRoute);
+app.use('/booking', bookingRoute);
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 app.use((req, res, next) => {
     const start = Date.now();
