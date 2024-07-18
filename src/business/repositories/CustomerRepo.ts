@@ -32,11 +32,12 @@ export class CustomerRepo {
         });
         return obj;
     }
+
     static async updateCustomer(id: number, req: UpdateCustomerRequest): Promise<CustomerEntity | null> {
         const obj: any | null = await prisma.phcustomer.update({
             where: {
                 id
-            },data: {
+            }, data: {
                 name: req.name,
                 nickName: req.nickName,
                 phone: req.phone,
@@ -47,4 +48,39 @@ export class CustomerRepo {
         return obj;
     }
 
+    static async searchCustomers(req: FilterCustomerRequest): Promise<CustomerEntity[]> {
+        const obj: CustomerEntity[] = await prisma.phcustomer.findMany({
+            where: {
+                AND: [
+                    {
+                        status: req.status !== null ? req.status : undefined,
+                    },
+                    {
+                        OR: [
+                            {
+                                name: {
+                                    contains: req.searchText,
+                                    mode: 'insensitive'
+                                }
+                            },
+                            {
+                                nickName: {
+                                    contains: req.searchText,
+                                    mode: 'insensitive'
+                                }
+                            },
+                            {
+                                phone: {
+                                    contains: req.searchText
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            skip: req.offset * DB_CONSTANT.PAGING,
+            take: DB_CONSTANT.PAGING
+        });
+        return obj;
+    }
 }

@@ -1,4 +1,4 @@
-import {BookingRequest} from "@business/model";
+import {AssignCustomerRequest, BookingRequest} from "@business/model";
 import {Operation, OperationService, Product, ProductService} from "@business/services";
 import {Dto} from "@core/common";
 
@@ -16,4 +16,13 @@ export class OperationFacade {
 
     }
 
+    static async assignCustomer(operationId: number, req: AssignCustomerRequest): Promise<Dto<Operation | null>> {
+        const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+        if (dto.next()) {
+            const op: Operation = dto.data as Operation;
+            const assignDto: Dto<Operation | null> = await OperationService.assignCustomer(operationId, req);
+            return assignDto;
+        }
+        return dto.bypass();
+    }
 }

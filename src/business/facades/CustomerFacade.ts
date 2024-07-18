@@ -1,4 +1,4 @@
-import {CreateCustomerRequest, UpdateCustomerRequest} from "@business/model";
+import {CreateCustomerRequest, FilterCustomerRequest, UpdateCustomerRequest} from "@business/model";
 import {CustomerService} from "@business/services/CustomerService";
 import {Customer} from "@business/services";
 import {Dto} from "@core/common";
@@ -11,5 +11,9 @@ export class CustomerFacade {
     static async updateCustomer(id: number, req: UpdateCustomerRequest): Promise<Dto<Customer | null>> {
         const dto: Dto<any | null> = await CustomerService.updateCustomer(id, req);
         return dto;
+    }
+
+    static async searchCustomers(req: FilterCustomerRequest) : Promise<Dto<Customer[]>> {
+        return CustomerService.searchCustomers(req);
     }
 }

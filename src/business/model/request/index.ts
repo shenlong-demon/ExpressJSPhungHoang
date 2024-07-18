@@ -6,3 +6,4 @@ export * from './CreateCustomerRequest';
 export * from './FilterCustomerRequest';
 export * from './UpdateCustomerRequest';
 export * from './BookingRequest';
+export * from './AssignCustomerRequest';

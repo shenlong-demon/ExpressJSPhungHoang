@@ -1,6 +1,7 @@
 import {OperationEntity} from "./model";
 import {PrismaClient} from '@prisma/client'
 import {CONSTANT, DB_CONSTANT, Logger} from "@core/common";
+import {AssignCustomerRequest} from "@business/model";
 
 const prisma = new PrismaClient();
 export class OperationRepo {
@@ -55,4 +56,22 @@ export class OperationRepo {
     }
 
 
+    static async assignCustomer(operationId: number, req: AssignCustomerRequest): Promise<OperationEntity | null> {
+        Logger.log(() => [`OperationRepo assignCustomer ${operationId}`, req]);
+        const op: OperationEntity | null = await prisma.phoperation.update({
+            where: {
+                id: operationId
+            },
+            data: {
+                customerId: req.customerId
+            },
+            include: {
+                customer: true
+            }
+
+        })
+        Logger.log(() => [`OperationRepo assignCustomer ${operationId} RESULT`, op]);
+
+        return op;
+    }
 }

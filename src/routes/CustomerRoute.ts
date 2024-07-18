@@ -1,6 +1,6 @@
 import express from "express";
 import {CustomerFacade} from "@business/facades";
-import {CreateCustomerRequest, UpdateCustomerRequest} from "@business//model";
+import {CreateCustomerRequest, FilterCustomerRequest, UpdateCustomerRequest} from "@business//model";
 
 
 const router = express.Router();
@@ -17,6 +17,13 @@ router.post('/create', async function(req, res, next) {
 router.put('/update/:id', async function(req, res, next) {
     try {
         res.json(await CustomerFacade.updateCustomer(Number(req.params.id) , req.body as UpdateCustomerRequest));
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+router.post('/filter', async function(req, res, next) {
+    try {
+        res.json(await CustomerFacade.searchCustomers(req.body as FilterCustomerRequest));
     } catch (err) {
         res.status(500).json(err);
     }

@@ -17,6 +17,22 @@ async function main() {
         })
     }
 
+    const customerData = [{id: 1, name: "Long", phone: "0905690200", nickName: "Nông dân"},
+        {id: 2, name: "Nhân", phone: "0905690200", nickName: "Leo cây"},
+        {id: 3, name: "Hiệp", phone: "0905690200", nickName: "Con nghiện"},
+        {id: 4, name: "Huy Lê", phone: "0905690200", nickName: "Báo thủ"}];
+    for (let data of customerData) {
+        const customer = await prisma.phcustomer.upsert({
+            where: { id: data.id},
+            update: {},
+            create: {
+                name: data.name,
+                phone: data.phone,
+                nickName: data.nickName
+            },
+        })
+    }
+
 
     const brandData = [{id: 1, name: "yamaha"},{id: 2, name: "honda"},{id: 3, name: "suzuki"},{id: 4, name: "khác"}];
     for (let data of brandData) {

@@ -1,6 +1,8 @@
 import express from "express";
 import {CreateOperationFacade, GetOperationDetailFacade, GetOperationsFacade} from "@business/facades/operation";
 import {Logger} from "@core/common";
+import {OperationFacade} from "@business/facades";
+import {AssignCustomerRequest, ProductFilterRequest} from "@business/model";
 
 const authMiddleware = require('../business/middleware/auth_middleware');
 
@@ -29,6 +31,13 @@ router.get('/detail/:id',authMiddleware, async function(req, res, next) {
         res.json(await GetOperationDetailFacade.getOperation(Number(req.params.id)));
     } catch (err) {
         Logger.log(() => [`operation create `, req.body, err]);
+        res.status(500).json(err);
+    }
+});
+router.put('/assign-customer/:id',authMiddleware, async function(req, res, next) {
+    try {
+        res.json(await OperationFacade.assignCustomer(Number(req.params.id), req.body as AssignCustomerRequest));
+    } catch (err) {
         res.status(500).json(err);
     }
 });

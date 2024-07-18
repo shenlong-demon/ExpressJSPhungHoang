@@ -19,4 +19,9 @@ export class CustomerService {
         const obj : CustomerEntity | null = await CustomerRepo.updateCustomer(id, req);
         return Dto.success(obj);
     }
+
+    static async searchCustomers(req: FilterCustomerRequest) : Promise<Dto<Customer[]>> {
+        const obj : CustomerEntity[] = await CustomerRepo.searchCustomers(req);
+        return Dto.success(obj);
+    }
 }

@@ -4,6 +4,7 @@ import {Operation, Product} from "@business/services/model";
 import {BookingEntity, OperationEntity} from "@business/repositories/model";
 import {ERROR_CODE} from "@business/common";
 import {BookingRequestSdo} from "@business/repositories/request";
+import {AssignCustomerRequest} from "@business/model";
 
 export class OperationService {
     static async createOperation(name?: string) : Promise<Dto<Operation | null>>{
@@ -20,7 +21,7 @@ export class OperationService {
         if(!!operation){
             return Dto.success(operation);
         }
-        return Dto.error(ERROR_CODE.USER_NOT_EXIST);
+        return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
     }
 
     static async booking(operationId: number, product: Product) : Promise<Dto<Operation | null>> {
@@ -32,5 +33,13 @@ export class OperationService {
             quantity: 1
         } as BookingRequestSdo) ;
         return Dto.success(booking.operation);
+    }
+
+    static async assignCustomer(operationId: number, req: AssignCustomerRequest)  : Promise<Dto<Operation | null>> {
+        const operation: OperationEntity | null = await OperationRepo.assignCustomer(operationId, req);
+        if(!!operation){
+            return Dto.success(operation);
+        }
+        return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
     }
 }
