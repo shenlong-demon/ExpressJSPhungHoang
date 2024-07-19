@@ -1,7 +1,7 @@
-import {Dto} from "@core/common";
-import {BookingRepo, OperationRepo} from "@business/repositories";
+import {Dto, Logger} from "@core/common";
+import {BillRepo, BookingRepo, OperationRepo} from "@business/repositories";
 import {Operation, Product} from "@business/services/model";
-import {BookingEntity, OperationEntity} from "@business/repositories/model";
+import {BillEntity, BookingEntity, OperationEntity, OrderEntity, ProductEntity} from "@business/repositories/model";
 import {ERROR_CODE} from "@business/common";
 import {BookingRequestSdo} from "@business/repositories/request";
 import {AssignCustomerRequest} from "@business/model";
@@ -41,5 +41,74 @@ export class OperationService {
             return Dto.success(operation);
         }
         return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
+    }
+
+    static async prepareReceipt(operationId: number) : Promise<Dto<Operation | null>> {
+        const operation: OperationEntity | null = await OperationRepo.getOperation(operationId);
+        if(!!operation){
+            const bill: BillEntity = {
+                id: operation.id,
+                operationId: operation.id,
+                appKey: operation.appKey,
+                createdAt: operation.createdAt,
+                updatedAt: operation.updatedAt,
+                name: operation.name,
+                phone: operation.phone,
+                note: operation.note,
+                customerId: operation.customerId,
+                employeeId: operation.employeeId,
+                orders: [],
+                estimation: operation.estimation,
+                profit: 0,
+                total: 0,
+                customer: operation.customer,
+                employee: operation.employee
+            };
+            let operationProfit: number = 0;
+            let operationTotal: number = 0;
+            const bookings: BookingEntity[] = operation.bookings || [];
+
+            for (const booking of bookings) {
+                let bookingProfit: number = 0;
+                let basePrice: number = 0;
+                const product: ProductEntity | null | undefined = booking.product;
+
+                if (!!product) {
+                    basePrice = product.basePrice;
+                    bookingProfit = (booking.price - product.basePrice) * booking.quantity;
+                } else {
+                    basePrice = 0;
+                    bookingProfit = booking.price * booking.quantity;
+                }
+                const bookingTotal: number = booking.price * booking.quantity;
+                operationProfit += bookingProfit;
+                operationTotal += bookingTotal
+
+                const order: OrderEntity = {
+                    id: booking.id,
+                    bookingId: booking.id,
+                    appKey: booking.appKey,
+                    createdAt: booking.createdAt,
+                    updatedAt: booking.updatedAt,
+                    name: booking.name,
+                    note: booking.note,
+                    price: booking.price,
+                    basePrice: basePrice,
+                    quantity: booking.quantity,
+                    profit: bookingProfit,
+                    total:bookingTotal,
+                    productId: booking.productId,
+                    product: booking.product,
+                    billId: bill.id
+                };
+                bill.orders.push(order);
+            }
+            bill.profit = operationProfit;
+            bill.total = operationTotal;
+            Logger.log(() => [`OperationService prepareReceipt operation`, operation, bill]);
+            // const finalOperation : OperationEntity | null = await OperationRepo.updateFinalOperation(operation);
+            const billEntity : BillEntity | null = await BillRepo.create(bill);
+        }
+        return Dto.success(operation);
     }
 }

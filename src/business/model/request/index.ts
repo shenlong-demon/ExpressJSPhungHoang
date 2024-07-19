@@ -7,3 +7,4 @@ export * from './FilterCustomerRequest';
 export * from './UpdateCustomerRequest';
 export * from './BookingRequest';
 export * from './AssignCustomerRequest';
+export * from './ReceiptRequest';

@@ -81,7 +81,6 @@ CREATE TABLE "phoperation" (
     "customerId" INTEGER,
     "employeeId" INTEGER,
     "estimation" TIMESTAMP(3),
-    "profit" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
     "appKey" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -101,7 +100,6 @@ CREATE TABLE "phbooking" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "appKey" TEXT,
     "operationId" INTEGER NOT NULL,
-    "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phbooking_pkey" PRIMARY KEY ("id")
 );
@@ -109,6 +107,7 @@ CREATE TABLE "phbooking" (
 -- CreateTable
 CREATE TABLE "phbill" (
     "id" SERIAL NOT NULL,
+    "operationId" INTEGER NOT NULL,
     "name" TEXT,
     "phone" TEXT,
     "note" TEXT,
@@ -117,7 +116,7 @@ CREATE TABLE "phbill" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "estimation" TIMESTAMP(3),
-    "appKey" TEXT NOT NULL,
+    "appKey" TEXT,
     "total" DOUBLE PRECISION NOT NULL,
     "profit" DOUBLE PRECISION NOT NULL,
 
@@ -127,14 +126,18 @@ CREATE TABLE "phbill" (
 -- CreateTable
 CREATE TABLE "phorder" (
     "id" SERIAL NOT NULL,
+    "bookingId" INTEGER NOT NULL,
     "productId" INTEGER,
     "price" DOUBLE PRECISION NOT NULL,
+    "basePrice" DOUBLE PRECISION NOT NULL,
     "quantity" INTEGER NOT NULL,
+    "name" TEXT,
     "note" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "appKey" TEXT,
     "billId" INTEGER NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
     "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phorder_pkey" PRIMARY KEY ("id")

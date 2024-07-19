@@ -7,17 +7,17 @@ const prisma = new PrismaClient();
 export class OperationRepo {
 
     static async create(name?: string): Promise<OperationEntity | null> {
-        const operation: OperationEntity = await prisma.phoperation.create({
+        const operation = await prisma.phoperation.create({
             data: {
                 name: name || CONSTANT.STR_EMPTY
             }
         });
-        return operation;
+        return operation as OperationEntity;
     }
 
-    static async getOperations(offset: number) {
+    static async getOperations(offset: number) : Promise<OperationEntity[]>{
         Logger.log(() => [`OperationRepo getOperations ${offset}`]);
-        const products: any[] = await prisma.phoperation.findMany({
+        const operation = await prisma.phoperation.findMany({
             orderBy: [
                 {
                     updatedAt: 'desc',
@@ -26,12 +26,12 @@ export class OperationRepo {
             skip: offset * DB_CONSTANT.PAGING,
             take: DB_CONSTANT.PAGING
         });
-        return products;
+        return operation as OperationEntity[];
     }
 
     static async getOperation(id: number): Promise<OperationEntity | null> {
         Logger.log(() => [`OperationRepo getOperation ${id}`]);
-        const op: OperationEntity | null = await prisma.phoperation.findFirst({
+        const op = await prisma.phoperation.findFirst({
             where: {
                 id
             },
@@ -49,16 +49,16 @@ export class OperationRepo {
                     }
                 }
             },
-        })
+        });
         Logger.log(() => [`OperationRepo getOperation ${id} RESULT`, op]);
 
-        return op;
+        return op as OperationEntity;
     }
 
 
     static async assignCustomer(operationId: number, req: AssignCustomerRequest): Promise<OperationEntity | null> {
         Logger.log(() => [`OperationRepo assignCustomer ${operationId}`, req]);
-        const op: OperationEntity | null = await prisma.phoperation.update({
+        const op = await prisma.phoperation.update({
             where: {
                 id: operationId
             },
@@ -72,6 +72,30 @@ export class OperationRepo {
         })
         Logger.log(() => [`OperationRepo assignCustomer ${operationId} RESULT`, op]);
 
-        return op;
+        return op as OperationEntity;
+    }
+
+    static async updateFinalOperation(operation: OperationEntity): Promise<OperationEntity | null> {
+        Logger.log(() => [`OperationRepo updateFinalOperation `, operation]);
+
+        const final: OperationEntity | null = await prisma.$transaction(async (prisma) => {
+            // Update the total of the Operation
+            // await prisma.phoperation.update({
+            //     where: { id: operation.id },
+            //     data: { profit: operation.profit },
+            // });
+
+            // Update the totals of each Booking
+            // for (const booking of operation.bookings || []) {
+            //     await prisma.phbooking.update({
+            //         where: { id: booking.id },
+            //         data: { profit: operation.profit},
+            //     });
+            // }
+            return OperationRepo.getOperation(operation.id);
+        });
+        Logger.log(() => [`OperationRepo updateFinalOperation RESULT`, final]);
+
+        return final;
     }
 }
