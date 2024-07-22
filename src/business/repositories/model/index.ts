@@ -2,9 +2,10 @@ export * from './user_entity';
 export * from './brand_entity';
 export * from './group_entity';
 export * from './ProductEntity';
-export * from './customer_entity';
+export * from './CustomerEntity';
 export * from './OperationEntity';
 export * from './BookingEntity'
 export * from './BillEntity';
 export * from './OrderEntity'
 export * from './employee_entity'
+export * from './OperationIssueEntity'

@@ -1,10 +1,17 @@
 import {Dto, Logger} from "@core/common";
-import {BillRepo, BookingRepo, OperationRepo} from "@business/repositories";
+import {BillRepo, BookingRepo, OperationIssueRepo, OperationRepo} from "@business/repositories";
 import {Operation, Product} from "@business/services/model";
-import {BillEntity, BookingEntity, OperationEntity, OrderEntity, ProductEntity} from "@business/repositories/model";
-import {ERROR_CODE} from "@business/common";
+import {
+    BillEntity,
+    BookingEntity,
+    OperationEntity,
+    OperationIssueEntity,
+    OrderEntity,
+    ProductEntity
+} from "@business/repositories/model";
+import {ERROR_CODE, WARNING_CODE} from "@business/common";
 import {BookingRequestSdo} from "@business/repositories/request";
-import {AssignCustomerRequest} from "@business/model";
+import {AssignCustomerRequest, CreateOperationIssue} from "@business/model";
 
 export class OperationService {
     static async createOperation(name?: string) : Promise<Dto<Operation | null>>{
@@ -31,7 +38,10 @@ export class OperationService {
             price: product.price,
             basePrice: product.basePrice,
             quantity: 1
-        } as BookingRequestSdo) ;
+        } as BookingRequestSdo);
+        if (booking.product?.quantity || 0 < 5) {
+            return Dto.warning<Operation>(WARNING_CODE.PRODUCT_QUANTITY_READY_OUT_OF_STOCK, `${booking.name}'s quantity is ${booking.product?.quantity || 0}`, booking.operation)
+        }
         return Dto.success(booking.operation);
     }
 
@@ -55,6 +65,7 @@ export class OperationService {
                 name: operation.name,
                 phone: operation.phone,
                 note: operation.note,
+                discount: operation.discount,
                 customerId: operation.customerId,
                 employeeId: operation.employeeId,
                 orders: [],
@@ -110,5 +121,11 @@ export class OperationService {
             const billEntity : BillEntity | null = await BillRepo.create(bill);
         }
         return Dto.success(operation);
+    }
+
+    static async createIssue(operationId: number, req: CreateOperationIssue)  : Promise<Dto<Operation | null>> {
+        const issue: OperationIssueEntity = await OperationIssueRepo.createIssue(operationId, req);
+        return Dto.success(issue.operation );
+
     }
 }

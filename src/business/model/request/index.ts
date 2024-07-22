@@ -8,3 +8,4 @@ export * from './UpdateCustomerRequest';
 export * from './BookingRequest';
 export * from './AssignCustomerRequest';
 export * from './ReceiptRequest';
+export * from './CreateOperationIssue';

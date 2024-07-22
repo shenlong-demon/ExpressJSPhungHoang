@@ -1,0 +1,4 @@
+export enum WARNING_CODE {
+    PRODUCT_QUANTITY_READY_OUT_OF_STOCK = 1,
+
+}

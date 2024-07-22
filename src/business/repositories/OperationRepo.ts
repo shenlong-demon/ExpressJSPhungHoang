@@ -47,7 +47,8 @@ export class OperationRepo {
                             }
                         }
                     }
-                }
+                },
+                issues: true
             },
         });
         Logger.log(() => [`OperationRepo getOperation ${id} RESULT`, op]);
@@ -98,4 +99,5 @@ export class OperationRepo {
 
         return final;
     }
+
 }

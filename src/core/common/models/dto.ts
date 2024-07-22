@@ -24,5 +24,8 @@ export class Dto<T> {
     public static error(code: number, message?: string): Dto<null>{
         return new Dto<null>(RESULT_CODE.ERROR | code,  message, null)
     }
+    public static warning<T>(code: number, message: string, data: T | null | undefined, ): Dto<T> {
+        return new Dto<T>(RESULT_CODE.WARNING | code, message, data);
+    }
 
 }

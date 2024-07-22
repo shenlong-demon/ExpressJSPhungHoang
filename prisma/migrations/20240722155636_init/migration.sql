@@ -68,6 +68,7 @@ CREATE TABLE "phcustomer" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "appKey" TEXT,
+    "total" DOUBLE PRECISION NOT NULL DEFAULT 0,
 
     CONSTRAINT "phcustomer_pkey" PRIMARY KEY ("id")
 );
@@ -78,6 +79,7 @@ CREATE TABLE "phoperation" (
     "name" TEXT,
     "phone" TEXT,
     "note" TEXT,
+    "discount" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "customerId" INTEGER,
     "employeeId" INTEGER,
     "estimation" TIMESTAMP(3),
@@ -105,12 +107,26 @@ CREATE TABLE "phbooking" (
 );
 
 -- CreateTable
+CREATE TABLE "phoperationissue" (
+    "id" SERIAL NOT NULL,
+    "note" TEXT,
+    "image" VARCHAR(500),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "appKey" TEXT,
+    "operationId" INTEGER NOT NULL,
+
+    CONSTRAINT "phoperationissue_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "phbill" (
     "id" SERIAL NOT NULL,
     "operationId" INTEGER NOT NULL,
     "name" TEXT,
     "phone" TEXT,
     "note" TEXT,
+    "discount" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "customerId" INTEGER,
     "employeeId" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -141,6 +157,20 @@ CREATE TABLE "phorder" (
     "profit" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "phorder_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "phbillissue" (
+    "id" SERIAL NOT NULL,
+    "operationIssueId" INTEGER NOT NULL,
+    "note" TEXT,
+    "image" VARCHAR(500),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "appKey" TEXT,
+    "billId" INTEGER NOT NULL,
+
+    CONSTRAINT "phbillissue_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -181,10 +211,16 @@ CREATE UNIQUE INDEX "phoperation_id_key" ON "phoperation"("id");
 CREATE UNIQUE INDEX "phbooking_id_key" ON "phbooking"("id");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "phoperationissue_id_key" ON "phoperationissue"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "phbill_id_key" ON "phbill"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "phorder_id_key" ON "phorder"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "phbillissue_id_key" ON "phbillissue"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "phemployee_id_key" ON "phemployee"("id");
@@ -208,6 +244,9 @@ ALTER TABLE "phbooking" ADD CONSTRAINT "phbooking_productId_fkey" FOREIGN KEY ("
 ALTER TABLE "phbooking" ADD CONSTRAINT "phbooking_operationId_fkey" FOREIGN KEY ("operationId") REFERENCES "phoperation"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "phoperationissue" ADD CONSTRAINT "phoperationissue_operationId_fkey" FOREIGN KEY ("operationId") REFERENCES "phoperation"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "phbill" ADD CONSTRAINT "phbill_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "phcustomer"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -218,3 +257,6 @@ ALTER TABLE "phorder" ADD CONSTRAINT "phorder_productId_fkey" FOREIGN KEY ("prod
 
 -- AddForeignKey
 ALTER TABLE "phorder" ADD CONSTRAINT "phorder_billId_fkey" FOREIGN KEY ("billId") REFERENCES "phbill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "phbillissue" ADD CONSTRAINT "phbillissue_billId_fkey" FOREIGN KEY ("billId") REFERENCES "phbill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

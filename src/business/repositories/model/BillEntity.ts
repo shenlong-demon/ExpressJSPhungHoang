@@ -1,5 +1,5 @@
 import {BaseEntity} from "@business/repositories/model/base_entity";
-import {CustomerEntity} from "@business/repositories/model/customer_entity";
+import {CustomerEntity} from "@business/repositories/model/CustomerEntity";
 import {OrderEntity} from "@business/repositories/model/OrderEntity";
 import {EmployeeEntity} from "@business/repositories/model/employee_entity";
 
@@ -8,6 +8,7 @@ export type BillEntity = BaseEntity & {
     name: string | null;
     phone: string | null;
     note: string | null;
+    discount: number;
     estimation: Date | null;
     customer: CustomerEntity | null;
     customerId: number | null;

@@ -74,6 +74,7 @@ model phcustomer {
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     appKey        String?         @default(uuid())
+    total         Float           @default(0)
     operations    phoperation[]
     bills         phbill[]
 }
@@ -83,12 +84,14 @@ model phoperation {
     name          String?
     phone         String?
     note          String?
+    discount      Float             @default(0)
     customer      phcustomer?     @relation(fields: [customerId], references: [id])
     customerId    Int?
     employee      phemployee?     @relation(fields: [employeeId], references: [id])
     employeeId    Int?
     estimation    DateTime?
     bookings      phbooking[]
+    issues        phoperationissue[]
     appKey        String?         @default(uuid())
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
@@ -111,12 +114,26 @@ model phbooking {
     operationId   Int
 }
 
+
+model phoperationissue {
+    id            Int             @id                 @unique  @default(autoincrement())
+    note          String?
+    image         String?         @db.VarChar(500)
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    appKey        String?         @default(uuid())
+    operation     phoperation     @relation(fields: [operationId], references: [id])
+    operationId   Int
+}
+
+
 model phbill {
     id            Int             @id                 @unique  @default(autoincrement())
     operationId   Int
     name          String?
     phone         String?
     note          String?
+    discount      Float             @default(0)
     customer      phcustomer?     @relation(fields: [customerId], references: [id])
     customerId    Int?
     employee      phemployee?     @relation(fields: [employeeId], references: [id])
@@ -127,6 +144,7 @@ model phbill {
     appKey        String?         @default(uuid())
     total         Float
     orders        phorder[]
+    issues        phbillissue[]
     profit        Float
 }
 
@@ -149,6 +167,20 @@ model phorder {
     total         Float
     profit        Float
 }
+
+
+model phbillissue {
+    id                      Int             @id                 @unique  @default(autoincrement())
+    operationIssueId        Int
+    note                    String?
+    image                   String?         @db.VarChar(500)
+    createdAt               DateTime        @default(now())
+    updatedAt               DateTime        @updatedAt
+    appKey                  String?         @default(uuid())
+    bill                    phbill          @relation(fields: [billId], references: [id])
+    billId                  Int
+}
+
 
 model phemployee {
     id            Int             @id                 @unique  @default(autoincrement())
