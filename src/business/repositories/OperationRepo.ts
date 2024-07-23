@@ -1,7 +1,7 @@
 import {OperationEntity} from "./model";
 import {PrismaClient} from '@prisma/client'
 import {CONSTANT, DB_CONSTANT, Logger} from "@core/common";
-import {AssignCustomerRequest} from "@business/model";
+import {AssignCustomerRequest, SetOperationDiscountRequest} from "@business/model";
 
 const prisma = new PrismaClient();
 export class OperationRepo {
@@ -112,4 +112,15 @@ export class OperationRepo {
         return final;
     }
 
+    static async setDiscount(operationId: number, req: SetOperationDiscountRequest) : Promise<OperationEntity | null> {
+        const update = await prisma.phoperation.update({
+            where: {
+                id: operationId
+            },
+            data: {
+                discount: req.discount
+            }
+        });
+        return OperationRepo.getOperation(operationId);
+    }
 }

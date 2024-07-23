@@ -11,27 +11,33 @@ import {
 } from "@business/repositories/model";
 import {ERROR_CODE, WARNING_CODE} from "@business/common";
 import {BookingRequestSdo} from "@business/repositories/request";
-import {AddOperationServiceRequest, AssignCustomerRequest, CreateOperationIssue} from "@business/model";
+import {
+    AddOperationServiceRequest,
+    AssignCustomerRequest,
+    CancelBookingRequest,
+    CreateOperationIssue, SetBookingNoteRequest, SetOperationDiscountRequest
+} from "@business/model";
 
 export class OperationService {
-    static async createOperation(name?: string) : Promise<Dto<Operation | null>>{
-        const newOperation : OperationEntity | null = await OperationRepo.create(name);
+    static async createOperation(name?: string): Promise<Dto<Operation | null>> {
+        const newOperation: OperationEntity | null = await OperationRepo.create(name);
         return Dto.success(newOperation);
     }
 
-    static async getOperations(offset: number) : Promise<Dto<Operation[]>>{
+    static async getOperations(offset: number): Promise<Dto<Operation[]>> {
         const operations: OperationEntity[] = await OperationRepo.getOperations(offset);
         return Dto.success(operations);
     }
-    static async getOperation(id: number) : Promise<Dto<Operation | null>>{
+
+    static async getOperation(id: number): Promise<Dto<Operation | null>> {
         const operation: OperationEntity | null = await OperationRepo.getOperation(id);
-        if(!!operation){
+        if (!!operation) {
             return Dto.success(operation);
         }
         return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
     }
 
-    static async booking(operationId: number, product: Product) : Promise<Dto<Operation | null>> {
+    static async booking(operationId: number, product: Product): Promise<Dto<Operation | null>> {
         const booking: BookingEntity = await BookingRepo.booking(operationId, {
             productId: product.id,
             productName: product.name,
@@ -45,17 +51,17 @@ export class OperationService {
         return Dto.success(booking.operation);
     }
 
-    static async assignCustomer(operationId: number, req: AssignCustomerRequest)  : Promise<Dto<Operation | null>> {
+    static async assignCustomer(operationId: number, req: AssignCustomerRequest): Promise<Dto<Operation | null>> {
         const operation: OperationEntity | null = await OperationRepo.assignCustomer(operationId, req);
-        if(!!operation){
+        if (!!operation) {
             return Dto.success(operation);
         }
         return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
     }
 
-    static async prepareReceipt(operationId: number) : Promise<Dto<Operation | null>> {
+    static async prepareReceipt(operationId: number): Promise<Dto<Operation | null>> {
         const operation: OperationEntity | null = await OperationRepo.getOperation(operationId);
-        if(!!operation){
+        if (!!operation) {
             const bill: BillEntity = {
                 id: operation.id,
                 operationId: operation.id,
@@ -108,7 +114,7 @@ export class OperationService {
                     basePrice: basePrice,
                     quantity: booking.quantity,
                     profit: bookingProfit,
-                    total:bookingTotal,
+                    total: bookingTotal,
                     productId: booking.productId,
                     product: booking.product,
                     billId: bill.id
@@ -118,7 +124,6 @@ export class OperationService {
             bill.profit = operationProfit;
             bill.total = operationTotal;
             Logger.log(() => [`OperationService prepareReceipt operation`, operation, bill]);
-
 
 
             const issues: OperationIssueEntity[] = operation.issues || [];
@@ -136,20 +141,35 @@ export class OperationService {
                 bill.issues.push(billIssue);
             }
 
-                // const finalOperation : OperationEntity | null = await OperationRepo.updateFinalOperation(operation);
-            const billEntity : BillEntity | null = await BillRepo.create(bill);
+            // const finalOperation : OperationEntity | null = await OperationRepo.updateFinalOperation(operation);
+            const billEntity: BillEntity | null = await BillRepo.create(bill);
         }
         return Dto.success(operation);
     }
 
-    static async createIssue(operationId: number, req: CreateOperationIssue)  : Promise<Dto<Operation | null>> {
+    static async createIssue(operationId: number, req: CreateOperationIssue): Promise<Dto<Operation | null>> {
         const issue: OperationIssueEntity = await OperationIssueRepo.createIssue(operationId, req);
-        return Dto.success(issue.operation );
+        return Dto.success(issue.operation);
 
     }
 
-    static async addService(operationId: number, req: AddOperationServiceRequest)  : Promise<Dto<Operation | null>> {
+    static async addService(operationId: number, req: AddOperationServiceRequest): Promise<Dto<Operation | null>> {
         const booking: BookingEntity = await BookingRepo.addService(operationId, req);
-        return Dto.success(booking.operation );
+        return Dto.success(booking.operation);
+    }
+
+    static async cancelBooking(operationId: number, req: CancelBookingRequest): Promise<Dto<Operation | null>> {
+        const operation: OperationEntity = await BookingRepo.cancelBooking(operationId, req);
+        return Dto.success(operation);
+    }
+
+    static async setBookingNote(operationId: number, req: SetBookingNoteRequest) : Promise<Dto<Operation | null>> {
+        const operation: OperationEntity = await BookingRepo.setBookingNote(operationId, req);
+        return Dto.success(operation);
+    }
+
+    static async setDiscount(operationId: number, req: SetOperationDiscountRequest) : Promise<Dto<Operation | null>> {
+        const operation: OperationEntity | null = await OperationRepo.setDiscount(operationId, req);
+        return Dto.success(operation);
     }
 }

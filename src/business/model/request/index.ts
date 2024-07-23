@@ -10,3 +10,6 @@ export * from './AssignCustomerRequest';
 export * from './ReceiptRequest';
 export * from './CreateOperationIssue';
 export * from './AddOperationServiceRequest';
+export * from './CancelBookingRequest';
+export * from './SetBookingNoteRequest';
+export * from './SetOperationDiscountRequest';

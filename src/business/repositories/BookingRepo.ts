@@ -2,7 +2,8 @@ import {BookingEntity, OperationEntity, ProductEntity} from "./model";
 import {PrismaClient} from '@prisma/client'
 import {CONSTANT, DB_CONSTANT, Logger} from "@core/common";
 import {BookingRequestSdo} from "@business/repositories/request";
-import {AddOperationServiceRequest} from "@business/model";
+import {AddOperationServiceRequest, CancelBookingRequest, SetBookingNoteRequest} from "@business/model";
+import {OperationRepo} from "@business/repositories/OperationRepo";
 
 const prisma = new PrismaClient();
 export class BookingRepo {
@@ -57,7 +58,7 @@ export class BookingRepo {
                     price: req.price,
                     quantity: 1,
                     name: req.name,
-                    note: CONSTANT.STR_EMPTY,
+                    note: req.note,
                 },
                 include: {
                     operation: {
@@ -77,5 +78,28 @@ export class BookingRepo {
         Logger.log(() => [`BookingRepo addService ${operationId} RESULT`, bookingItem]);
 
         return bookingItem as BookingEntity;
+    }
+
+    static async cancelBooking(operationId: number, req: CancelBookingRequest)  : Promise<OperationEntity> {
+        const bookingItem = await prisma.phbooking.delete({
+            where: {
+                id: req.bookingId
+            }
+        });
+        const finalOperation = await OperationRepo.getOperation(operationId);
+        return finalOperation as OperationEntity;
+    }
+
+    static async setBookingNote(operationId: number, req: SetBookingNoteRequest) : Promise<OperationEntity> {
+        const bookingItem = await prisma.phbooking.update({
+            where: {
+                id: req.bookingId
+            },
+            data: {
+                note: req.note
+            }
+        });
+        const finalOperation = await OperationRepo.getOperation(operationId);
+        return finalOperation as OperationEntity;
     }
 }

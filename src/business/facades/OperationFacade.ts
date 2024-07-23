@@ -3,10 +3,11 @@ import {
     AssignCustomerRequest,
     BookingRequest,
     CreateOperationIssue,
-    ReceiptRequest
+    ReceiptRequest, SetBookingNoteRequest, SetOperationDiscountRequest
 } from "@business/model";
 import {Operation, OperationService, Product, ProductService} from "@business/services";
 import {Dto} from "@core/common";
+import {CancelBookingRequest} from "@business/model/request/CancelBookingRequest";
 
 export class OperationFacade {
     static async booking(operationId: number, req: BookingRequest): Promise<Dto<Operation | null>> {
@@ -57,6 +58,36 @@ export class OperationFacade {
         if (dto.next()) {
             const op: Operation = dto.data as Operation;
             const assignDto: Dto<Operation | null> = await OperationService.addService(operationId, req);
+            return assignDto;
+        }
+        return dto.bypass();
+    }
+
+    static async cancelBooking(operationId: number, req: CancelBookingRequest) : Promise<Dto<Operation | null>> {
+        const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+        if (dto.next()) {
+            const op: Operation = dto.data as Operation;
+            const assignDto: Dto<Operation | null> = await OperationService.cancelBooking(operationId, req);
+            return assignDto;
+        }
+        return dto.bypass();
+    }
+
+    static async setBookingNote(operationId: number, req: SetBookingNoteRequest) : Promise<Dto<Operation | null>> {
+        const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+        if (dto.next()) {
+            const op: Operation = dto.data as Operation;
+            const assignDto: Dto<Operation | null> = await OperationService.setBookingNote(operationId, req);
+            return assignDto;
+        }
+        return dto.bypass();
+    }
+
+    static async setDiscount(operationId: number, req: SetOperationDiscountRequest)  : Promise<Dto<Operation | null>> {
+        const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+        if (dto.next()) {
+            const op: Operation = dto.data as Operation;
+            const assignDto: Dto<Operation | null> = await OperationService.setDiscount(operationId, req);
             return assignDto;
         }
         return dto.bypass();
