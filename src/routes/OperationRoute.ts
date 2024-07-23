@@ -2,7 +2,7 @@ import express from "express";
 import {CreateOperationFacade, GetOperationDetailFacade, GetOperationsFacade} from "@business/facades/operation";
 import {Logger} from "@core/common";
 import {OperationFacade} from "@business/facades";
-import {AssignCustomerRequest, CreateOperationIssue, ProductFilterRequest, ReceiptRequest} from "@business/model";
+import {AddOperationServiceRequest, AssignCustomerRequest, CreateOperationIssue, ReceiptRequest} from "@business/model";
 
 const authMiddleware = require('../business/middleware/auth_middleware');
 
@@ -51,6 +51,13 @@ router.put('/receipt/:id',authMiddleware, async function(req, res, next) {
 router.put('/create-issue/:id',authMiddleware, async function(req, res, next) {
     try {
         res.json(await OperationFacade.createIssue(Number(req.params.id), req.body as CreateOperationIssue));
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+router.put('/add-service/:id',authMiddleware, async function(req, res, next) {
+    try {
+        res.json(await OperationFacade.addService(Number(req.params.id), req.body as AddOperationServiceRequest));
     } catch (err) {
         res.status(500).json(err);
     }

@@ -67,7 +67,19 @@ export class OperationRepo {
                 customerId: req.customerId
             },
             include: {
-                customer: true
+                employee: true,
+                customer: true,
+                bookings: {
+                    include: {
+                        product: {
+                            include: {
+                                brand: false,
+                                group: false
+                            }
+                        }
+                    }
+                },
+                issues: true
             }
 
         })

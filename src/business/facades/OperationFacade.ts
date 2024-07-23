@@ -1,4 +1,10 @@
-import {AssignCustomerRequest, BookingRequest, CreateOperationIssue, ReceiptRequest} from "@business/model";
+import {
+    AddOperationServiceRequest,
+    AssignCustomerRequest,
+    BookingRequest,
+    CreateOperationIssue,
+    ReceiptRequest
+} from "@business/model";
 import {Operation, OperationService, Product, ProductService} from "@business/services";
 import {Dto} from "@core/common";
 
@@ -41,6 +47,16 @@ export class OperationFacade {
         if (dto.next()) {
             const op: Operation = dto.data as Operation;
             const assignDto: Dto<Operation | null> = await OperationService.createIssue(operationId, req);
+            return assignDto;
+        }
+        return dto.bypass();
+    }
+
+    static async addService(operationId: number, req: AddOperationServiceRequest)  : Promise<Dto<Operation | null>> {
+        const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+        if (dto.next()) {
+            const op: Operation = dto.data as Operation;
+            const assignDto: Dto<Operation | null> = await OperationService.addService(operationId, req);
             return assignDto;
         }
         return dto.bypass();

@@ -34,7 +34,7 @@ export class BillRepo {
     static async create(bill: BillEntity): Promise<BillEntity | null> {
         try {
             const final: BillEntity | null = await prisma.$transaction(async (prisma) => {
-                const {id, customer, employee, orders, ...newBill} = {
+                const {id, customer, employee, orders, issues, ...newBill} = {
                     ...bill,
                 };
                 // Update the total of the Operation
@@ -46,12 +46,20 @@ export class BillRepo {
                     const {id, product, ...newOrder} = {
                         ...order,
                         billId: finalBill.id,
-                        name: order.name,
-                        note: order.note,
 
                     };
                     await prisma.phorder.create({
                         data: newOrder,
+                    });
+                }
+                for (const issue of bill.issues || []) {
+                    const {id, ...newIssue} = {
+                        ...issue,
+                        billId: finalBill.id,
+
+                    };
+                    await prisma.phbillissue.create({
+                        data: newIssue,
                     });
                 }
                 return BillRepo.getBill(finalBill.id);

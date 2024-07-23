@@ -9,3 +9,4 @@ export * from './BillEntity';
 export * from './OrderEntity'
 export * from './employee_entity'
 export * from './OperationIssueEntity'
+export * from './BillIssueEntity'

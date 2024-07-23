@@ -2,7 +2,7 @@ import {Dto, Logger} from "@core/common";
 import {BillRepo, BookingRepo, OperationIssueRepo, OperationRepo} from "@business/repositories";
 import {Operation, Product} from "@business/services/model";
 import {
-    BillEntity,
+    BillEntity, BillIssueEntity,
     BookingEntity,
     OperationEntity,
     OperationIssueEntity,
@@ -11,7 +11,7 @@ import {
 } from "@business/repositories/model";
 import {ERROR_CODE, WARNING_CODE} from "@business/common";
 import {BookingRequestSdo} from "@business/repositories/request";
-import {AssignCustomerRequest, CreateOperationIssue} from "@business/model";
+import {AddOperationServiceRequest, AssignCustomerRequest, CreateOperationIssue} from "@business/model";
 
 export class OperationService {
     static async createOperation(name?: string) : Promise<Dto<Operation | null>>{
@@ -69,6 +69,7 @@ export class OperationService {
                 customerId: operation.customerId,
                 employeeId: operation.employeeId,
                 orders: [],
+                issues: [],
                 estimation: operation.estimation,
                 profit: 0,
                 total: 0,
@@ -117,7 +118,25 @@ export class OperationService {
             bill.profit = operationProfit;
             bill.total = operationTotal;
             Logger.log(() => [`OperationService prepareReceipt operation`, operation, bill]);
-            // const finalOperation : OperationEntity | null = await OperationRepo.updateFinalOperation(operation);
+
+
+
+            const issues: OperationIssueEntity[] = operation.issues || [];
+            for (const issue of issues) {
+                const billIssue: BillIssueEntity = {
+                    id: issue.id,
+                    operationIssueId: issue.id,
+                    appKey: issue.appKey,
+                    createdAt: issue.createdAt,
+                    updatedAt: issue.updatedAt,
+                    billId: bill.id,
+                    note: issue.note,
+                    image: issue.image
+                }
+                bill.issues.push(billIssue);
+            }
+
+                // const finalOperation : OperationEntity | null = await OperationRepo.updateFinalOperation(operation);
             const billEntity : BillEntity | null = await BillRepo.create(bill);
         }
         return Dto.success(operation);
@@ -127,5 +146,10 @@ export class OperationService {
         const issue: OperationIssueEntity = await OperationIssueRepo.createIssue(operationId, req);
         return Dto.success(issue.operation );
 
+    }
+
+    static async addService(operationId: number, req: AddOperationServiceRequest)  : Promise<Dto<Operation | null>> {
+        const booking: BookingEntity = await BookingRepo.addService(operationId, req);
+        return Dto.success(booking.operation );
     }
 }
