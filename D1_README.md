@@ -36,8 +36,16 @@ await prisma.phuser.findFirst();
 ```
 
 # D1 DATABASE
-
+## Setup
+- Login
+```shell
+npx wrangler login
+```
 ## CREATE
+- Create D1 database
+```shell
+npx wrangler d1 create phd1
+```
 
 # APPLY TO PRISMA
 
@@ -48,7 +56,7 @@ We are using D1 database with SQLite
 ### Create first migration
 
 ```shell
-npx wrangler d1 migrations create _db_name_ init
+npx wrangler d1 migrations create phd1 init
 ```
 
 - After running, we hava a file sql with path is `./migrations/0001_init.sql`
@@ -61,7 +69,7 @@ npx wrangler d1 migrations create _db_name_ init
 ### Or creating update migration
 
 ```shell
-npx wrangler d1 migrations create _db_name_ create_or_update_table
+npx wrangler d1 migrations create phd1 create_or_update_table
 ```
 
 - After running, we hava a file sql with path is `./migrations/0002_create_or_update_table.sql`
