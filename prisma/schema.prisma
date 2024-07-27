@@ -1,22 +1,26 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["relationJoins"]
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
+
 model phuser {
   id            Int             @id                 @unique  @default(autoincrement())
-  name          String          @db.VarChar(255)
-  phone         String          @db.VarChar(50)    @unique
+  name          String
+  phone         String          @unique
   password      String
-  token         String?         @db.VarChar(255)             @default(value: "")
+  token         String?         @default(value: "")
   status        Int             @default(1)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
@@ -25,7 +29,7 @@ model phuser {
 
 model phbrand {
   id            Int             @id                 @unique @default(autoincrement())
-  name          String          @db.VarChar(255)
+  name          String
   status        Int             @default(1)
   products      phproduct[]
   createdAt     DateTime        @default(now())
@@ -35,7 +39,7 @@ model phbrand {
 
 model phgroup {
   id            Int             @id                 @unique @default(autoincrement())
-  name          String          @db.VarChar(255)
+  name          String
   status        Int             @default(1)
   products      phproduct[]
   createdAt     DateTime        @default(now())
@@ -45,10 +49,10 @@ model phgroup {
 
 model phproduct {
   id                Int             @id                 @unique @default(autoincrement())
-  code              String?         @db.VarChar(50)
-  name              String          @db.VarChar(255)
-  otherName         String?         @db.VarChar(255)
-  image             String?         @db.VarChar(500)
+  code              String?
+  name              String
+  otherName         String?
+  image             String?
   price             Float
   basePrice         Float
   quantity          Int
@@ -66,10 +70,10 @@ model phproduct {
 
 model phcustomer {
     id            Int             @id                 @unique  @default(autoincrement())
-    name          String          @db.VarChar(255)
-    nickName      String          @db.VarChar(255)
-    phone         String          @db.VarChar(50)
-    image         String?         @db.VarChar(500)
+    name          String
+    nickName      String
+    phone         String
+    image         String?
     status        Int             @default(1)
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
@@ -118,7 +122,7 @@ model phbooking {
 model phoperationissue {
     id            Int             @id                 @unique  @default(autoincrement())
     note          String?
-    image         String?         @db.VarChar(500)
+    image         String?
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
     appKey        String?         @default(uuid())
@@ -173,7 +177,7 @@ model phbillissue {
     id                      Int             @id                 @unique  @default(autoincrement())
     operationIssueId        Int
     note                    String?
-    image                   String?         @db.VarChar(500)
+    image                   String?
     createdAt               DateTime        @default(now())
     updatedAt               DateTime        @updatedAt
     appKey                  String?         @default(uuid())

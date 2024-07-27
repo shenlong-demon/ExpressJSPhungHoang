@@ -1,46 +1,22 @@
 {
-  "name": "phunghoangexpressjs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "phnodeworker",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "build": "npx tsc",
-    "start": "npx nodemon src/app.ts",
-    "local": "ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 3000",
-    "migrate": "node-pg-migrate",
-    "migrate_up": "npm run migrate up",
-    "migrate_init": "sh ./migrate_init.sh",
-    "migrate_seed": "npx prisma db seed",
-    "production": "sh ./deploy.sh"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/huyle21202/PhungHoangExpressJS.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/huyle21202/PhungHoangExpressJS/issues"
-  },
-  "homepage": "https://github.com/huyle21202/PhungHoangExpressJS#readme",
-  "dependencies": {
-    "@prisma/client": "5",
-    "express": "4.18.2",
-    "jsonwebtoken": "9.0.0",
-    "morgan": "1.10.0",
-    "prisma": "5",
-    "uuid": "10.0.0"
+	"deploy": "wrangler deploy",
+	"dev": "wrangler dev",
+	"start": "wrangler dev",
+	"cf-typegen": "wrangler types"
   },
   "devDependencies": {
-    "@types/express": "4.17.17",
-    "@types/node": "18.16.6",
-    "concurrently": "8.0.1",
-    "nodemon": "2.0.22",
-    "ts-node": "10.9.1",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "5.0.4"
+	"@cloudflare/workers-types": "^4.20240725.0",
+	"prettier": "3.3.3",
+	"prisma": "5.17.0",
+	"typescript": "^5.5.2",
+	"wrangler": "3.57.0"
+  },
+  "dependencies": {
+	"@prisma/adapter-d1": "5.17.0",
+	"@prisma/client": "5.17.0"
   }
 }

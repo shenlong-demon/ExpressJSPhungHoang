@@ -1,4 +1,0 @@
-
-yarn add uuid@10.0.0 \
-morgan@1.10.0
-
