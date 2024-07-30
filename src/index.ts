@@ -11,15 +11,8 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 import { TestRepo } from './TestRepo';
-import { Env } from '../worker-configuration';
+import app from './app';
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		const all = await TestRepo.get(env.DB);
-		// const { results } = await env.DB.prepare(
-		// 	"SELECT * FROM d1_migrations"
-		// )
-		// 	.all();
-		return Response.json(all);
-	},
+	fetch: app.fetch,
 } satisfies ExportedHandler<Env>;

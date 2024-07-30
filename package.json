@@ -1,22 +1,26 @@
 {
-  "name": "phnodeworker",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-	"deploy": "wrangler deploy",
-	"dev": "wrangler dev",
-	"start": "wrangler dev",
-	"cf-typegen": "wrangler types"
-  },
-  "devDependencies": {
-	"@cloudflare/workers-types": "^4.20240725.0",
-	"prettier": "3.3.3",
-	"prisma": "5.17.0",
-	"typescript": "^5.5.2",
-	"wrangler": "3.57.0"
-  },
-  "dependencies": {
-	"@prisma/adapter-d1": "5.17.0",
-	"@prisma/client": "5.17.0"
-  }
+	"name": "phnodeworker",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types",
+		"postinstall": "sh ./run-postinstall.sh"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20240725.0",
+		"prettier": "3.3.3",
+		"prisma": "5.17.0",
+		"typescript": "5.5.4",
+		"wrangler": "3.57.0"
+	},
+	"dependencies": {
+		"@prisma/adapter-d1": "5.17.0",
+		"@prisma/client": "5.17.0",
+		"hono": "4.5.2",
+		"jsonwebtoken": "9.0.2",
+		"uuid": "10.0.0"
+	}
 }

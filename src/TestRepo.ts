@@ -1,12 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-import { PrismaD1 } from '@prisma/adapter-d1';
+import { prisma } from '../prisma/PrismaClient';
 
 export class TestRepo {
-	public static async get(d1: any): Promise<any> {
-		const prisma = new PrismaClient({
-			adapter: new PrismaD1(d1),
-		});
+	public static async get(): Promise<any> {
 		const users = await prisma.phuser.findFirst();
-		return users;
+		const count = await prisma.phuser.count();
+		return { users, count };
 	}
 }
