@@ -30,12 +30,12 @@ export class BillRepo {
 	}
 	static async create(bill: BillEntity): Promise<BillEntity | null> {
 		try {
-			const final: BillEntity | null = await prisma.$transaction(async (prisma) => {
+			const final: BillEntity | null = await prisma.$transaction(async (prismaTrans) => {
 				const { id, customer, employee, orders, issues, ...newBill } = {
 					...bill,
 				};
 				// Update the total of the Operation
-				const finalBill = await prisma.phbill.create({
+				const finalBill = await prismaTrans.phbill.create({
 					data: newBill,
 				});
 				// // Update the totals of each Booking
@@ -44,7 +44,7 @@ export class BillRepo {
 						...order,
 						billId: finalBill.id,
 					};
-					await prisma.phorder.create({
+					await prismaTrans.phorder.create({
 						data: newOrder,
 					});
 				}
@@ -53,7 +53,7 @@ export class BillRepo {
 						...issue,
 						billId: finalBill.id,
 					};
-					await prisma.phbillissue.create({
+					await prismaTrans.phbillissue.create({
 						data: newIssue,
 					});
 				}

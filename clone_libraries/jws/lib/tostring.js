@@ -1,5 +1,5 @@
 /*global module*/
-import { Buffer } from "node:buffer";
+var Buffer = require('safe-buffer').Buffer;
 
 module.exports = function toString(obj) {
   if (typeof obj === 'string')

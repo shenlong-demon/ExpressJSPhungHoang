@@ -1,5 +1,5 @@
 /*global module*/
-import { Buffer } from 'node:buffer';
+var Buffer = require('safe-buffer').Buffer;
 var DataStream = require('./data-stream');
 var jwa = require('jwa');
 import { Stream } from 'node:stream';

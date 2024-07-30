@@ -9,6 +9,8 @@ const isNumber = require('lodash.isnumber');
 const isPlainObject = require('lodash.isplainobject');
 const isString = require('lodash.isstring');
 const once = require('lodash.once');
+import { Buffer } from 'safe-buffer';
+
 import { KeyObject, createSecretKey, createPrivateKey } from 'node:crypto';
 
 const SUPPORTED_ALGS = ['RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512', 'HS256', 'HS384', 'HS512', 'none'];
