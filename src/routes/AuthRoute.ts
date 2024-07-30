@@ -1,5 +1,6 @@
-import { LoginWithPhoneNumberAndPasswordFacade, LoginRequest } from '../business';
-import { Hono } from 'hono';
+import {LoginRequest, LoginWithPhoneNumberAndPasswordFacade} from '../business';
+import {Hono} from 'hono';
+
 const router = new Hono();
 
 /* GET quotes listing. */

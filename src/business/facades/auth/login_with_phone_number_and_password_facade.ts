@@ -1,4 +1,4 @@
-import { AuthService, TokenService, Setting, User } from '../../services';
+import { AuthService, Setting, SettingService, TokenService, User } from '../../services';
 import { Dto, Logger } from '../../../core/common';
 import { LoginRequest } from '../../model/request';
 import { LoginResult } from '../../model/result';
@@ -13,7 +13,7 @@ export class LoginWithPhoneNumberAndPasswordFacade {
 			user.token = token;
 			await AuthService.setToken(user, token);
 			Logger.log(() => [`LoginWithPhoneNumberAndPasswordFacade setToken`]);
-			const setting: Setting = {}; // await SettingService.getSetting();
+			const setting: Setting = await SettingService.getSetting();
 
 			return Dto.success({
 				user,
