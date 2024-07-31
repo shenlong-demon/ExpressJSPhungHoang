@@ -1,6 +1,6 @@
 export type BaseEntity = {
     id: number;
     appKey: string | null;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: number;
+    updatedAt: number | null;
 };

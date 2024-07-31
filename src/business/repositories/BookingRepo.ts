@@ -5,6 +5,7 @@ import { AddOperationServiceRequest, CancelBookingRequest, SetBookingNoteRequest
 import { OperationRepo } from '@business/repositories/OperationRepo';
 
 import { prisma } from '../../../prisma/PrismaClient';
+import { DateTimeUtils } from '@business/common';
 
 export class BookingRepo {
 	static async booking(operationId: number, req: BookingRequestSdo): Promise<BookingEntity> {
@@ -24,6 +25,7 @@ export class BookingRepo {
 					quantity,
 					name: req.productName,
 					note: CONSTANT.STR_EMPTY,
+					createdAt: DateTimeUtils.now(),
 					// profit: (req.price - req.basePrice) * quantity
 				},
 				include: {
@@ -56,6 +58,7 @@ export class BookingRepo {
 				quantity: 1,
 				name: req.name,
 				note: req.note,
+				createdAt: DateTimeUtils.now(),
 			},
 			include: {
 				operation: {
@@ -89,6 +92,7 @@ export class BookingRepo {
 		const bookingItem = await prisma.phbooking.update({
 			where: {
 				id: req.bookingId,
+				updatedAt: DateTimeUtils.now(),
 			},
 			data: {
 				note: req.note,

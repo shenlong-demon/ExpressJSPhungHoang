@@ -4,6 +4,7 @@ import { ProductFilterRequest, UpdateProductRequest } from '../model/request';
 import { DB_CONSTANT, Logger } from '../../core/common';
 
 import { prisma } from '../../../prisma/PrismaClient';
+import {DateTimeUtils} from "@business/common";
 
 export class ProductRepo {
 	static async createNewProduct(req: CreateProductRequestSdo): Promise<ProductEntity | null> {
@@ -18,6 +19,8 @@ export class ProductRepo {
 				basePrice: req.basePrice,
 				quantity: req.quantity,
 				image: req.image,
+				createdAt: DateTimeUtils.now(),
+				updatedAt: DateTimeUtils.now(),
 			},
 			include: {
 				brand: true,
@@ -40,6 +43,7 @@ export class ProductRepo {
 				price: req.price,
 				basePrice: req.basePrice,
 				image: req.image,
+				updatedAt: DateTimeUtils.now(),
 			},
 			include: {
 				brand: true,

@@ -108,3 +108,8 @@ npx wrangler d1 execute phd1 --local --command="SELECT name FROM sqlite_master W
 # Select
 
 npx wrangler d1 execute phd1 --local --command="SELECT * from phuser"
+
+
+# EXECUTE SQL
+## Execute sql file
+npx wrangler d1 execute phd1 --local --file="./prisma/seed_init.sql"

@@ -3,12 +3,14 @@ import { CONSTANT, DB_CONSTANT, Logger } from '@core/common';
 import { AssignCustomerRequest, CreateOperationRequest, SetOperationDiscountRequest, SetOperationEstimationRequest } from '@business/model';
 
 import { prisma } from '../../../prisma/PrismaClient';
+import { DateTimeUtils } from '@business/common';
 
 export class OperationRepo {
 	static async create(req: CreateOperationRequest): Promise<OperationEntity | null> {
 		const operation = await prisma.phoperation.create({
 			data: {
 				name: req.name || CONSTANT.STR_EMPTY,
+				createdAt: DateTimeUtils.now(),
 			},
 		});
 		return operation as OperationEntity;
@@ -127,7 +129,7 @@ export class OperationRepo {
 				id: operationId,
 			},
 			data: {
-				estimation: new Date(req.newDate),
+				estimation: req.newDate,
 			},
 		});
 		return OperationRepo.getOperation(operationId);

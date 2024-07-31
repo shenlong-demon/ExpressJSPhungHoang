@@ -3,6 +3,7 @@ import { CreateCustomerRequest, FilterCustomerRequest, UpdateCustomerRequest } f
 import { CONSTANT, DB_CONSTANT } from '@core/common';
 
 import { prisma } from '../../../prisma/PrismaClient';
+import {DateTimeUtils} from "@business/common";
 
 export class CustomerRepo {
 	// static async getCustomer(req: FilterCustomerRequest): Promise<CustomerEntity[]> {
@@ -26,6 +27,8 @@ export class CustomerRepo {
 				phone: req.phone,
 				image: req.image || CONSTANT.STR_EMPTY,
 				status: req.status,
+				createdAt: DateTimeUtils.now(),
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		return obj;
@@ -42,6 +45,7 @@ export class CustomerRepo {
 				phone: req.phone,
 				image: req.image,
 				status: req.status,
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		return obj;

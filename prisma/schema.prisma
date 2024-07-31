@@ -22,8 +22,8 @@ model phuser {
   password      String
   token         String?         @default(value: "")
   status        Int             @default(1)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     Int
+  updatedAt     Int?
   appKey        String?         @default(uuid())
 }
 
@@ -32,8 +32,8 @@ model phbrand {
   name          String
   status        Int             @default(1)
   products      phproduct[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     Int
+  updatedAt     Int?
   appKey        String?         @default(uuid())
 }
 
@@ -42,8 +42,8 @@ model phgroup {
   name          String
   status        Int             @default(1)
   products      phproduct[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     Int
+  updatedAt     Int?
   appKey        String?         @default(uuid())
 }
 
@@ -61,8 +61,8 @@ model phproduct {
   brandId           Int
   group             phgroup          @relation(fields: [groupId], references: [id])
   groupId           Int
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  createdAt         Int
+  updatedAt         Int?
   appKey            String?         @default(uuid())
   bookings          phbooking[]
   orders            phorder[]
@@ -75,8 +75,8 @@ model phcustomer {
     phone         String
     image         String?
     status        Int             @default(1)
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     Int
+    updatedAt     Int?
     appKey        String?         @default(uuid())
     total         Float           @default(0)
     operations    phoperation[]
@@ -93,12 +93,12 @@ model phoperation {
     customerId    Int?
     employee      phemployee?     @relation(fields: [employeeId], references: [id])
     employeeId    Int?
-    estimation    DateTime?
+    estimation    Int?
     bookings      phbooking[]
     issues        phoperationissue[]
     appKey        String?         @default(uuid())
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     Int
+    updatedAt     Int?
 }
 
 
@@ -111,8 +111,8 @@ model phbooking {
     quantity      Int
     name          String?
     note          String?
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     Int
+    updatedAt     Int?
     appKey        String?         @default(uuid())
     operation     phoperation     @relation(fields: [operationId], references: [id])
     operationId   Int
@@ -123,8 +123,8 @@ model phoperationissue {
     id            Int             @id                 @unique  @default(autoincrement())
     note          String?
     image         String?
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     Int
+    updatedAt     Int?
     appKey        String?         @default(uuid())
     operation     phoperation     @relation(fields: [operationId], references: [id])
     operationId   Int
@@ -142,9 +142,9 @@ model phbill {
     customerId    Int?
     employee      phemployee?     @relation(fields: [employeeId], references: [id])
     employeeId    Int?
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
-    estimation    DateTime?
+    createdAt     Int
+    updatedAt     Int?
+    estimation    Int?
     appKey        String?         @default(uuid())
     total         Float
     orders        phorder[]
@@ -163,8 +163,8 @@ model phorder {
     quantity      Int
     name          String?
     note          String?
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     Int
+    updatedAt     Int?
     appKey        String?         @default(uuid())
     bill          phbill          @relation(fields: [billId], references: [id])
     billId        Int
@@ -178,8 +178,8 @@ model phbillissue {
     operationIssueId        Int
     note                    String?
     image                   String?
-    createdAt               DateTime        @default(now())
-    updatedAt               DateTime        @updatedAt
+    createdAt               Int
+    updatedAt               Int?
     appKey                  String?         @default(uuid())
     bill                    phbill          @relation(fields: [billId], references: [id])
     billId                  Int
@@ -190,8 +190,8 @@ model phemployee {
     id            Int             @id                 @unique  @default(autoincrement())
     name          String
     phone         String
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    createdAt     Int
+    updatedAt     Int?
     appKey        String?         @default(uuid())
     status        Int             @default(1)
     operations    phoperation[]

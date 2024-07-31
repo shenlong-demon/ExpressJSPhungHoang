@@ -2,6 +2,7 @@ import { UserEntity } from './model';
 import { LoginRequest } from '../model/request';
 import { Logger } from '../../core/common';
 import { prisma } from '../../../prisma/PrismaClient';
+import { DateTimeUtils } from '@business/common';
 
 export class UserRepo {
 	// static async createUser(phone: string, password: string) : Promise<any>{
@@ -31,6 +32,7 @@ export class UserRepo {
 			},
 			data: {
 				token,
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 	}

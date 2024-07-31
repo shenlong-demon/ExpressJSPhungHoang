@@ -15,5 +15,5 @@ export type OperationEntity = BaseEntity & {
     employeeId: number | null;
     bookings: BookingEntity[];
     issues: OperationIssueEntity[];
-    estimation: Date | null;
+    estimation: number | null;
 };

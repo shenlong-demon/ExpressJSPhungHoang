@@ -1,6 +1,7 @@
 import { BillEntity } from './model';
 import { Logger } from '@core/common';
 import { prisma } from '../../../prisma/PrismaClient';
+import { DateTimeUtils } from '@business/common';
 
 export class BillRepo {
 	static async getBill(id: number): Promise<BillEntity | null> {
@@ -34,6 +35,17 @@ export class BillRepo {
 				const { id, customer, employee, orders, issues, ...newBill } = {
 					...bill,
 				};
+				if (bill.customerId) {
+					await prismaTrans.phcustomer.update({
+						where: {
+							id: bill.customerId,
+						},
+						data: {
+							total: { increment: bill.total },
+							updatedAt: DateTimeUtils.now()
+						},
+					});
+				}
 				// Update the total of the Operation
 				const finalBill = await prismaTrans.phbill.create({
 					data: newBill,

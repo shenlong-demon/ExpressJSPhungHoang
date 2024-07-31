@@ -1,11 +1,13 @@
 import { BrandEntity } from './model';
 import { prisma } from '../../../prisma/PrismaClient';
+import {DateTimeUtils} from "@business/common";
 
 export class BrandRepo {
 	static async update(id: number, name: string, status: number): Promise<BrandEntity | null> {
 		const brand = await prisma.phbrand.update({
 			where: {
 				id,
+				updatedAt: DateTimeUtils.now()
 			},
 			data: {
 				name,
@@ -20,6 +22,8 @@ export class BrandRepo {
 			data: {
 				name,
 				status,
+				createdAt: DateTimeUtils.now(),
+				updatedAt: DateTimeUtils.now()
 			},
 		});
 		return brand;

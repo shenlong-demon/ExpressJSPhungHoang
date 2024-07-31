@@ -67,7 +67,7 @@ export class OperationService {
 		return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
 	}
 
-	static async prepareReceipt(operationId: number): Promise<Dto<Operation | null>> {
+	static async prepareReceipt(operationId: number): Promise<Dto<BillEntity | null>> {
 		const operation: OperationEntity | null = await OperationRepo.getOperation(operationId);
 		if (!!operation) {
 			const bill: BillEntity = {
@@ -150,6 +150,7 @@ export class OperationService {
 
 			// const finalOperation : OperationEntity | null = await OperationRepo.updateFinalOperation(operation);
 			const billEntity: BillEntity | null = await BillRepo.create(bill);
+			return Dto.success(billEntity);
 		}
 		return Dto.success(operation);
 	}

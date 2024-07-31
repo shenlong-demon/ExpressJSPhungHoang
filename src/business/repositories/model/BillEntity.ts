@@ -10,7 +10,7 @@ export type BillEntity = BaseEntity & {
     phone: string | null;
     note: string | null;
     discount: number;
-    estimation: Date | null;
+    estimation: number | null;
     customer: CustomerEntity | null;
     customerId: number | null;
     employee: EmployeeEntity | null;

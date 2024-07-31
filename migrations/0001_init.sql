@@ -6,8 +6,8 @@ CREATE TABLE "phuser" (
     "password" TEXT NOT NULL,
     "token" TEXT DEFAULT '',
     "status" INTEGER NOT NULL DEFAULT 1,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT
 );
 
@@ -16,8 +16,8 @@ CREATE TABLE "phbrand" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT
 );
 
@@ -26,8 +26,8 @@ CREATE TABLE "phgroup" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 1,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT
 );
 
@@ -44,8 +44,8 @@ CREATE TABLE "phproduct" (
     "status" INTEGER NOT NULL DEFAULT 1,
     "brandId" INTEGER NOT NULL,
     "groupId" INTEGER NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT,
     CONSTRAINT "phproduct_brandId_fkey" FOREIGN KEY ("brandId") REFERENCES "phbrand" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "phproduct_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "phgroup" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -59,8 +59,8 @@ CREATE TABLE "phcustomer" (
     "phone" TEXT NOT NULL,
     "image" TEXT,
     "status" INTEGER NOT NULL DEFAULT 1,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT,
     "total" REAL NOT NULL DEFAULT 0
 );
@@ -74,10 +74,10 @@ CREATE TABLE "phoperation" (
     "discount" REAL NOT NULL DEFAULT 0,
     "customerId" INTEGER,
     "employeeId" INTEGER,
-    "estimation" DATETIME,
+    "estimation" INTEGER,
     "appKey" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     CONSTRAINT "phoperation_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "phcustomer" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "phoperation_employeeId_fkey" FOREIGN KEY ("employeeId") REFERENCES "phemployee" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -90,8 +90,8 @@ CREATE TABLE "phbooking" (
     "quantity" INTEGER NOT NULL,
     "name" TEXT,
     "note" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT,
     "operationId" INTEGER NOT NULL,
     CONSTRAINT "phbooking_productId_fkey" FOREIGN KEY ("productId") REFERENCES "phproduct" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
@@ -103,8 +103,8 @@ CREATE TABLE "phoperationissue" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "note" TEXT,
     "image" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT,
     "operationId" INTEGER NOT NULL,
     CONSTRAINT "phoperationissue_operationId_fkey" FOREIGN KEY ("operationId") REFERENCES "phoperation" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -120,9 +120,9 @@ CREATE TABLE "phbill" (
     "discount" REAL NOT NULL DEFAULT 0,
     "customerId" INTEGER,
     "employeeId" INTEGER,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "estimation" DATETIME,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
+    "estimation" INTEGER,
     "appKey" TEXT,
     "total" REAL NOT NULL,
     "profit" REAL NOT NULL,
@@ -140,8 +140,8 @@ CREATE TABLE "phorder" (
     "quantity" INTEGER NOT NULL,
     "name" TEXT,
     "note" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT,
     "billId" INTEGER NOT NULL,
     "total" REAL NOT NULL,
@@ -156,8 +156,8 @@ CREATE TABLE "phbillissue" (
     "operationIssueId" INTEGER NOT NULL,
     "note" TEXT,
     "image" TEXT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT,
     "billId" INTEGER NOT NULL,
     CONSTRAINT "phbillissue_billId_fkey" FOREIGN KEY ("billId") REFERENCES "phbill" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -168,8 +168,8 @@ CREATE TABLE "phemployee" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
+    "createdAt" INTEGER NOT NULL,
+    "updatedAt" INTEGER,
     "appKey" TEXT,
     "status" INTEGER NOT NULL DEFAULT 1
 );

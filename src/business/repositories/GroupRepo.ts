@@ -1,6 +1,7 @@
 import { GroupEntity } from './model';
 
 import { prisma } from '../../../prisma/PrismaClient';
+import { DateTimeUtils } from '@business/common';
 
 export class GroupRepo {
 	static async update(id: number, name: string, status: number): Promise<GroupEntity | null> {
@@ -11,6 +12,7 @@ export class GroupRepo {
 			data: {
 				name,
 				status,
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		return group;
@@ -21,6 +23,8 @@ export class GroupRepo {
 			data: {
 				name,
 				status,
+				createdAt: DateTimeUtils.now(),
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		return group;
