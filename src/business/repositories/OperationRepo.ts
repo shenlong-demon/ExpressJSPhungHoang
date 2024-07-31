@@ -1,8 +1,8 @@
-import {OperationEntity} from './model';
-import {CONSTANT, DB_CONSTANT, Logger} from '@core/common';
-import {AssignCustomerRequest, CreateOperationRequest, SetOperationDiscountRequest} from '@business/model';
+import { OperationEntity } from './model';
+import { CONSTANT, DB_CONSTANT, Logger } from '@core/common';
+import { AssignCustomerRequest, CreateOperationRequest, SetOperationDiscountRequest, SetOperationEstimationRequest } from '@business/model';
 
-import {prisma} from '../../../prisma/PrismaClient';
+import { prisma } from '../../../prisma/PrismaClient';
 
 export class OperationRepo {
 	static async create(req: CreateOperationRequest): Promise<OperationEntity | null> {
@@ -116,6 +116,18 @@ export class OperationRepo {
 			},
 			data: {
 				discount: req.discount,
+			},
+		});
+		return OperationRepo.getOperation(operationId);
+	}
+
+	static async setEstimation(operationId: number, req: SetOperationEstimationRequest): Promise<OperationEntity | null> {
+		const update = await prisma.phoperation.update({
+			where: {
+				id: operationId,
+			},
+			data: {
+				estimation: new Date(req.newDate),
 			},
 		});
 		return OperationRepo.getOperation(operationId);

@@ -19,7 +19,7 @@ import {
 	CreateOperationIssue,
 	CreateOperationRequest,
 	SetBookingNoteRequest,
-	SetOperationDiscountRequest,
+	SetOperationDiscountRequest, SetOperationEstimationRequest,
 } from '@business/model';
 
 export class OperationService {
@@ -176,6 +176,11 @@ export class OperationService {
 
 	static async setDiscount(operationId: number, req: SetOperationDiscountRequest): Promise<Dto<Operation | null>> {
 		const operation: OperationEntity | null = await OperationRepo.setDiscount(operationId, req);
+		return Dto.success(operation);
+	}
+
+	static async setEstimation(operationId: number, req: SetOperationEstimationRequest) {
+		const operation: OperationEntity | null = await OperationRepo.setEstimation(operationId, req);
 		return Dto.success(operation);
 	}
 }
