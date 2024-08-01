@@ -1,6 +1,6 @@
 import { Dto, Logger } from '@core/common';
 import { BillRepo, BookingRepo, OperationIssueRepo, OperationRepo } from '@business/repositories';
-import { Operation, Product } from '@business/services/model';
+import { Bill, Operation, Product } from '@business/services/model';
 import {
 	BillEntity,
 	BillIssueEntity,
@@ -19,7 +19,8 @@ import {
 	CreateOperationIssue,
 	CreateOperationRequest,
 	SetBookingNoteRequest,
-	SetOperationDiscountRequest, SetOperationEstimationRequest,
+	SetOperationDiscountRequest,
+	SetOperationEstimationRequest,
 } from '@business/model';
 
 export class OperationService {
@@ -67,7 +68,7 @@ export class OperationService {
 		return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
 	}
 
-	static async prepareReceipt(operationId: number): Promise<Dto<BillEntity | null>> {
+	static async prepareReceipt(operationId: number): Promise<Dto<Bill | null>> {
 		const operation: OperationEntity | null = await OperationRepo.getOperation(operationId);
 		if (!!operation) {
 			const bill: BillEntity = {

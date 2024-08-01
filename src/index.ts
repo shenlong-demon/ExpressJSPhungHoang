@@ -10,7 +10,6 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-import { TestRoute } from './TestRoute';
 import app from './app';
 
 export default {

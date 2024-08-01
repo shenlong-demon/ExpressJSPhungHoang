@@ -1,4 +1,4 @@
-import { BillEntity } from './model';
+import { BillEntity, BillIssueEntity, OrderEntity } from './model';
 import { Logger } from '@core/common';
 import { prisma } from '../../../prisma/PrismaClient';
 import { DateTimeUtils } from '@business/common';
@@ -30,52 +30,72 @@ export class BillRepo {
 		return op as BillEntity | null;
 	}
 	static async create(bill: BillEntity): Promise<BillEntity | null> {
+		const { id, customer, employee, orders, issues, total, profit, ...newBill } = {
+			...bill,
+		};
+		const finalBill = await prisma.phbill.create({
+			data: { ...newBill, total: 0, profit: 0 },
+		});
 		try {
-			const final: BillEntity | null = await prisma.$transaction(async (prismaTrans) => {
-				const { id, customer, employee, orders, issues, ...newBill } = {
-					...bill,
-				};
-				if (bill.customerId) {
-					await prismaTrans.phcustomer.update({
-						where: {
-							id: bill.customerId,
-						},
-						data: {
-							total: { increment: bill.total },
-							updatedAt: DateTimeUtils.now()
-						},
-					});
-				}
-				// Update the total of the Operation
-				const finalBill = await prismaTrans.phbill.create({
-					data: newBill,
-				});
-				// // Update the totals of each Booking
-				for (const order of bill.orders || []) {
+			const orderMany = await prisma.phorder.createMany({
+				data: (bill.orders || []).map((order: OrderEntity): any => {
 					const { id, product, ...newOrder } = {
 						...order,
 						billId: finalBill.id,
 					};
-					await prismaTrans.phorder.create({
-						data: newOrder,
-					});
-				}
-				for (const issue of bill.issues || []) {
+					return newOrder;
+				}),
+			});
+
+			const issueMany = await prisma.phbillissue.createMany({
+				data: (bill.issues || []).map((issue: BillIssueEntity): any => {
 					const { id, ...newIssue } = {
 						...issue,
 						billId: finalBill.id,
 					};
-					await prismaTrans.phbillissue.create({
-						data: newIssue,
-					});
-				}
-				return BillRepo.getBill(finalBill.id);
+					return newIssue;
+				}),
 			});
-			Logger.log(() => [`BillRepo create RESULT`, final]);
-			return final;
-		} catch (e) {
-			Logger.log(() => [`BillRepo create ERROR`, e]);
+
+			const finalUpdateBill = await prisma.phbill.update({
+				where: {
+					id: finalBill.id,
+				},
+				data: {
+					total: bill.total,
+					profit: bill.profit,
+					updatedAt: DateTimeUtils.now(),
+				},
+			});
+			if (bill.customerId) {
+				const updateCustomer = await prisma.phcustomer.update({
+					where: {
+						id: bill.customerId,
+					},
+					data: {
+						total: { increment: bill.total },
+						updatedAt: DateTimeUtils.now(),
+					},
+				});
+			}
+			const deleteBookings = await prisma.phbooking.deleteMany({
+				where: { operationId: bill.operationId },
+			});
+			const deleteIssues = await prisma.phoperationissue.deleteMany({
+				where: { operationId: bill.operationId },
+			});
+			const deleteOperation = await prisma.phoperation.delete({
+				where: { id: bill.operationId },
+			});
+			return BillRepo.getBill(bill.id);
+		} catch (ex) {
+			Logger.log(() => [`BillRepo create ERROR `, ex]);
+			const finalBill = await prisma.phbill.delete({
+				where: {
+					id: bill.id,
+				},
+			});
+			return null;
 		}
-		return null;
 	}
 }

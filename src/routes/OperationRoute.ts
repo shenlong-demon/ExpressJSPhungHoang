@@ -8,7 +8,8 @@ import {
 	CreateOperationIssue,
 	ReceiptRequest,
 	SetBookingNoteRequest,
-	SetOperationDiscountRequest, SetOperationEstimationRequest,
+	SetOperationDiscountRequest,
+	SetOperationEstimationRequest,
 } from '@business/model';
 import { CancelBookingRequest } from '@business/model/request/CancelBookingRequest';
 
@@ -43,5 +44,6 @@ router.put('/set-operation-discount/:id', async (c) =>
 router.put('/set-operation-estimation/:id', async (c) =>
 	c.json(await OperationFacade.setEstimation(Number(c.req.param('id')), (await c.req.json()) as SetOperationEstimationRequest)),
 );
+router.put('/get-operation-detail/:id', async (c) => c.json(await OperationFacade.getOperationDetail(Number(c.req.param('id')))));
 
 export default router;

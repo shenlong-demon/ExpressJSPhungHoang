@@ -8,7 +8,7 @@ import {
 	SetOperationDiscountRequest,
 	SetOperationEstimationRequest,
 } from '@business/model';
-import { Operation, OperationService, Product, ProductService } from '@business/services';
+import { Bill, Operation, OperationService, Product, ProductService } from '@business/services';
 import { Dto } from '@core/common';
 import { CancelBookingRequest } from '@business/model/request/CancelBookingRequest';
 
@@ -35,11 +35,11 @@ export class OperationFacade {
 		return dto.bypass();
 	}
 
-	static async receipt(operationId: number, req: ReceiptRequest): Promise<Dto<Operation | null>> {
+	static async receipt(operationId: number, req: ReceiptRequest): Promise<Dto<Bill | null>> {
 		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
 		if (dto.next()) {
 			const op: Operation = dto.data as Operation;
-			const assignDto: Dto<Operation | null> = await OperationService.prepareReceipt(operationId);
+			const assignDto: Dto<Bill | null> = await OperationService.prepareReceipt(operationId);
 			return assignDto;
 		}
 		return dto.bypass();
@@ -103,5 +103,10 @@ export class OperationFacade {
 			return newOp;
 		}
 		return dto.bypass();
+	}
+
+	static async getOperationDetail(operationId: number): Promise<Dto<Operation | null>> {
+		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+		return dto;
 	}
 }
