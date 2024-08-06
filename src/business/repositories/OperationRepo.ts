@@ -134,4 +134,16 @@ export class OperationRepo {
 		});
 		return OperationRepo.getOperation(operationId);
 	}
+
+	static async deleteOperation(operationId: number): Promise<void> {
+		const deleteBookings = await prisma.phbooking.deleteMany({
+			where: { operationId: operationId },
+		});
+		const deleteIssues = await prisma.phoperationissue.deleteMany({
+			where: { operationId: operationId },
+		});
+		const deleteOperation = await prisma.phoperation.delete({
+			where: { id: operationId },
+		});
+	}
 }

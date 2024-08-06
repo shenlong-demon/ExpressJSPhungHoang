@@ -3,7 +3,7 @@ import { CreateCustomerRequest, FilterCustomerRequest, UpdateCustomerRequest } f
 import { CONSTANT, DB_CONSTANT } from '@core/common';
 
 import { prisma } from '../../../prisma/PrismaClient';
-import {DateTimeUtils} from "@business/common";
+import { DateTimeUtils } from '@business/common';
 
 export class CustomerRepo {
 	// static async getCustomer(req: FilterCustomerRequest): Promise<CustomerEntity[]> {
@@ -49,6 +49,20 @@ export class CustomerRepo {
 			},
 		});
 		return obj;
+	}
+
+	static async updateTotal(customerId: number, moreTotal: number): Promise<void> {
+		const obj: any | null = await prisma.phcustomer.update({
+			where: {
+				id: customerId,
+			},
+			data: {
+				total: {
+					increment: moreTotal,
+				},
+				updatedAt: DateTimeUtils.now(),
+			},
+		});
 	}
 
 	static async searchCustomers(req: FilterCustomerRequest): Promise<CustomerEntity[]> {

@@ -15,3 +15,7 @@ export * from './SetBookingNoteRequest';
 export * from './SetOperationDiscountRequest';
 export * from './CreateOperationRequest';
 export * from './SetOperationEstimationRequest';
+export * from './CreateBrandRequest';
+export * from './UpdateBrandRequest';
+export * from './CreateGroupRequest';
+export * from './UpdateGroupRequest';
