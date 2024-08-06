@@ -142,6 +142,7 @@ model phbill {
     customerId    Int?
     employee      phemployee?     @relation(fields: [employeeId], references: [id])
     employeeId    Int?
+    receiptedAt   Int			@default(0)
     createdAt     Int
     updatedAt     Int?
     estimation    Int?
@@ -196,4 +197,16 @@ model phemployee {
     status        Int             @default(1)
     operations    phoperation[]
     bills         phbill[]
+}
+
+model phcloseoutreport {
+    id            Int             @id                 @unique  @default(autoincrement())
+    date		  Int
+   	numberOfBill  Int
+   	totalBill	  Int
+   	totalProfit   Float
+   	totalDiscount Float
+    createdAt     Int
+    updatedAt     Int?
+    appKey        String?         @default(uuid())
 }

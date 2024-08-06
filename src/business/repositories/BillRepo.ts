@@ -6,6 +6,27 @@ import { CustomerRepo } from '@business/repositories/CustomerRepo';
 import { OperationRepo } from '@business/repositories/OperationRepo';
 
 export class BillRepo {
+	public static async getBills(fromDate: number, toDate: number): Promise<BillEntity[]> {
+		Logger.log(() => [`BillRepo getBills fromDate ${fromDate}  toDate ${toDate}`]);
+
+		const bills = await prisma.phbill.findMany({
+			where: {
+				AND: [
+					{
+						receiptedAt: {
+							gte: fromDate,
+						},
+					},
+					{
+						receiptedAt: {
+							lte: toDate,
+						},
+					},
+				],
+			},
+		});
+		return bills as BillEntity[];
+	}
 	static async getBill(id: number): Promise<BillEntity | null> {
 		Logger.log(() => [`BillRepo getBill ${id}`]);
 		const op = await prisma.phbill.findFirst({
@@ -36,7 +57,7 @@ export class BillRepo {
 			...bill,
 		};
 		const finalBill = await prisma.phbill.create({
-			data: { ...newBill, total: 0, profit: 0 },
+			data: { ...newBill, total: 0, profit: 0, discount: 0, receiptedAt: DateTimeUtils.now() },
 		});
 		try {
 			await BillRepo.addOrders(finalBill.id, orders);
@@ -53,6 +74,7 @@ export class BillRepo {
 				data: {
 					total: bill.total,
 					profit: bill.profit,
+					discount: bill.discount,
 					updatedAt: DateTimeUtils.now(),
 				},
 			});

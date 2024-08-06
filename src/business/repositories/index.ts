@@ -8,3 +8,4 @@ export * from './BookingRepo';
 export * from './BillRepo';
 export * from './OperationIssueRepo';
 export * from './TestRepo';
+export * from './CloseOutReportRepo';

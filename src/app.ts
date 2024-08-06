@@ -10,6 +10,7 @@ import operationRoute from './routes/OperationRoute';
 import customerRoute from './routes/CustomerRoute';
 import dataRoute from './routes/DataRoute';
 import bookingRoute from './routes/BookingRoute';
+import reportRoute from './routes/ReportRoute';
 
 const app = new Hono<{ Bindings: Env }>();
 let initialized: boolean = false;
@@ -38,4 +39,5 @@ app.route('/operation', operationRoute);
 app.route('/customer', customerRoute);
 app.route('/data', dataRoute);
 app.route('/booking', bookingRoute);
+app.route('/report', reportRoute);
 export default app;

@@ -19,3 +19,4 @@ export * from './CreateBrandRequest';
 export * from './UpdateBrandRequest';
 export * from './CreateGroupRequest';
 export * from './UpdateGroupRequest';
+export * from './DoCloseOutReportRequest';

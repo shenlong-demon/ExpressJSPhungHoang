@@ -10,7 +10,7 @@ import {
 	OrderEntity,
 	ProductEntity,
 } from '@business/repositories/model';
-import { ERROR_CODE, WARNING_CODE } from '@business/common';
+import { DateTimeUtils, ERROR_CODE, WARNING_CODE } from '@business/common';
 import { BookingRequestSdo } from '@business/repositories/request';
 import {
 	AddOperationServiceRequest,
@@ -90,6 +90,7 @@ export class OperationService {
 				total: 0,
 				customer: operation.customer,
 				employee: operation.employee,
+				receiptedAt: DateTimeUtils.now(),
 			};
 			let operationProfit: number = 0;
 			let operationTotal: number = 0;
@@ -130,8 +131,8 @@ export class OperationService {
 				};
 				bill.orders.push(order);
 			}
-			bill.profit = operationProfit;
-			bill.total = operationTotal;
+			bill.profit = operationProfit - operation.discount;
+			bill.total = operationTotal - operation.discount;
 			Logger.log(() => [`OperationService prepareReceipt operation`, operation, bill]);
 
 			const issues: OperationIssueEntity[] = operation.issues || [];
