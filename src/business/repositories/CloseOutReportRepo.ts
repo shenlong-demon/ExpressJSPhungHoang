@@ -47,4 +47,24 @@ export class CloseOutReportRepo {
 			});
 		}
 	}
+
+	public static async getCloseOutReports(fromDate: number, toDate: number): Promise<CloseOutReportEntity[]> {
+		const list = await prisma.phcloseoutreport.findMany({
+			where: {
+				AND: [
+					{
+						date: {
+							gte: fromDate,
+						},
+					},
+					{
+						date: {
+							lte: toDate,
+						},
+					},
+				],
+			},
+		});
+		return list as CloseOutReportEntity[];
+	}
 }

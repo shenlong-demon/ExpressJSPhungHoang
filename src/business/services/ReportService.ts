@@ -1,6 +1,6 @@
 import { CONSTANT, Dto } from '@core/common';
 import { CloseOutReport, Operation } from '@business/services/model';
-import { DoCloseOutReportRequest } from '@business/model';
+import { DoCloseOutReportRequest, GetCloseOutReportsRequest } from '@business/model';
 import { BillEntity, CloseOutReportEntity } from '@business/repositories/model';
 import { BillRepo, CloseOutReportRepo } from '@business/repositories';
 import { DateTimeUtils } from '@business/common';
@@ -33,5 +33,11 @@ export class ReportService {
 		const report: CloseOutReportEntity | null = await CloseOutReportRepo.update(entity, fromTime, toTime);
 
 		return Dto.success(report);
+	}
+	static async getCloseOutReports(req: GetCloseOutReportsRequest): Promise<Dto<CloseOutReport[]>> {
+		const fromTime: number = DateTimeUtils.getStartOfDateInMonth(req.date);
+		const toTime: number = DateTimeUtils.getEndOfDateInMonth(req.date);
+		const list: CloseOutReportEntity[] = await CloseOutReportRepo.getCloseOutReports(fromTime, toTime);
+		return Dto.success(list);
 	}
 }
