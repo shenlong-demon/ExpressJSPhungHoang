@@ -42,7 +42,8 @@ binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "phd1"
 database_id = "8ca25fef-1273-4ca3-a23e-e6674842dd9d"
 
-
+[vars]
+JWT_SECRET_KEY = "JWT_SECRET_KEY"
 # Bind a dispatch namespace. Use Workers for Platforms to deploy serverless functions programmatically on behalf of your customers.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms
 # [[dispatch_namespaces]]

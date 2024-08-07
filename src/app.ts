@@ -12,12 +12,14 @@ import dataRoute from './routes/DataRoute';
 import bookingRoute from './routes/BookingRoute';
 import reportRoute from './routes/ReportRoute';
 import { jwtAuth } from './middlewares';
+import { GlobalConfig } from '@business/common';
 
 const app = new Hono<{ Bindings: Env }>();
 let initialized: boolean = false;
 app.use('*', async (c, next) => {
 	if (!initialized) {
 		initDB(c.env.DB);
+		GlobalConfig.init(c.env);
 		initialized = true;
 	}
 	await next();
