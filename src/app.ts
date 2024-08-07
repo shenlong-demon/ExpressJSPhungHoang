@@ -25,7 +25,7 @@ app.use('*', async (c, next) => {
 	await next();
 });
 app.onError((err, c) => {
-	Logger.log(() => [`${err}`]);
+	Logger.log(() => [`app.onError ${err}`, err]);
 	return c.json(
 		{
 			error: err,

@@ -6,6 +6,21 @@ import { prisma } from '../../../prisma/PrismaClient';
 import { DateTimeUtils } from '@business/common';
 
 export class OperationRepo {
+	private static FULL_OPERATION_INCLUDE: {
+		employee: true;
+		customer: true;
+		bookings: {
+			include: {
+				product: {
+					include: {
+						brand: false;
+						group: false;
+					};
+				};
+			};
+		};
+		issues: true;
+	};
 	static async create(req: CreateOperationRequest): Promise<OperationEntity | null> {
 		const operation = await prisma.phoperation.create({
 			data: {
@@ -36,21 +51,7 @@ export class OperationRepo {
 			where: {
 				id,
 			},
-			include: {
-				employee: true,
-				customer: true,
-				bookings: {
-					include: {
-						product: {
-							include: {
-								brand: false,
-								group: false,
-							},
-						},
-					},
-				},
-				issues: true,
-			},
+			include: OperationRepo.FULL_OPERATION_INCLUDE,
 		});
 		Logger.log(() => [`OperationRepo getOperation ${id} RESULT`, op]);
 
