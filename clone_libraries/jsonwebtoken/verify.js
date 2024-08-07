@@ -7,6 +7,7 @@ const validateAsymmetricKey = require('./lib/validateAsymmetricKey');
 const PS_SUPPORTED = require('./lib/psSupported');
 const jws = require('jws');
 import { KeyObject, createSecretKey, createPublicKey } from 'node:crypto';
+import { Buffer } from 'safe-buffer';
 
 const PUB_KEY_ALGS = ['RS256', 'RS384', 'RS512'];
 const EC_KEY_ALGS = ['ES256', 'ES384', 'ES512'];
