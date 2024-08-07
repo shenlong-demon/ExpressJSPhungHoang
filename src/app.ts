@@ -11,6 +11,7 @@ import customerRoute from './routes/CustomerRoute';
 import dataRoute from './routes/DataRoute';
 import bookingRoute from './routes/BookingRoute';
 import reportRoute from './routes/ReportRoute';
+import { jwtAuth } from './middlewares';
 
 const app = new Hono<{ Bindings: Env }>();
 let initialized: boolean = false;
@@ -30,6 +31,15 @@ app.onError((err, c) => {
 		500,
 	);
 });
+app.use('/product/*', jwtAuth);
+app.use('/brand/*', jwtAuth);
+app.use('/group/*', jwtAuth);
+app.use('/operation/*', jwtAuth);
+app.use('/customer/*', jwtAuth);
+app.use('/data/*', jwtAuth);
+app.use('/booking/*', jwtAuth);
+app.use('/report/*', jwtAuth);
+
 app.route('/', testRoute);
 app.route('/auth', authRoute); // Handle /book
 app.route('/product', productRoute);

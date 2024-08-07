@@ -1,8 +1,8 @@
 import { User } from './model';
-import { CONSTANT, Logger } from '../../core/common';
 
 // @ts-ignore
 import * as jwt from 'jsonwebtoken';
+import { CONSTANT, Logger } from '@core/common';
 export class TokenService {
 	private static SECRET_KEY = 'your_secret_key';
 	static async getToken(user: User): Promise<string> {
@@ -15,13 +15,13 @@ export class TokenService {
 		return token;
 	}
 
-	static verifyToken(token: string): string | null {
+	static async verifyToken(token: string): Promise<string | null> {
 		try {
-			const decoded = jwt.verify(token.split(' ')[1], TokenService.SECRET_KEY);
-			Logger.log(() => [`TokenService decoded  ${decoded}`, decoded]);
+			const decoded = await jwt.verify(token.split(' ')[1], TokenService.SECRET_KEY);
+			Logger.log(() => [`TokenService decoded  ${decoded}`, decoded, token]);
 			return decoded.userId;
 		} catch (error) {
-			Logger.log(() => [`TokenService decoded  ${error}`, error]);
+			Logger.log(() => [`TokenService decoded  ${error}`, error, token]);
 		}
 		return CONSTANT.STR_EMPTY;
 	}
