@@ -15,13 +15,14 @@ export class TokenService {
 		return token;
 	}
 
-	static async verifyToken(token: string): Promise<string | null> {
+	static verifyToken(authorization: string): string | null {
+		const token: string = authorization.split(' ')[1];
 		try {
-			const decoded = await jwt.verify(token.split(' ')[1], TokenService.SECRET_KEY);
-			Logger.log(() => [`TokenService decoded  ${decoded}`, decoded, token]);
+			const decoded = jwt.verify(token, TokenService.SECRET_KEY);
+			Logger.log(() => [`TokenService decoded ${TokenService.SECRET_KEY}  ${decoded}`, decoded, token]);
 			return decoded.userId;
 		} catch (error) {
-			Logger.log(() => [`TokenService decoded  ${error}`, error, token]);
+			Logger.log(() => [`TokenService decoded ${TokenService.SECRET_KEY}  ${error}`, error, token]);
 		}
 		return CONSTANT.STR_EMPTY;
 	}
