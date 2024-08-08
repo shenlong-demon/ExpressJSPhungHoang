@@ -14,19 +14,7 @@ export class OperationIssueRepo {
 				image: req.image,
 				createdAt: DateTimeUtils.now(),
 				updatedAt: DateTimeUtils.now(),
-			},
-			include: {
-				operation: {
-					include: {
-						bookings: {
-							include: {
-								product: true,
-							},
-						},
-						issues: true,
-					},
-				},
-			},
+			}
 		});
 		return issue as OperationIssueEntity;
 	}

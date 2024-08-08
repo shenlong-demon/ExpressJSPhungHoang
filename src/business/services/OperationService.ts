@@ -57,7 +57,7 @@ export class OperationService {
 				booking.operation,
 			);
 		}
-		return Dto.success(booking.operation);
+		return Dto.success(await OperationRepo.getOperation(operationId));
 	}
 
 	static async assignCustomer(operationId: number, req: AssignCustomerRequest): Promise<Dto<Operation | null>> {
@@ -159,12 +159,12 @@ export class OperationService {
 
 	static async createIssue(operationId: number, req: CreateOperationIssue): Promise<Dto<Operation | null>> {
 		const issue: OperationIssueEntity = await OperationIssueRepo.createIssue(operationId, req);
-		return Dto.success(issue.operation);
+		return Dto.success( await OperationRepo.getOperation(operationId));
 	}
 
 	static async addService(operationId: number, req: AddOperationServiceRequest): Promise<Dto<Operation | null>> {
 		const booking: BookingEntity = await BookingRepo.addService(operationId, req);
-		return Dto.success(booking.operation);
+		return Dto.success( await OperationRepo.getOperation(operationId));
 	}
 
 	static async cancelBooking(operationId: number, req: CancelBookingRequest): Promise<Dto<Operation | null>> {

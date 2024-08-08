@@ -11,40 +11,28 @@ export class BookingRepo {
 	static async booking(operationId: number, req: BookingRequestSdo): Promise<BookingEntity> {
 		Logger.log(() => [`BookingRepo booking ${operationId}`, req]);
 		const quantity: number = req.quantity;
-		const finalBooking = await prisma.$transaction(async (prisma) => {
-			await prisma.phproduct.update({
-				where: { id: req.productId },
-				data: { quantity: { increment: quantity * -1 } },
-			});
-
-			const bookingItem = await prisma.phbooking.create({
-				data: {
-					productId: req.productId,
-					operationId: operationId,
-					price: req.price,
-					quantity,
-					name: req.productName,
-					note: CONSTANT.STR_EMPTY,
-					createdAt: DateTimeUtils.now(),
-					// profit: (req.price - req.basePrice) * quantity
-				},
-				include: {
-					operation: {
-						include: {
-							bookings: {
-								include: {
-									product: true,
-								},
-							},
-						},
-					},
-				},
-			});
-			return bookingItem;
+		const bookingItem = await prisma.phbooking.create({
+			data: {
+				productId: req.productId,
+				operationId: operationId,
+				price: req.price,
+				quantity,
+				name: req.productName,
+				note: CONSTANT.STR_EMPTY,
+				createdAt: DateTimeUtils.now(),
+				updatedAt: DateTimeUtils.now(),
+				// profit: (req.price - req.basePrice) * quantity
+			},
+			include: {
+				product: true,
+			},
 		});
-		Logger.log(() => [`BookingRepo booking ${operationId} RESULT`, finalBooking]);
+		await prisma.phproduct.update({
+			where: { id: req.productId },
+			data: { quantity: { increment: quantity * -1 }, updatedAt: DateTimeUtils.now() },
+		});
 
-		return finalBooking as BookingEntity;
+		return bookingItem as BookingEntity;
 	}
 
 	static async addService(operationId: number, req: AddOperationServiceRequest): Promise<BookingEntity> {
@@ -59,17 +47,6 @@ export class BookingRepo {
 				name: req.name,
 				note: req.note,
 				createdAt: DateTimeUtils.now(),
-			},
-			include: {
-				operation: {
-					include: {
-						bookings: {
-							include: {
-								product: true,
-							},
-						},
-					},
-				},
 			},
 		});
 

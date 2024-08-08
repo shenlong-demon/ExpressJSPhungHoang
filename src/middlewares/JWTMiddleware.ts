@@ -3,7 +3,7 @@ import { Context, Next } from 'hono';
 import { Logger } from '@core/common';
 
 const jwtAuth = async (c: Context, next: Next) => {
-	const authHeader = c.req.header('token');
+	const authHeader: string | undefined = c.req.header('Authorization') || c.req.header('token');
 	Logger.log(() => [`JWTMiddleware authHeader ${authHeader}`]);
 	if (!authHeader) {
 		return c.json({ message: 'No token provided' }, 401);

@@ -47,25 +47,9 @@ export class OperationRepo {
 
 	static async getOperation(id: number): Promise<OperationEntity | null> {
 		Logger.log(() => [`OperationRepo getOperation ${id}`]);
-		const op = await prisma.phoperation.findFirst({
+		const op = await prisma.phoperation.findUnique({
 			where: {
 				id,
-			},
-			include: OperationRepo.FULL_OPERATION_INCLUDE,
-		});
-		Logger.log(() => [`OperationRepo getOperation ${id} RESULT`, op]);
-
-		return op as OperationEntity;
-	}
-
-	static async assignCustomer(operationId: number, req: AssignCustomerRequest): Promise<OperationEntity | null> {
-		Logger.log(() => [`OperationRepo assignCustomer ${operationId}`, req]);
-		const op = await prisma.phoperation.update({
-			where: {
-				id: operationId,
-			},
-			data: {
-				customerId: req.customerId,
 			},
 			include: {
 				employee: true,
@@ -83,9 +67,24 @@ export class OperationRepo {
 				issues: true,
 			},
 		});
-		Logger.log(() => [`OperationRepo assignCustomer ${operationId} RESULT`, op]);
+		Logger.log(() => [`OperationRepo getOperation ${id} RESULT`, op]);
 
 		return op as OperationEntity;
+	}
+
+	static async assignCustomer(operationId: number, req: AssignCustomerRequest): Promise<OperationEntity | null> {
+		Logger.log(() => [`OperationRepo assignCustomer ${operationId}`, req]);
+		const op = await prisma.phoperation.update({
+			where: {
+				id: operationId,
+			},
+			data: {
+				customerId: req.customerId,
+			},
+		});
+		Logger.log(() => [`OperationRepo assignCustomer ${operationId} RESULT`, op]);
+
+		return OperationRepo.getOperation(operationId);
 	}
 
 	static async updateFinalOperation(operation: OperationEntity): Promise<OperationEntity | null> {

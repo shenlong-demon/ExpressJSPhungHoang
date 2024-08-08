@@ -8,7 +8,8 @@
 		"start": "wrangler dev",
 		"cf-typegen": "wrangler types",
 		"postinstall": "sh ./run-postinstall.sh",
-		"local": "ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 8787"
+		"local": "ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 8787",
+	  	"sql-local": "sh ./sql_local.sh"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240725.0",
