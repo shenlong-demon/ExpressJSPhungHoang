@@ -3,7 +3,7 @@ import {
 	AssignCustomerRequest,
 	BookingRequest,
 	CreateOperationIssue,
-	ReceiptRequest,
+	ReceiptRequest, RemoveIssueRequest,
 	SetBookingNoteRequest,
 	SetOperationDiscountRequest,
 	SetOperationEstimationRequest,
@@ -108,5 +108,15 @@ export class OperationFacade {
 	static async getOperationDetail(operationId: number): Promise<Dto<Operation | null>> {
 		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
 		return dto;
+	}
+
+	static async removeIssue(operationId: number, req: RemoveIssueRequest) {
+		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+		if (dto.next()) {
+			const op: Operation = dto.data as Operation;
+			const assignDto: Dto<Operation | null> = await OperationService.removeIssue(operationId, req);
+			return assignDto;
+		}
+		return dto.bypass();
 	}
 }

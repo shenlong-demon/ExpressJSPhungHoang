@@ -21,3 +21,4 @@ export * from './CreateGroupRequest';
 export * from './UpdateGroupRequest';
 export * from './DoCloseOutReportRequest';
 export * from './GetCloseOutReportsRequest';
+export * from './RemoveIssueRequest';

@@ -1,6 +1,12 @@
 import { OperationEntity } from './model';
 import { CONSTANT, DB_CONSTANT, Logger } from '@core/common';
-import { AssignCustomerRequest, CreateOperationRequest, SetOperationDiscountRequest, SetOperationEstimationRequest } from '@business/model';
+import {
+	AssignCustomerRequest,
+	CreateOperationRequest,
+	RemoveIssueRequest,
+	SetOperationDiscountRequest,
+	SetOperationEstimationRequest,
+} from '@business/model';
 
 import { prisma } from '../../../prisma/PrismaClient';
 import { DateTimeUtils } from '@business/common';
@@ -130,6 +136,14 @@ export class OperationRepo {
 			},
 			data: {
 				estimation: req.newDate,
+			},
+		});
+		return OperationRepo.getOperation(operationId);
+	}
+	static async removeIssue(operationId: number, req: RemoveIssueRequest): Promise<OperationEntity | null> {
+		const remove = await prisma.phoperationissue.delete({
+			where: {
+				id: req.issueId,
 			},
 		});
 		return OperationRepo.getOperation(operationId);

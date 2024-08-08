@@ -18,6 +18,7 @@ import {
 	CancelBookingRequest,
 	CreateOperationIssue,
 	CreateOperationRequest,
+	RemoveIssueRequest,
 	SetBookingNoteRequest,
 	SetOperationDiscountRequest,
 	SetOperationEstimationRequest,
@@ -159,12 +160,12 @@ export class OperationService {
 
 	static async createIssue(operationId: number, req: CreateOperationIssue): Promise<Dto<Operation | null>> {
 		const issue: OperationIssueEntity = await OperationIssueRepo.createIssue(operationId, req);
-		return Dto.success( await OperationRepo.getOperation(operationId));
+		return Dto.success(await OperationRepo.getOperation(operationId));
 	}
 
 	static async addService(operationId: number, req: AddOperationServiceRequest): Promise<Dto<Operation | null>> {
 		const booking: BookingEntity = await BookingRepo.addService(operationId, req);
-		return Dto.success( await OperationRepo.getOperation(operationId));
+		return Dto.success(await OperationRepo.getOperation(operationId));
 	}
 
 	static async cancelBooking(operationId: number, req: CancelBookingRequest): Promise<Dto<Operation | null>> {
@@ -182,8 +183,13 @@ export class OperationService {
 		return Dto.success(operation);
 	}
 
-	static async setEstimation(operationId: number, req: SetOperationEstimationRequest) {
+	static async setEstimation(operationId: number, req: SetOperationEstimationRequest): Promise<Dto<Operation | null>> {
 		const operation: OperationEntity | null = await OperationRepo.setEstimation(operationId, req);
+		return Dto.success(operation);
+	}
+
+	static async removeIssue(operationId: number, req: RemoveIssueRequest): Promise<Dto<Operation | null>> {
+		const operation: Operation = await OperationRepo.removeIssue(operationId, req);
 		return Dto.success(operation);
 	}
 }
