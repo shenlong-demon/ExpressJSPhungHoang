@@ -11,6 +11,12 @@ export class BookingRepo {
 	static async booking(operationId: number, req: BookingRequestSdo): Promise<BookingEntity> {
 		Logger.log(() => [`BookingRepo booking ${operationId}`, req]);
 		const quantity: number = req.quantity;
+
+		await prisma.phproduct.update({
+			where: { id: req.productId },
+			data: { quantity: { increment: quantity * -1 }, updatedAt: DateTimeUtils.now() },
+		});
+
 		const bookingItem = await prisma.phbooking.create({
 			data: {
 				productId: req.productId,
@@ -21,16 +27,12 @@ export class BookingRepo {
 				note: CONSTANT.STR_EMPTY,
 				createdAt: DateTimeUtils.now(),
 				updatedAt: DateTimeUtils.now(),
-				// profit: (req.price - req.basePrice) * quantity
 			},
 			include: {
 				product: true,
 			},
 		});
-		await prisma.phproduct.update({
-			where: { id: req.productId },
-			data: { quantity: { increment: quantity * -1 }, updatedAt: DateTimeUtils.now() },
-		});
+
 
 		return bookingItem as BookingEntity;
 	}

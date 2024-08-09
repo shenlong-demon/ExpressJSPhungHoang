@@ -55,7 +55,7 @@ export class OperationService {
 			return Dto.warning<Operation>(
 				WARNING_CODE.PRODUCT_QUANTITY_READY_OUT_OF_STOCK,
 				`${booking.name}'s quantity is ${booking.product?.quantity || 0}`,
-				booking.operation,
+				await OperationRepo.getOperation(operationId)
 			);
 		}
 		return Dto.success(await OperationRepo.getOperation(operationId));
@@ -189,7 +189,7 @@ export class OperationService {
 	}
 
 	static async removeIssue(operationId: number, req: RemoveIssueRequest): Promise<Dto<Operation | null>> {
-		const operation: Operation = await OperationRepo.removeIssue(operationId, req);
+		const operation: Operation | null = await OperationRepo.removeIssue(operationId, req);
 		return Dto.success(operation);
 	}
 }

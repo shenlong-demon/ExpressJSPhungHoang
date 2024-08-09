@@ -4,19 +4,19 @@ import { ProductFilterRequest, UpdateProductRequest } from '../model/request';
 import { DB_CONSTANT, Logger } from '../../core/common';
 
 import { prisma } from '../../../prisma/PrismaClient';
-import {DateTimeUtils} from "@business/common";
+import { DateTimeUtils } from '@business/common';
 
 export class ProductRepo {
 	static async createNewProduct(req: CreateProductRequestSdo): Promise<ProductEntity | null> {
 		const product: any | null = await prisma.phproduct.create({
 			data: {
-				code: req.code,
 				name: req.name,
 				otherName: req.otherName,
+				code: req.code,
 				groupId: req.groupId,
 				brandId: req.brandId,
-				price: req.price,
 				basePrice: req.basePrice,
+				price: req.price,
 				quantity: req.quantity,
 				image: req.image,
 				createdAt: DateTimeUtils.now(),
