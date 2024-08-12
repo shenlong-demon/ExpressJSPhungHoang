@@ -1,7 +1,7 @@
 import { BillEntity, BillIssueEntity, OrderEntity, ProductEntity } from './model';
 import { CONSTANT, DB_CONSTANT, Logger } from '@core/common';
 import { prisma } from '../../../prisma/PrismaClient';
-import { DateTimeUtils } from '@business/common';
+import { DateTimeUtils, GlobalConfig } from '@business/common';
 import { CustomerRepo } from '@business/repositories/CustomerRepo';
 import { OperationRepo } from '@business/repositories/OperationRepo';
 import { BillsFilterRequest } from '@business/model';

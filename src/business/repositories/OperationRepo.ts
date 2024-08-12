@@ -93,30 +93,6 @@ export class OperationRepo {
 		return OperationRepo.getOperation(operationId);
 	}
 
-	static async updateFinalOperation(operation: OperationEntity): Promise<OperationEntity | null> {
-		Logger.log(() => [`OperationRepo updateFinalOperation `, operation]);
-
-		const final: OperationEntity | null = await prisma.$transaction(async (prisma) => {
-			// Update the total of the Operation
-			// await prisma.phoperation.update({
-			//     where: { id: operation.id },
-			//     data: { profit: operation.profit },
-			// });
-
-			// Update the totals of each Booking
-			// for (const booking of operation.bookings || []) {
-			//     await prisma.phbooking.update({
-			//         where: { id: booking.id },
-			//         data: { profit: operation.profit},
-			//     });
-			// }
-			return OperationRepo.getOperation(operation.id);
-		});
-		Logger.log(() => [`OperationRepo updateFinalOperation RESULT`, final]);
-
-		return final;
-	}
-
 	static async setDiscount(operationId: number, req: SetOperationDiscountRequest): Promise<OperationEntity | null> {
 		const update = await prisma.phoperation.update({
 			where: {
