@@ -9,3 +9,4 @@ export * from './BrandService';
 export * from './GroupService';
 export * from './OperationService';
 export * from './ReportService';
+export * from './BillService';

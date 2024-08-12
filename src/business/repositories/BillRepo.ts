@@ -1,9 +1,10 @@
-import { BillEntity, BillIssueEntity, OrderEntity } from './model';
-import { Logger } from '@core/common';
+import { BillEntity, BillIssueEntity, OrderEntity, ProductEntity } from './model';
+import { CONSTANT, DB_CONSTANT, Logger } from '@core/common';
 import { prisma } from '../../../prisma/PrismaClient';
 import { DateTimeUtils } from '@business/common';
 import { CustomerRepo } from '@business/repositories/CustomerRepo';
 import { OperationRepo } from '@business/repositories/OperationRepo';
+import { BillsFilterRequest } from '@business/model';
 
 export class BillRepo {
 	public static async getBills(fromDate: number, toDate: number): Promise<BillEntity[]> {
@@ -126,5 +127,54 @@ export class BillRepo {
 				return newIssue;
 			}),
 		});
+	}
+
+	public static async getBillsBy(req: BillsFilterRequest): Promise<BillEntity[]> {
+		Logger.log(() => [`BillRepo getBillsBy `, req]);
+		const bills = await prisma.phbill.findMany({
+			where: {
+				OR: [
+					{
+						name: {
+							contains: req.text || CONSTANT.STR_EMPTY,
+						},
+					},
+					{
+						customer: {
+							name:
+								req.text === null || req.text === CONSTANT.STR_EMPTY
+									? undefined
+									: {
+											contains: req.text,
+										},
+						},
+					},
+				],
+			},
+			include: {
+				employee: true,
+				customer: true,
+				orders: {
+					include: {
+						product: {
+							include: {
+								brand: false,
+								group: false,
+							},
+						},
+					},
+				},
+				issues: true,
+			},
+			skip: req.offset * DB_CONSTANT.PAGING,
+			take: DB_CONSTANT.PAGING,
+			orderBy: [
+				{
+					receiptedAt: 'desc',
+				},
+			],
+		});
+		Logger.log(() => [`BillRepo getBillsBy RETURN `, bills]);
+		return bills as BillEntity[];
 	}
 }
