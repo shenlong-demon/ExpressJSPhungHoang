@@ -43,7 +43,7 @@ database_name = "phd1"
 database_id = "8ca25fef-1273-4ca3-a23e-e6674842dd9d"
 
 [vars]
-JWT_SECRET_KEY = "your_secret_key______"
+JWT_SECRET_KEY = "1d9f119569614501b92063be76d1a73591faca6cd2a6eac84424eea8763da40d"
 # Bind a dispatch namespace. Use Workers for Platforms to deploy serverless functions programmatically on behalf of your customers.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#dispatch-namespace-bindings-workers-for-platforms
 # [[dispatch_namespaces]]

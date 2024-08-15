@@ -9,7 +9,8 @@
 		"cf-typegen": "wrangler types",
 		"postinstall": "sh ./run-postinstall.sh",
 		"local": "ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 8787",
-	  	"sql-local": "sh ./sql_local.sh"
+	  	"sql-local": "sh ./sql_local.sh",
+	  	"sql": "sh ./sql_remote.sh"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240725.0",

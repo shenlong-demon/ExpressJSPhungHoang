@@ -3,9 +3,8 @@ import { Logger } from '@core/common';
 
 export class TestRepo {
 	static async get(): Promise<any> {
-		const user = await prisma.phuser.findFirst();
-		const count = await prisma.phuser.count();
-		const data = { user, count, metadata: 1 };
+		const userCount = await prisma.phuser.count();
+		const data = { userCount, metadata: 1, migration: '0004_add_receiptAt_to_bill_table.sql' };
 		Logger.log(() => [`TestRepo get`, data]);
 		return data;
 	}
