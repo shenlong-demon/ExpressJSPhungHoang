@@ -1,8 +1,8 @@
 import { UserEntity } from './model';
-import { LoginRequest } from '../model/request';
-import { Logger } from '../../core/common';
+import { Logger } from '@core/common';
 import { prisma } from '../../../prisma/PrismaClient';
 import { DateTimeUtils } from '@business/common';
+import { LoginRequest } from '@business/model';
 
 export class UserRepo {
 	// static async createUser(phone: string, password: string) : Promise<any>{
@@ -15,14 +15,14 @@ export class UserRepo {
 
 	static async getByPhoneAndPassword(req: LoginRequest): Promise<UserEntity | null> {
 		// Query returns User or null
-		const user: UserEntity | null = await prisma.phuser.findFirst({
+		const user = await prisma.phuser.findFirst({
 			where: {
 				phone: req.phone,
 				password: req.password,
 			},
 		});
 		Logger.log(() => [`UserRepo getByPhoneAndPassword`, req, user]);
-		return user;
+		return user as UserEntity;
 	}
 
 	static async setToken(id: number, token: string): Promise<void> {

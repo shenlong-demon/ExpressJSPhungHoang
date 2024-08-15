@@ -1,9 +1,9 @@
-import {UserRepo} from '../repositories';
-import {UserEntity} from '../repositories/model';
-import {User} from './model';
-import {ERROR_CODE, STATUS} from '../common';
-import {Dto, Logger} from '../../core/common';
-import {LoginRequest} from '../model/request';
+import { UserRepo } from '../repositories';
+import { UserEntity } from '../repositories/model';
+import { User } from './model';
+import { ERROR_CODE, STATUS } from '../common';
+import { Dto, Logger } from '../../core/common';
+import { LoginRequest } from '../model/request';
 
 export class AuthService {
 	static async login(req: LoginRequest): Promise<Dto<User | null>> {
@@ -13,9 +13,8 @@ export class AuthService {
 			if (user.status === STATUS.ACTIVE) {
 				return Dto.success(user);
 			}
-			return Dto.error(ERROR_CODE.USER_IS_INACTIVE);
 		}
-		return Dto.error(ERROR_CODE.USER_NOT_EXIST);
+		return Dto.error(ERROR_CODE.LOGIN_FAILED);
 	}
 
 	static async setToken(user: User, token: string): Promise<void> {

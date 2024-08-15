@@ -15,7 +15,7 @@ export class Dto<T> {
 		return !this.isError();
 	}
 	public bypass(): Dto<null> {
-		return new Dto<null>(this.code, this.message);
+		return new Dto<null>(this.code, this.message, null);
 	}
 
 	public isError(): boolean {
@@ -26,7 +26,7 @@ export class Dto<T> {
 		return new Dto<T>(0, CONSTANT.STR_EMPTY, data);
 	}
 	public static error(code: number, message?: string): Dto<null> {
-		return new Dto<null>(RESULT_CODE.ERROR | code, message, null);
+		return new Dto<null>(RESULT_CODE.ERROR | code, message || CONSTANT.STR_EMPTY, null);
 	}
 	public static warning<T>(code: number, message: string, data: T | null | undefined): Dto<T> {
 		return new Dto<T>(RESULT_CODE.WARNING | code, message, data);

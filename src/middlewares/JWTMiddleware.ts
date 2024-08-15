@@ -14,6 +14,8 @@ const jwtAuth = async (c: Context, next: Next) => {
 		if (userId) {
 			// c.req.token = token;
 			await next();
+		} else {
+			return c.json({ message: 'Failed to authenticate token' }, 401);
 		}
 	} catch (err) {
 		return c.json({ message: 'Failed to authenticate token' }, 401);
