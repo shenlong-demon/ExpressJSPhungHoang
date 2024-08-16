@@ -19,6 +19,7 @@ export class ProductRepo {
 				price: req.price,
 				quantity: req.quantity,
 				image: req.image,
+				status: req.status,
 				createdAt: DateTimeUtils.now(),
 				updatedAt: DateTimeUtils.now(),
 			},
@@ -43,6 +44,7 @@ export class ProductRepo {
 				price: req.price,
 				basePrice: req.basePrice,
 				image: req.image,
+				status: req.status,
 				updatedAt: DateTimeUtils.now(),
 			},
 			include: {

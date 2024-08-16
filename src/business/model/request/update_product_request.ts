@@ -1,11 +1,11 @@
-
 export type UpdateProductRequest = {
-    name: string;
-    code?: string;
-    otherName?: string;
-    image?: string;
-    price: number;
-    basePrice: number;
-    brandId: number;
-    groupId: number;
+	name: string;
+	code?: string;
+	otherName?: string;
+	image?: string;
+	price: number;
+	basePrice: number;
+	brandId: number;
+	groupId: number;
+	status: number;
 };
