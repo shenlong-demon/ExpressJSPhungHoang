@@ -15,7 +15,11 @@ import billRoute from './routes/BillRoute';
 import { jwtAuth } from './middlewares';
 import { GlobalConfig } from '@business/common';
 
-const app = new Hono<{ Bindings: Env }>();
+export type Variables = {
+	phone: string;
+};
+
+const app = new Hono<{ Bindings: Env; Variables: Variables }>();
 let initialized: boolean = false;
 app.use('*', async (c, next) => {
 	if (!initialized) {

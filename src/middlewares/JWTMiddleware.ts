@@ -10,9 +10,9 @@ const jwtAuth = async (c: Context, next: Next) => {
 	}
 
 	try {
-		const userId: string | null = TokenService.verifyToken(authHeader);
-		if (userId) {
-			// c.req.token = token;
+		const phone: string | null = TokenService.verifyToken(authHeader);
+		if (phone) {
+			c.set('phone', phone);
 			await next();
 		} else {
 			return c.json({ message: 'Failed to authenticate token' }, 401);

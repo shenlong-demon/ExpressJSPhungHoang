@@ -20,4 +20,9 @@ export class AuthService {
 	static async setToken(user: User, token: string): Promise<void> {
 		await UserRepo.setToken(user.id, token);
 	}
+
+	static async logout(phone: string): Promise<Dto<null>> {
+		await UserRepo.logout(phone);
+		return Dto.success(null);
+	}
 }

@@ -1,5 +1,5 @@
 import { UserEntity } from './model';
-import { Logger } from '@core/common';
+import { CONSTANT, Logger } from '@core/common';
 import { prisma } from '../../../prisma/PrismaClient';
 import { DateTimeUtils } from '@business/common';
 import { LoginRequest } from '@business/model';
@@ -32,6 +32,20 @@ export class UserRepo {
 			},
 			data: {
 				token,
+				updatedAt: DateTimeUtils.now(),
+			},
+		});
+	}
+
+	static async logout(phone: string): Promise<void> {
+		Logger.log(() => [`UserRepo logout ${phone}`]);
+
+		const updateUser = await prisma.phuser.update({
+			where: {
+				phone,
+			},
+			data: {
+				token: CONSTANT.STR_EMPTY,
 				updatedAt: DateTimeUtils.now(),
 			},
 		});
