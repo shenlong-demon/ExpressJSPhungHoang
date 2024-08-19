@@ -4,6 +4,7 @@ import {
 	AssignCustomerRequest,
 	CreateOperationRequest,
 	RemoveIssueRequest,
+	RenameOperationRequest,
 	SetOperationDiscountRequest,
 	SetOperationEstimationRequest,
 } from '@business/model';
@@ -32,6 +33,7 @@ export class OperationRepo {
 			data: {
 				name: req.name || CONSTANT.STR_EMPTY,
 				createdAt: DateTimeUtils.now(),
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		return operation as OperationEntity;
@@ -86,6 +88,7 @@ export class OperationRepo {
 			},
 			data: {
 				customerId: req.customerId,
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		Logger.log(() => [`OperationRepo assignCustomer ${operationId} RESULT`, op]);
@@ -100,6 +103,7 @@ export class OperationRepo {
 			},
 			data: {
 				discount: req.discount,
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		return OperationRepo.getOperation(operationId);
@@ -112,6 +116,7 @@ export class OperationRepo {
 			},
 			data: {
 				estimation: req.newDate,
+				updatedAt: DateTimeUtils.now(),
 			},
 		});
 		return OperationRepo.getOperation(operationId);
@@ -135,5 +140,18 @@ export class OperationRepo {
 		const deleteOperation = await prisma.phoperation.delete({
 			where: { id: operationId },
 		});
+	}
+
+	static async renameOperation(operationId: number, req: RenameOperationRequest): Promise<OperationEntity | null> {
+		const update = await prisma.phoperation.update({
+			where: {
+				id: operationId,
+			},
+			data: {
+				name: req.name,
+				updatedAt: DateTimeUtils.now(),
+			},
+		});
+		return OperationRepo.getOperation(operationId);
 	}
 }

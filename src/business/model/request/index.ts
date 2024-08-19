@@ -23,3 +23,4 @@ export * from './DoCloseOutReportRequest';
 export * from './GetCloseOutReportsRequest';
 export * from './RemoveIssueRequest';
 export * from './BillsFilterRequest';
+export * from './RenameOperationRequest';

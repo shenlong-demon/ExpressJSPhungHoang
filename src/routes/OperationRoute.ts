@@ -8,6 +8,7 @@ import {
 	CreateOperationIssue,
 	ReceiptRequest,
 	RemoveIssueRequest,
+	RenameOperationRequest,
 	SetBookingNoteRequest,
 	SetOperationDiscountRequest,
 	SetOperationEstimationRequest,
@@ -50,4 +51,8 @@ router.get('/get-operation-detail/:id', async (c) => c.json(await OperationFacad
 router.put('/remove-issue/:id', async (c) =>
 	c.json(await OperationFacade.removeIssue(Number(c.req.param('id')), (await c.req.json()) as RemoveIssueRequest)),
 );
+router.put('/rename/:id', async (c) =>
+	c.json(await OperationFacade.renameOperation(Number(c.req.param('id')), (await c.req.json()) as RenameOperationRequest)),
+);
+router.delete('/delete/:id', async (c) => c.json(await OperationFacade.deleteOperation(Number(c.req.param('id')))));
 export default router;

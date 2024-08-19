@@ -3,7 +3,9 @@ import {
 	AssignCustomerRequest,
 	BookingRequest,
 	CreateOperationIssue,
-	ReceiptRequest, RemoveIssueRequest,
+	ReceiptRequest,
+	RemoveIssueRequest,
+	RenameOperationRequest,
 	SetBookingNoteRequest,
 	SetOperationDiscountRequest,
 	SetOperationEstimationRequest,
@@ -110,12 +112,32 @@ export class OperationFacade {
 		return dto;
 	}
 
-	static async removeIssue(operationId: number, req: RemoveIssueRequest) {
+	static async removeIssue(operationId: number, req: RemoveIssueRequest): Promise<Dto<Operation | null>> {
 		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
 		if (dto.next()) {
 			const op: Operation = dto.data as Operation;
 			const assignDto: Dto<Operation | null> = await OperationService.removeIssue(operationId, req);
 			return assignDto;
+		}
+		return dto.bypass();
+	}
+
+	static async renameOperation(operationId: number, req: RenameOperationRequest): Promise<Dto<Operation | null>> {
+		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+		if (dto.next()) {
+			const op: Operation = dto.data as Operation;
+			const newDto: Dto<Operation | null> = await OperationService.renameOperation(operationId, req);
+			return newDto;
+		}
+		return dto.bypass();
+	}
+
+	static async deleteOperation(operationId: number): Promise<Dto<null>> {
+		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
+		if (dto.next()) {
+			const op: Operation = dto.data as Operation;
+			const newDto: Dto<null> = await OperationService.deleteOperation(operationId);
+			return newDto;
 		}
 		return dto.bypass();
 	}
