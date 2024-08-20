@@ -200,7 +200,7 @@ export class OperationService {
 	}
 
 	static async deleteOperation(operationId: number): Promise<Dto<null>> {
-		await OperationRepo.deleteOperation(operationId);
+		await OperationRepo.deleteOperation(operationId, true);
 		return Dto.success(null);
 	}
 }

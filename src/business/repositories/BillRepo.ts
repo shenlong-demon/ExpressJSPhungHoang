@@ -79,7 +79,7 @@ export class BillRepo {
 					updatedAt: DateTimeUtils.now(),
 				},
 			});
-			await OperationRepo.deleteOperation(bill.operationId);
+			await OperationRepo.deleteOperation(bill.operationId, false);
 
 			return BillRepo.getBill(bill.id);
 		} catch (ex) {

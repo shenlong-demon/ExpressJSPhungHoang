@@ -1,4 +1,4 @@
-import { OperationEntity } from './model';
+import { BookingEntity, OperationEntity } from './model';
 import { CONSTANT, DB_CONSTANT, Logger } from '@core/common';
 import {
 	AssignCustomerRequest,
@@ -130,7 +130,20 @@ export class OperationRepo {
 		return OperationRepo.getOperation(operationId);
 	}
 
-	static async deleteOperation(operationId: number): Promise<void> {
+	static async deleteOperation(operationId: number, shouldReturnToStock: boolean): Promise<void> {
+		const op: OperationEntity | null = await OperationRepo.getOperation(operationId);
+		if (!!op && shouldReturnToStock) {
+			const bookings: BookingEntity[] = op.bookings;
+			for (let i = 0; i < bookings.length; i++) {
+				const booking: BookingEntity = bookings[i];
+				if (!!booking.productId) {
+					await prisma.phproduct.update({
+						where: { id: booking.productId },
+						data: { quantity: { increment: booking.quantity }, updatedAt: DateTimeUtils.now() },
+					});
+				}
+			}
+		}
 		const deleteBookings = await prisma.phbooking.deleteMany({
 			where: { operationId: operationId },
 		});
