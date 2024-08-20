@@ -133,6 +133,7 @@ export class OperationRepo {
 	static async deleteOperation(operationId: number, shouldReturnToStock: boolean): Promise<void> {
 		const op: OperationEntity | null = await OperationRepo.getOperation(operationId);
 		if (!!op && shouldReturnToStock) {
+			// NOTE: Return to stock
 			const bookings: BookingEntity[] = op.bookings;
 			for (let i = 0; i < bookings.length; i++) {
 				const booking: BookingEntity = bookings[i];

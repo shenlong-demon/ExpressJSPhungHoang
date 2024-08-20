@@ -33,7 +33,6 @@ export class BookingRepo {
 			},
 		});
 
-
 		return bookingItem as BookingEntity;
 	}
 
@@ -58,6 +57,20 @@ export class BookingRepo {
 	}
 
 	static async cancelBooking(operationId: number, req: CancelBookingRequest): Promise<OperationEntity> {
+		const booking: BookingEntity | null = (await prisma.phbooking.findFirst({
+			where: {
+				id: req.bookingId,
+			},
+		})) as BookingEntity | null;
+
+		if (!!booking && booking.productId) {
+			// NOTE: Return to stock
+			await prisma.phproduct.update({
+				where: { id: booking.productId },
+				data: { quantity: { increment: booking.quantity }, updatedAt: DateTimeUtils.now() },
+			});
+		}
+
 		const bookingItem = await prisma.phbooking.delete({
 			where: {
 				id: req.bookingId,
