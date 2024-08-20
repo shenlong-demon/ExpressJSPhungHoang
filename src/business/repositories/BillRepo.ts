@@ -149,6 +149,16 @@ export class BillRepo {
 										},
 						},
 					},
+					{
+						customer: {
+							phone:
+								req.text === null || req.text === CONSTANT.STR_EMPTY
+									? undefined
+									: {
+											contains: req.text,
+										},
+						},
+					},
 				],
 			},
 			include: {
