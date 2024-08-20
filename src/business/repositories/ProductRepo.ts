@@ -43,6 +43,7 @@ export class ProductRepo {
 				brandId: req.brandId,
 				price: req.price,
 				basePrice: req.basePrice,
+				quantity: req.quantity,
 				image: req.image,
 				status: req.status,
 				updatedAt: DateTimeUtils.now(),
