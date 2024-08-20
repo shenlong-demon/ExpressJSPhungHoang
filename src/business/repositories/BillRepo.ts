@@ -131,9 +131,14 @@ export class BillRepo {
 
 	public static async getBillsBy(req: BillsFilterRequest): Promise<BillEntity[]> {
 		Logger.log(() => [`BillRepo getBillsBy `, req]);
+		const billNo: number = Number(req.text);
+		const notBillNo: boolean = isNaN(billNo);
 		const bills = await prisma.phbill.findMany({
 			where: {
 				OR: [
+					{
+						id: notBillNo ? -1 : billNo,
+					},
 					{
 						name: {
 							contains: req.text || CONSTANT.STR_EMPTY,
