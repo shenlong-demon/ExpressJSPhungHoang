@@ -133,35 +133,55 @@ export class BillRepo {
 		Logger.log(() => [`BillRepo getBillsBy `, req]);
 		const billNo: number = Number(req.text);
 		const notBillNo: boolean = isNaN(billNo);
+		const extraTime: number = 2 * 60 * 60 * 1000;
+		const gte: number = !!req.date ? req.date - extraTime : 0;
+		const lte: number = !!req.date ? req.date + extraTime : DateTimeUtils.now();
+		Logger.log(() => [`BillRepo getBillsBy gte ${gte}      lte ${lte} `, req]);
+
 		const bills = await prisma.phbill.findMany({
 			where: {
-				OR: [
+				AND: [
 					{
-						id: notBillNo ? -1 : billNo,
+						OR: [
+							{
+								id: notBillNo ? -1 : billNo,
+							},
+							{
+								name: {
+									contains: req.text || CONSTANT.STR_EMPTY,
+								},
+							},
+							{
+								customer: {
+									name:
+										req.text === null || req.text === CONSTANT.STR_EMPTY
+											? undefined
+											: {
+													contains: req.text,
+												},
+								},
+							},
+							{
+								customer: {
+									phone:
+										req.text === null || req.text === CONSTANT.STR_EMPTY
+											? undefined
+											: {
+													contains: req.text,
+												},
+								},
+							},
+						],
 					},
+
 					{
-						name: {
-							contains: req.text || CONSTANT.STR_EMPTY,
+						receiptedAt: {
+							gte,
 						},
 					},
 					{
-						customer: {
-							name:
-								req.text === null || req.text === CONSTANT.STR_EMPTY
-									? undefined
-									: {
-											contains: req.text,
-										},
-						},
-					},
-					{
-						customer: {
-							phone:
-								req.text === null || req.text === CONSTANT.STR_EMPTY
-									? undefined
-									: {
-											contains: req.text,
-										},
+						receiptedAt: {
+							lte,
 						},
 					},
 				],
