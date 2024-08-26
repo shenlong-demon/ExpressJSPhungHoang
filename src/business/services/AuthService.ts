@@ -14,7 +14,7 @@ export class AuthService {
 				return Dto.success(user);
 			}
 		}
-		return Dto.error(ERROR_CODE.LOGIN_FAILED);
+		return Dto.error(ERROR_CODE.LOGIN_FAILED, 'Login failed. Please check again !!!');
 	}
 
 	static async setToken(user: User, token: string): Promise<void> {

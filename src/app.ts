@@ -29,8 +29,10 @@ app.use('*', async (c, next) => {
 	}
 	await next();
 });
-app.onError((err, c) => {
+app.onError(async (err, c) => {
 	Logger.log(() => [`app.onError ${err}`, err]);
+	const body = await c.req.json();
+	Logger.logEvent(`___ SERVER ERROR ___`, { error: err, context: c.req, env: c.env, body });
 	return c.json(
 		{
 			error: err,
