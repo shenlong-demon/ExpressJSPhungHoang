@@ -12,6 +12,7 @@ import dataRoute from './routes/DataRoute';
 import bookingRoute from './routes/BookingRoute';
 import reportRoute from './routes/ReportRoute';
 import billRoute from './routes/BillRoute';
+import expenseRoute from './routes/ExpenseRoute';
 import { jwtAuth } from './middlewares';
 import { GlobalConfig } from '@business/common';
 
@@ -49,6 +50,7 @@ app.use('/data/*', jwtAuth);
 app.use('/booking/*', jwtAuth);
 app.use('/report/*', jwtAuth);
 app.use('/bill/*', jwtAuth);
+app.use('/expense/*', jwtAuth);
 
 app.route('/', testRoute);
 app.route('/auth', authRoute); // Handle /book
@@ -61,4 +63,5 @@ app.route('/data', dataRoute);
 app.route('/booking', bookingRoute);
 app.route('/report', reportRoute);
 app.route('/bill', billRoute);
+app.route('/expense', expenseRoute);
 export default app;

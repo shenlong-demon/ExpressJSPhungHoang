@@ -1,4 +1,4 @@
-import {BaseEntity} from '@business/repositories/model/base_entity';
+import { BaseEntity } from '@business/repositories/model/base_entity';
 
 export type CloseOutReportEntity = BaseEntity & {
 	date: number;
@@ -6,4 +6,6 @@ export type CloseOutReportEntity = BaseEntity & {
 	totalBill: number;
 	totalProfit: number;
 	totalDiscount: number;
+	numberOfExpense: number;
+	totalExpense: number;
 };

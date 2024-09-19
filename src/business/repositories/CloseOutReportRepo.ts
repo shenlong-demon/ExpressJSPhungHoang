@@ -30,6 +30,8 @@ export class CloseOutReportRepo {
 					totalBill: entity.totalBill,
 					totalProfit: entity.totalProfit,
 					totalDiscount: entity.totalDiscount,
+					numberOfExpense: entity.numberOfExpense,
+					totalExpense: entity.totalExpense,
 					updatedAt: DateTimeUtils.now(),
 				},
 			});
@@ -41,6 +43,8 @@ export class CloseOutReportRepo {
 					totalBill: entity.totalBill,
 					totalProfit: entity.totalProfit,
 					totalDiscount: entity.totalDiscount,
+					numberOfExpense: entity.numberOfExpense,
+					totalExpense: entity.totalExpense,
 					createdAt: DateTimeUtils.now(),
 					updatedAt: DateTimeUtils.now(),
 				},

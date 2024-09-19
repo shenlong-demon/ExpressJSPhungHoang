@@ -1,6 +1,6 @@
-import { Brand, Group } from './model';
+import { Group } from './model';
 import { GroupEntity } from '../repositories/model';
-import { BrandRepo, GroupRepo } from '../repositories';
+import { GroupRepo } from '../repositories';
 import { Dto } from '../../core/common';
 import { CreateBrandRequest, UpdateBrandRequest } from '@business/model';
 

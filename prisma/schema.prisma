@@ -200,12 +200,24 @@ model phemployee {
 }
 
 model phcloseoutreport {
+    id            		Int             @id                 @unique  @default(autoincrement())
+    date		  		Int
+   	numberOfBill  		Int
+   	totalBill	  		Int
+   	totalProfit   		Float
+   	totalDiscount 		Float
+   	numberOfExpense 	Int				@default(0)
+    totalExpense	 	Float			@default(0)
+    createdAt     		Int
+    updatedAt     		Int?
+    appKey        		String?         @default(uuid())
+}
+
+
+model phexpense {
     id            Int             @id                 @unique  @default(autoincrement())
-    date		  Int
-   	numberOfBill  Int
-   	totalBill	  Int
-   	totalProfit   Float
-   	totalDiscount Float
+    note          String
+   	total  		  Float
     createdAt     Int
     updatedAt     Int?
     appKey        String?         @default(uuid())

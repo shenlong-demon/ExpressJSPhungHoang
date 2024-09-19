@@ -1,8 +1,8 @@
 import { CONSTANT, Dto } from '@core/common';
 import { CloseOutReport, Operation } from '@business/services/model';
 import { DoCloseOutReportRequest, GetCloseOutReportsRequest } from '@business/model';
-import { BillEntity, CloseOutReportEntity } from '@business/repositories/model';
-import { BillRepo, CloseOutReportRepo } from '@business/repositories';
+import { BillEntity, CloseOutReportEntity, ExpenseEntity } from '@business/repositories/model';
+import { BillRepo, CloseOutReportRepo, ExpenseRepo } from '@business/repositories';
 import { DateTimeUtils } from '@business/common';
 
 export class ReportService {
@@ -11,13 +11,18 @@ export class ReportService {
 		const fromTime: number = DateTimeUtils.getStartOfDate(req.date);
 		const toTime: number = DateTimeUtils.getEndOfDate(req.date);
 		const bills: BillEntity[] = await BillRepo.getBills(fromTime, toTime);
+		const expenses: ExpenseEntity[] = await ExpenseRepo.getExpensesByPeriodOfTime(fromTime, toTime);
 		let totalBill: number = 0;
 		let totalProfit: number = 0;
 		let totalDiscount: number = 0;
+		let totalExpense: number = 0;
 		for (const bill of bills) {
 			totalBill += bill.total;
 			totalProfit += bill.profit;
 			totalDiscount += bill.discount;
+		}
+		for (const expense of expenses) {
+			totalExpense += expense.total;
 		}
 		const entity: CloseOutReportEntity = {
 			id: 0,
@@ -29,6 +34,8 @@ export class ReportService {
 			totalBill,
 			totalProfit,
 			totalDiscount,
+			numberOfExpense: expenses.length,
+			totalExpense,
 		};
 		const report: CloseOutReportEntity | null = await CloseOutReportRepo.update(entity, fromTime, toTime);
 
