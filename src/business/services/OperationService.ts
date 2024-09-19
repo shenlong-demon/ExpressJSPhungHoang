@@ -52,7 +52,8 @@ export class OperationService {
 			basePrice: product.basePrice,
 			quantity: 1,
 		} as BookingRequestSdo);
-		if (booking.product?.quantity || 0 < 5) {
+		Logger.log(() => [`OperationService booking BookingEntity less than 5 ${(booking.product?.quantity || 0) < 5} `, booking]);
+		if ((booking.product?.quantity || 0) < 5) {
 			return Dto.warning<Operation>(
 				WARNING_CODE.PRODUCT_QUANTITY_READY_OUT_OF_STOCK,
 				`${booking.name}'s quantity is ${booking.product?.quantity || 0}`,
