@@ -5,8 +5,6 @@ export type UpdateProductRequest = {
 	image?: string;
 	price: number;
 	basePrice: number;
-	brandId: number;
-	groupId: number;
 	quantity: number;
 	status: number;
 };

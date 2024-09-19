@@ -1,6 +1,4 @@
 export * from './user_entity';
-export * from './brand_entity';
-export * from './group_entity';
 export * from './ProductEntity';
 export * from './CustomerEntity';
 export * from './OperationEntity';

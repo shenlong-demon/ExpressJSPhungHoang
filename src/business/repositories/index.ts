@@ -1,7 +1,5 @@
 export * from './UserRepo';
 export * from './ProductRepo';
-export * from './BrandRepo';
-export * from './GroupRepo';
 export * from './OperationRepo';
 export * from './CustomerRepo';
 export * from './BookingRepo';

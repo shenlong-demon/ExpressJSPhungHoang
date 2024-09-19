@@ -18,12 +18,7 @@ export class OperationRepo {
 		customer: true;
 		bookings: {
 			include: {
-				product: {
-					include: {
-						brand: false;
-						group: false;
-					};
-				};
+				product: true;
 			};
 		};
 		issues: true;
@@ -64,12 +59,7 @@ export class OperationRepo {
 				customer: true,
 				bookings: {
 					include: {
-						product: {
-							include: {
-								brand: false,
-								group: false,
-							},
-						},
+						product: true,
 					},
 				},
 				issues: true,

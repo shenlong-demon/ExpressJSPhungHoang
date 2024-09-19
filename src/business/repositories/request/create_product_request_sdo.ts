@@ -6,8 +6,6 @@ export type CreateProductRequestSdo = {
 	price: number;
 	basePrice: number;
 	quantity: number;
-	brandId: number;
-	groupId: number;
 
 	status: number;
 };

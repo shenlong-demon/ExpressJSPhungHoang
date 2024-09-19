@@ -39,12 +39,7 @@ export class BillRepo {
 				customer: true,
 				orders: {
 					include: {
-						product: {
-							include: {
-								brand: false,
-								group: false,
-							},
-						},
+						product: true,
 					},
 				},
 			},
@@ -191,12 +186,7 @@ export class BillRepo {
 				customer: true,
 				orders: {
 					include: {
-						product: {
-							include: {
-								brand: false,
-								group: false,
-							},
-						},
+						product: true,
 					},
 				},
 				issues: true,

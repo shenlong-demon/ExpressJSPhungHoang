@@ -27,26 +27,6 @@ model phuser {
   appKey        String?         @default(uuid())
 }
 
-model phbrand {
-  id            Int             @id                 @unique @default(autoincrement())
-  name          String
-  status        Int             @default(1)
-  products      phproduct[]
-  createdAt     Int
-  updatedAt     Int?
-  appKey        String?         @default(uuid())
-}
-
-model phgroup {
-  id            Int             @id                 @unique @default(autoincrement())
-  name          String
-  status        Int             @default(1)
-  products      phproduct[]
-  createdAt     Int
-  updatedAt     Int?
-  appKey        String?         @default(uuid())
-}
-
 model phproduct {
   id                Int             @id                 @unique @default(autoincrement())
   code              String?
@@ -57,10 +37,6 @@ model phproduct {
   basePrice         Float
   quantity          Int
   status            Int             @default(1)
-  brand             phbrand          @relation(fields: [brandId], references: [id])
-  brandId           Int
-  group             phgroup          @relation(fields: [groupId], references: [id])
-  groupId           Int
   createdAt         Int
   updatedAt         Int?
   appKey            String?         @default(uuid())

@@ -5,8 +5,6 @@ export * from './TokenService';
 export * from './TestService';
 export * from './SettingService';
 export * from './ProductService';
-export * from './BrandService';
-export * from './GroupService';
 export * from './OperationService';
 export * from './ReportService';
 export * from './BillService';

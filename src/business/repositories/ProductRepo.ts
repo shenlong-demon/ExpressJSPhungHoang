@@ -13,8 +13,6 @@ export class ProductRepo {
 				name: req.name,
 				otherName: req.otherName,
 				code: req.code,
-				groupId: req.groupId,
-				brandId: req.brandId,
 				basePrice: req.basePrice,
 				price: req.price,
 				quantity: req.quantity,
@@ -22,10 +20,6 @@ export class ProductRepo {
 				status: req.status,
 				createdAt: DateTimeUtils.now(),
 				updatedAt: DateTimeUtils.now(),
-			},
-			include: {
-				brand: true,
-				group: true,
 			},
 		});
 		return product;
@@ -39,18 +33,12 @@ export class ProductRepo {
 				code: req.code,
 				name: req.name,
 				otherName: req.otherName,
-				groupId: req.groupId,
-				brandId: req.brandId,
 				price: req.price,
 				basePrice: req.basePrice,
 				quantity: req.quantity,
 				image: req.image,
 				status: req.status,
 				updatedAt: DateTimeUtils.now(),
-			},
-			include: {
-				brand: true,
-				group: true,
 			},
 		});
 		return product;
@@ -62,11 +50,6 @@ export class ProductRepo {
 			where: {
 				status,
 			},
-			// relationLoadStrategy: 'join', // or 'query'
-			include: {
-				brand: true,
-				group: true,
-			},
 			skip: offset * DB_CONSTANT.PAGING,
 			take: DB_CONSTANT.PAGING,
 		});
@@ -77,12 +60,6 @@ export class ProductRepo {
 		const products: any[] = await prisma.phproduct.findMany({
 			where: {
 				status: req.status !== null ? req.status : undefined,
-				brandId: req.brandId !== null ? req.brandId : undefined,
-				groupId: req.groupId !== null ? req.groupId : undefined,
-			},
-			include: {
-				brand: true,
-				group: true,
 			},
 			skip: req.offset * DB_CONSTANT.PAGING,
 			take: DB_CONSTANT.PAGING,
@@ -97,10 +74,6 @@ export class ProductRepo {
 		const product: ProductEntity | null = await prisma.phproduct.findFirst({
 			where: {
 				id: productId,
-			},
-			include: {
-				brand: true,
-				group: true,
 			},
 		});
 		Logger.log(() => [`ProductRepo getProductById  ${productId} RESULT `, product]);
