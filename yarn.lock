@@ -695,6 +695,11 @@ safe-buffer@^5.0.1:
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
 
+safe-stringify@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/safe-stringify/-/safe-stringify-1.1.1.tgz#f4240f506d041f58374d6106e2a5850f6b1ce576"
+  integrity sha512-YSzQLuwp06fuvJD1h6+vVNFYZoXmDs5UUNPUbTvQK7Ap+L0qD4Vp+sN434C+pdS3prVVlUfQdNeiEIgxox/kUQ==
+
 selfsigned@^2.0.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/selfsigned/-/selfsigned-2.4.1.tgz#560d90565442a3ed35b674034cec4e95dceb4ae0"

@@ -9,8 +9,8 @@
 		"cf-typegen": "wrangler types",
 		"postinstall": "sh ./run-postinstall.sh",
 		"local": "ngrok http --domain=fresh-recently-bedbug.ngrok-free.app 8787",
-	  	"sql-local": "sh ./sql_local.sh",
-	  	"sql": "sh ./sql_remote.sh"
+		"sql-local": "sh ./sql_local.sh",
+		"sql": "sh ./sql_remote.sh"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240725.0",
@@ -24,6 +24,7 @@
 		"@prisma/client": "5.17.0",
 		"hono": "4.5.2",
 		"jsonwebtoken": "9.0.2",
+		"safe-stringify": "^1.1.1",
 		"uuid": "10.0.0"
 	}
 }

@@ -1,3 +1,5 @@
+import { JSONUtility } from '@core/common';
+
 export class Logger {
 	static log(func: () => any[]): void {
 		try {
@@ -8,9 +10,9 @@ export class Logger {
 		} catch (e) {}
 	}
 	public static async logEvent(message: string, data: any): Promise<void> {
-		const str: string = JSON.stringify({
+		const str: string = JSONUtility.stringify({
 			chat_id: -4549650450,
-			text: JSON.stringify({
+			text: JSONUtility.stringify({
 				message,
 				data,
 			}),
