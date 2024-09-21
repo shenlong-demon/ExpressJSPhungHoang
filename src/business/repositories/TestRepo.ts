@@ -7,10 +7,16 @@ export class TestRepo {
 		const data = {
 			userCount,
 			metadata: 1724118330709,
-			migration: '0004_add_receiptAt_to_bill_table.sql',
+			migration: '0007_delete_table_group_and_brand.sql',
 			hash: '***9851b1',
-			version: '1.2.1',
-			note: ['Filter Customer by Date', 'Bill Filter with BillNo', 'Return to Stock', 'Rename Operation + DELETE Operation'],
+			version: '1.3.0',
+			note: [
+				'DELETE group and brand',
+				'Filter Customer by Date',
+				'Bill Filter with BillNo',
+				'Return to Stock',
+				'Rename Operation + DELETE Operation',
+			],
 		};
 		Logger.log(() => [`TestRepo get`, data]);
 		return data;
