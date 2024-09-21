@@ -40,8 +40,6 @@ app.onError(async (err, c) => {
 	);
 });
 app.use('/product/*', jwtAuth);
-app.use('/brand/*', jwtAuth);
-app.use('/group/*', jwtAuth);
 app.use('/operation/*', jwtAuth);
 app.use('/customer/*', jwtAuth);
 app.use('/data/*', jwtAuth);
