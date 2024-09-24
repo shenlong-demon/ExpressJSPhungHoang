@@ -41,7 +41,7 @@ export class OperationFacade {
 		const dto: Dto<Operation | null> = await OperationService.getOperation(operationId);
 		if (dto.next()) {
 			const op: Operation = dto.data as Operation;
-			const assignDto: Dto<Bill | null> = await OperationService.prepareReceipt(operationId);
+			const assignDto: Dto<Bill | null> = await OperationService.prepareReceipt(operationId, req);
 			return assignDto;
 		}
 		return dto.bypass();

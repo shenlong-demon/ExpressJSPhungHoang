@@ -1,13 +1,12 @@
 import { ProductEntity } from './model';
-import { CreateProductRequestSdo } from './request';
-import { ProductFilterRequest, UpdateProductRequest } from '../model/request';
-import { DB_CONSTANT, Logger } from '../../core/common';
+import { CreateProductRequest, ProductFilterRequest, UpdateProductRequest } from '@business/model/request';
+import { DB_CONSTANT, Logger } from '@core/common';
 
 import { prisma } from '../../../prisma/PrismaClient';
 import { DateTimeUtils } from '@business/common';
 
 export class ProductRepo {
-	static async createNewProduct(req: CreateProductRequestSdo): Promise<ProductEntity | null> {
+	static async createNewProduct(req: CreateProductRequest): Promise<ProductEntity | null> {
 		const product: any | null = await prisma.phproduct.create({
 			data: {
 				name: req.name,

@@ -18,6 +18,7 @@ import {
 	CancelBookingRequest,
 	CreateOperationIssue,
 	CreateOperationRequest,
+	ReceiptRequest,
 	RemoveIssueRequest,
 	RenameOperationRequest,
 	SetBookingNoteRequest,
@@ -41,7 +42,7 @@ export class OperationService {
 		if (!!operation) {
 			return Dto.success(operation);
 		}
-		return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
+		return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST, `Operation is not exists !!!}`);
 	}
 
 	static async booking(operationId: number, product: Product): Promise<Dto<Operation | null>> {
@@ -71,9 +72,13 @@ export class OperationService {
 		return Dto.error(ERROR_CODE.OPERATION_NOT_EXIST);
 	}
 
-	static async prepareReceipt(operationId: number): Promise<Dto<Bill | null>> {
+	static async prepareReceipt(operationId: number, req: ReceiptRequest): Promise<Dto<Bill | null>> {
+		Logger.log(() => [`OperationService prepareReceipt ${operationId}`, req]);
 		const operation: OperationEntity | null = await OperationRepo.getOperation(operationId);
 		if (!!operation) {
+			const receiptedAt: number = !!req.receiptedAt && req.receiptedAt > 0 ? req.receiptedAt : DateTimeUtils.now();
+			Logger.log(() => [`OperationService prepareReceipt receiptedAt ${receiptedAt}`]);
+
 			const bill: BillEntity = {
 				id: operation.id,
 				operationId: operation.id,
@@ -93,7 +98,7 @@ export class OperationService {
 				total: 0,
 				customer: operation.customer,
 				employee: operation.employee,
-				receiptedAt: DateTimeUtils.now(),
+				receiptedAt,
 			};
 			let operationProfit: number = 0;
 			let operationTotal: number = 0;

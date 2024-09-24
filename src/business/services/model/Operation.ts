@@ -1,7 +1,3 @@
-import {OperationEntity, ProductEntity} from "../../repositories/model";
-import {Group} from "./group";
-import {Brand} from "./brand";
+import { OperationEntity, ProductEntity } from '../../repositories/model';
 
-export type Operation = OperationEntity & {
-
-};
+export type Operation = OperationEntity & {};

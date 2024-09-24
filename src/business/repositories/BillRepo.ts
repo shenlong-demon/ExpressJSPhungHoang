@@ -53,7 +53,7 @@ export class BillRepo {
 			...bill,
 		};
 		const finalBill = await prisma.phbill.create({
-			data: { ...newBill, total: 0, profit: 0, discount: 0, receiptedAt: DateTimeUtils.now() },
+			data: { ...newBill, total: 0, profit: 0, discount: 0 },
 		});
 		try {
 			await BillRepo.addOrders(finalBill.id, orders);
@@ -76,7 +76,7 @@ export class BillRepo {
 			});
 			await OperationRepo.deleteOperation(bill.operationId, false);
 
-			return BillRepo.getBill(bill.id);
+			return BillRepo.getBill(finalBill.id);
 		} catch (ex) {
 			Logger.log(() => [`BillRepo create ERROR `, ex]);
 			await BillRepo.deleteBill(finalBill.id);

@@ -13,14 +13,12 @@ import billRoute from './routes/BillRoute';
 import expenseRoute from './routes/ExpenseRoute';
 import { jwtAuth } from './middlewares';
 import { GlobalConfig } from '@business/common';
-import { cors } from 'hono/cors';
 
 export type Variables = {
 	phone: string;
 };
 
 const app = new Hono<{ Bindings: Env; Variables: Variables }>();
-app.use('*', cors());
 let initialized: boolean = false;
 app.use('*', async (c, next) => {
 	if (!initialized) {

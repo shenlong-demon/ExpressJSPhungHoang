@@ -1,6 +1,5 @@
 import { Hono } from 'hono';
 import { CreateOperationFacade, GetOperationDetailFacade, GetOperationsFacade } from '@business/facades/operation';
-import { Logger } from '@core/common';
 import { OperationFacade } from '@business/facades';
 import {
 	AddOperationServiceRequest,
